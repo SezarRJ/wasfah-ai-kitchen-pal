@@ -22,6 +22,10 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
 
+  const handleSearchClick = () => {
+    navigate('/search');
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
       <div className="container px-4 py-3 flex items-center justify-between">
@@ -46,7 +50,7 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
               variant="ghost"
               size="icon"
               className="text-wasfah-deep-teal"
-              onClick={() => navigate('/search')}
+              onClick={handleSearchClick}
             >
               <Search size={20} />
             </Button>

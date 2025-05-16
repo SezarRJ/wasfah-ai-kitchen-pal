@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { mockRecipes } from '@/data/mockData';
@@ -7,12 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Heart, Clock, Users, ArrowUpRight, ChefHat, Share } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
+import { CookingMode } from '@/components/recipe/CookingMode';
 
 export default function RecipeDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const [isCookingMode, setIsCookingMode] = useState(false);
   
   const recipe = mockRecipes.find(r => r.id === id);
   
@@ -45,8 +47,12 @@ export default function RecipeDetailPage() {
   };
 
   const handleStartCookingMode = () => {
-    navigate(`/recipe/${id}/cooking`);
+    setIsCookingMode(true);
   };
+
+  if (isCookingMode) {
+    return <CookingMode recipe={recipe} onClose={() => setIsCookingMode(false)} />;
+  }
 
   return (
     <PageContainer
@@ -66,6 +72,8 @@ export default function RecipeDetailPage() {
           </div>
         ),
       }}
+      fullWidth
+      noPadding
     >
       <div>
         <div 

@@ -1,4 +1,3 @@
-
 // Recipe Types
 export interface Recipe {
   id: string;
@@ -17,6 +16,7 @@ export interface Recipe {
   instructions: string[];
   tags: string[];
   isFavorite: boolean;
+  tips?: string[]; // Added optional tips property
 }
 
 export interface Ingredient {

@@ -142,10 +142,9 @@ export const CookingMode: React.FC<CookingModeProps> = ({ recipe, onClose }) => 
           </Button>
           
           <Button
-            className="bg-wasfah-bright-teal hover:bg-wasfah-teal text-white"
             onClick={nextStep}
             disabled={currentStep === totalSteps - 1}
-            className="w-28"
+            className="w-28 bg-wasfah-bright-teal hover:bg-wasfah-teal text-white"
           >
             Next
             <ChevronRight size={16} className="ml-1" />

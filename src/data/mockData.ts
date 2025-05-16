@@ -1,4 +1,3 @@
-
 import { Recipe, PantryItem, User, MealPlan } from '../types';
 
 export const mockRecipes: Recipe[] = [
@@ -35,6 +34,16 @@ export const mockRecipes: Recipe[] = [
     ],
     tags: ['Indian', 'Curry', 'Spicy', 'Main Course'],
     isFavorite: true,
+    tips: [
+      'For best results, marinate the chicken in yogurt and spices for 2 hours before cooking.',
+      'Use a sharp knife and cut the chicken into equal-sized pieces for even cooking.',
+      'Keep stirring to prevent onions from browning too quickly.',
+      'Freshly minced garlic provides more flavor than pre-minced.',
+      'Authentic tikka masala paste will give the best flavor profile.',
+      'Use chicken thighs instead of breast for more flavor and moisture.',
+      'For a thicker sauce, let it simmer uncovered.',
+      'Garnish with fresh cilantro and serve with naan bread.'
+    ]
   },
   {
     id: '2',

@@ -63,7 +63,7 @@ export default function ProfilePage() {
             
             <div className="flex flex-col items-center mb-4">
               <Avatar className="h-20 w-20 mb-4 animate-scale-in ring-2 ring-wasfah-bright-teal ring-offset-2">
-                <AvatarImage src={mockUser.avatar || ''} alt={mockUser.name} />
+                <AvatarImage src={mockUser.avatar || mockUser.avatarUrl || ''} alt={mockUser.name} />
                 <AvatarFallback className="text-xl bg-wasfah-bright-teal text-white">
                   {getInitials(mockUser.name)}
                 </AvatarFallback>
@@ -83,7 +83,7 @@ export default function ProfilePage() {
               
               <div className="flex gap-4 mt-4">
                 <div className="text-center">
-                  <p className="text-lg font-bold text-wasfah-deep-teal">{mockUser.recipesSaved}</p>
+                  <p className="text-lg font-bold text-wasfah-deep-teal">{mockUser.recipesSaved || 0}</p>
                   <p className="text-xs text-gray-600">Saved</p>
                 </div>
                 <Separator orientation="vertical" className="h-10" />

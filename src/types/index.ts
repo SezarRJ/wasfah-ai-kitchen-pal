@@ -60,6 +60,11 @@ export interface User {
   loyaltyPoints?: number;
   loyaltyLevel?: string;
   achievements?: Achievement[];
+  // Add the missing properties
+  avatar?: string;
+  recipesSaved?: number;
+  recipesCreated?: number;
+  followersCount?: number;
 }
 
 // Health Tracking Types

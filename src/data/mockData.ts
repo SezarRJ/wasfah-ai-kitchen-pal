@@ -267,6 +267,7 @@ export const mockUser: User = {
   name: 'Sarah Johnson',
   email: 'sarah@example.com',
   avatarUrl: '',
+  avatar: 'https://i.pravatar.cc/300?u=sarah',
   isPremium: true,
   dietaryPreferences: ['Vegetarian', 'Low-Carb'],
   cuisinePreferences: ['Italian', 'Thai', 'Mexican'],
@@ -277,7 +278,10 @@ export const mockUser: User = {
     protein: 100,
     carbs: 200,
     fat: 60
-  }
+  },
+  recipesSaved: 24,
+  recipesCreated: 7,
+  followersCount: 18
 };
 
 export const mockMealPlans: MealPlan[] = [

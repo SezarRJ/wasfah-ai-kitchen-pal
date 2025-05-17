@@ -13,7 +13,7 @@ export const TodayMealPlan: React.FC<TodayMealPlanProps> = ({ mealPlan }) => {
   if (!mealPlan) return null;
   
   return (
-    <div className="mb-6">
+    <div className="mb-6 animate-fade-in">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-bold text-wasfah-deep-teal">Your meal plan today</h2>
         <Link to="/meal-plan">
@@ -23,9 +23,11 @@ export const TodayMealPlan: React.FC<TodayMealPlanProps> = ({ mealPlan }) => {
         </Link>
       </div>
       
-      <div>
-        {mealPlan.meals.map(meal => (
-          <MealCard key={meal.id} meal={meal} />
+      <div className="space-y-2">
+        {mealPlan.meals.map((meal, index) => (
+          <div key={meal.id} className="transform transition-all duration-300" style={{ animationDelay: `${index * 150}ms` }}>
+            <MealCard meal={meal} />
+          </div>
         ))}
       </div>
     </div>

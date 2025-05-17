@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { FeaturedRecipe } from '@/components/recipe/FeaturedRecipe';
@@ -14,6 +14,16 @@ import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  useEffect(() => {
+    // Simulate loading data with a slight delay to show animations when components mount
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   const featuredRecipe = mockRecipes[0];
   const recommendedRecipes = mockRecipes.slice(1, 5);
@@ -32,6 +42,16 @@ export default function HomePage() {
   const todayDate = new Date().toISOString().split('T')[0];
   const todayMealPlan = mockMealPlans.find(mp => mp.date === todayDate) || mockMealPlans[0];
 
+  if (!isLoaded) {
+    return (
+      <PageContainer header={{ showLogo: true, showSearch: true }}>
+        <div className="container px-4 py-4 flex justify-center items-center h-[90vh]">
+          <div className="w-8 h-8 border-4 border-wasfah-bright-teal border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </PageContainer>
+    );
+  }
+
   return (
     <PageContainer
       header={{
@@ -45,24 +65,38 @@ export default function HomePage() {
       }}
     >
       <div className="container px-4 py-4 space-y-6">
-        <FeaturedRecipe recipe={featuredRecipe} />
+        <div className="animate-fade-in" style={{ animationDelay: "0ms" }}>
+          <FeaturedRecipe recipe={featuredRecipe} />
+        </div>
         
-        <QuickActionsSection />
+        <div className="animate-fade-in" style={{ animationDelay: "100ms" }}>
+          <QuickActionsSection />
+        </div>
         
-        <SubscriptionBanner />
+        <div className="animate-fade-in" style={{ animationDelay: "200ms" }}>
+          <SubscriptionBanner />
+        </div>
         
-        <LoyaltyCard />
+        <div className="animate-fade-in" style={{ animationDelay: "300ms" }}>
+          <LoyaltyCard />
+        </div>
         
-        <ExpiringIngredients expiringItems={expiringItems} />
+        <div className="animate-fade-in" style={{ animationDelay: "400ms" }}>
+          <ExpiringIngredients expiringItems={expiringItems} />
+        </div>
         
-        <RecommendedRecipes 
-          recipes={recommendedRecipes}
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-        />
+        <div className="animate-fade-in" style={{ animationDelay: "500ms" }}>
+          <RecommendedRecipes 
+            recipes={recommendedRecipes}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+        </div>
         
-        <TodayMealPlan mealPlan={todayMealPlan} />
+        <div className="animate-fade-in" style={{ animationDelay: "600ms" }}>
+          <TodayMealPlan mealPlan={todayMealPlan} />
+        </div>
       </div>
     </PageContainer>
   );

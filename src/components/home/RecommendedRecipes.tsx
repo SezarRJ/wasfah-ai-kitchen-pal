@@ -20,7 +20,7 @@ export const RecommendedRecipes: React.FC<RecommendedRecipesProps> = ({
   onSelectCategory
 }) => {
   return (
-    <div className="mb-6">
+    <div className="mb-6 animate-fade-in">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-bold text-wasfah-deep-teal">Recommended for you</h2>
         <Link to="/recipes">
@@ -36,7 +36,7 @@ export const RecommendedRecipes: React.FC<RecommendedRecipesProps> = ({
         onSelectCategory={onSelectCategory}
       />
       
-      <div className="mt-4">
+      <div className="mt-4 transition-all duration-500 ease-in-out">
         <RecipeGrid recipes={recipes} columns={2} cardSize="medium" />
       </div>
     </div>

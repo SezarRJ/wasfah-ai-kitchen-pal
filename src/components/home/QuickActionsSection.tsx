@@ -5,43 +5,28 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Activity, ArrowLeftRight, ShoppingCart, Target } from 'lucide-react';
 
 export const QuickActionsSection: React.FC = () => {
+  const actions = [
+    { icon: <Activity className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Track Health", path: "/health-tracking" },
+    { icon: <ArrowLeftRight className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Swap Ingredients", path: "/ingredient-swap" },
+    { icon: <ShoppingCart className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Shopping List", path: "/shopping-list" },
+    { icon: <Target className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Set Goals", path: "/nutrition-goals" },
+  ];
+
   return (
     <div className="grid grid-cols-4 gap-2">
-      <Link to="/health-tracking">
-        <Card className="text-center p-2 hover:shadow-md transition-all">
-          <CardContent className="p-1">
-            <Activity className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
-            <div className="text-xs mt-1 font-medium">Track Health</div>
-          </CardContent>
-        </Card>
-      </Link>
-      
-      <Link to="/ingredient-swap">
-        <Card className="text-center p-2 hover:shadow-md transition-all">
-          <CardContent className="p-1">
-            <ArrowLeftRight className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
-            <div className="text-xs mt-1 font-medium">Swap Ingredients</div>
-          </CardContent>
-        </Card>
-      </Link>
-      
-      <Link to="/shopping-list">
-        <Card className="text-center p-2 hover:shadow-md transition-all">
-          <CardContent className="p-1">
-            <ShoppingCart className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
-            <div className="text-xs mt-1 font-medium">Shopping List</div>
-          </CardContent>
-        </Card>
-      </Link>
-      
-      <Link to="/nutrition-goals">
-        <Card className="text-center p-2 hover:shadow-md transition-all">
-          <CardContent className="p-1">
-            <Target className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
-            <div className="text-xs mt-1 font-medium">Set Goals</div>
-          </CardContent>
-        </Card>
-      </Link>
+      {actions.map((action, index) => (
+        <Link to={action.path} key={action.path}>
+          <Card 
+            className="text-center p-2 hover:shadow-md transition-all duration-300 transform hover:scale-105 hover:bg-gray-50" 
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <CardContent className="p-1 animate-fade-in" style={{ animationDelay: `${index * 150}ms` }}>
+              {action.icon}
+              <div className="text-xs mt-1 font-medium">{action.label}</div>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
     </div>
   );
 };

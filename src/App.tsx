@@ -21,6 +21,7 @@ import IngredientSwapPage from "./pages/IngredientSwapPage";
 import ShoppingListPage from "./pages/ShoppingListPage";
 import LoyaltyProgramPage from "./pages/LoyaltyProgramPage";
 import SubscriptionPage from "./pages/SubscriptionPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/shopping-list" element={<ShoppingListPage />} />
           <Route path="/loyalty" element={<LoyaltyProgramPage />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

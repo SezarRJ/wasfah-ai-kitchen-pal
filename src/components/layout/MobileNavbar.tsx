@@ -43,10 +43,10 @@ export const MobileNavbar: React.FC = () => {
             key={index}
             to={item.href}
             className={cn(
-              'flex flex-col items-center px-3 py-2 rounded-md',
+              'flex flex-col items-center px-3 py-2 rounded-md transition-all duration-300',
               location.pathname === item.href
-                ? 'text-wasfah-bright-teal'
-                : 'text-gray-500 dark:text-gray-400'
+                ? 'text-wasfah-bright-teal scale-110'
+                : 'text-gray-500 dark:text-gray-400 hover:text-wasfah-deep-teal'
             )}
           >
             <item.icon size={20} />

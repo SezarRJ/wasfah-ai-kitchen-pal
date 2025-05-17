@@ -1,4 +1,3 @@
-
 // Recipe Types
 export interface Recipe {
   id: string;

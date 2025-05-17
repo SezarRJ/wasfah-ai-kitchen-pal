@@ -14,15 +14,18 @@ import {
   Bell,
   CreditCard,
   Lock,
-  ExternalLink
+  ExternalLink,
+  LogOut
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
+  
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -32,6 +35,11 @@ export default function ProfilePage() {
   
   const handleEditProfile = () => {
     toast.success("Profile edit mode enabled");
+  };
+  
+  const handleLogout = () => {
+    toast.info("Logging out...");
+    setTimeout(() => navigate('/auth'), 1500);
   };
 
   return (
@@ -204,6 +212,15 @@ export default function ProfilePage() {
               Privacy & Data
             </Button>
           </Link>
+          
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-red-500 hover:bg-red-50 hover:text-red-600"
+            onClick={handleLogout}
+          >
+            <LogOut size={18} className="mr-3" />
+            Sign Out
+          </Button>
         </div>
       </div>
     </PageContainer>

@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { mockUser } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Bell, Lock, Moon, CreditCard, LogOut, Smartphone, Globe, Volume2 } from 'lucide-react';
+import { ArrowLeft, Bell, Lock, Moon, CreditCard, Smartphone, Globe, Volume2 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -35,11 +34,6 @@ export default function SettingsPage() {
 
   const handleSaveChanges = (section: string) => {
     toast.success(`${section} settings saved successfully`);
-  };
-
-  const handleLogout = () => {
-    toast.info("Logging out...");
-    setTimeout(() => navigate('/auth'), 1500);
   };
 
   return (
@@ -334,15 +328,6 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </div>
-          
-          <Button 
-            variant="ghost" 
-            className="w-full justify-center text-gray-600 hover:bg-gray-100 mt-4"
-            onClick={handleLogout}
-          >
-            <LogOut size={18} className="mr-2" />
-            Sign Out
-          </Button>
         </div>
       </div>
     </PageContainer>

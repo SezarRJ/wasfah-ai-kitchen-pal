@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageContainer } from '@/components/layout/PageContainer';
@@ -12,7 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { 
   Utensils, Award, Target, Activity, ShoppingCart, 
-  Wallet, Gift, Sparkles, Swap, ChevronRight 
+  Wallet, Gift, ArrowLeftRight, ChevronRight 
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -64,7 +63,7 @@ export default function HomePage() {
           <Link to="/ingredient-swap">
             <Card className="text-center p-2 hover:shadow-md transition-all">
               <CardContent className="p-1">
-                <Swap className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
+                <ArrowLeftRight className="h-6 w-6 mx-auto text-wasfah-bright-teal" />
                 <div className="text-xs mt-1 font-medium">Swap Ingredients</div>
               </CardContent>
             </Card>

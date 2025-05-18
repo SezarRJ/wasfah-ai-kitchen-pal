@@ -1,3 +1,4 @@
+
 // Recipe Types
 export interface Recipe {
   id: string;
@@ -44,6 +45,7 @@ export interface User {
   name: string;
   email: string;
   avatarUrl: string;
+  avatar?: string; // Making this optional to work with ProfilePage
   isPremium: boolean;
   dietaryPreferences: string[];
   cuisinePreferences: string[];
@@ -59,8 +61,6 @@ export interface User {
   loyaltyPoints?: number;
   loyaltyLevel?: string;
   achievements?: Achievement[];
-  // Add the missing properties
-  avatar?: string;
   recipesSaved?: number;
   recipesCreated?: number;
   followersCount?: number;

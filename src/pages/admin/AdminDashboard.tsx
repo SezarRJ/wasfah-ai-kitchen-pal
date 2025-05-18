@@ -7,7 +7,7 @@ import {
   ScrollText,
   Cpu,
   Database,
-  ApiIcon,
+  Server,
   ArrowUp,
   ArrowDown
 } from 'lucide-react';
@@ -184,7 +184,7 @@ const AdminDashboard = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <ApiIcon className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <Server className="h-4 w-4 mr-2 text-muted-foreground" />
                   <span className="text-sm">Requests/min</span>
                 </div>
                 <div className="flex items-center">
@@ -197,7 +197,7 @@ const AdminDashboard = () => {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <ApiIcon className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <Server className="h-4 w-4 mr-2 text-muted-foreground" />
                   <span className="text-sm">Response Time</span>
                 </div>
                 <div className="flex items-center">
@@ -210,7 +210,7 @@ const AdminDashboard = () => {
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <ApiIcon className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <Server className="h-4 w-4 mr-2 text-muted-foreground" />
                   <span className="text-sm">Error Rate</span>
                 </div>
                 <div className="flex items-center">

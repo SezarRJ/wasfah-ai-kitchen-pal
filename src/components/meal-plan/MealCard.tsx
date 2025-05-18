@@ -22,7 +22,7 @@ export const MealCard: React.FC<MealCardProps> = ({ meal }) => {
 
   return (
     <Link to={`/recipe/${meal.recipe.id}`}>
-      <Card className="mb-3 hover-scale">
+      <Card className="mb-3 hover:scale-105 transition-transform duration-300">
         <CardContent className="p-0">
           <div className="flex">
             <div

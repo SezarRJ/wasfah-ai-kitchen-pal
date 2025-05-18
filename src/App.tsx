@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -22,6 +21,15 @@ import ShoppingListPage from "./pages/ShoppingListPage";
 import LoyaltyProgramPage from "./pages/LoyaltyProgramPage";
 import SubscriptionPage from "./pages/SubscriptionPage";
 import SettingsPage from "./pages/SettingsPage";
+
+// Admin Panel Routes
+import AdminPage from "./pages/AdminPage";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminRecipes from "./pages/admin/AdminRecipes";
+import AdminSystemMonitoring from "./pages/admin/AdminSystemMonitoring";
+import AdminAuthGuard from "./components/admin/AdminAuthGuard";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +57,24 @@ const App = () => (
           <Route path="/loyalty" element={<LoyaltyProgramPage />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route 
+            path="/admin" 
+            element={
+              <AdminAuthGuard>
+                <AdminPage />
+              </AdminAuthGuard>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<AdminUsers />} />
+            <Route path="recipes" element={<AdminRecipes />} />
+            <Route path="system" element={<AdminSystemMonitoring />} />
+            {/* Other admin routes will be added here as needed */}
+          </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

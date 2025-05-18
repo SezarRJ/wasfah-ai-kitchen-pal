@@ -9,6 +9,17 @@ interface MealCardProps {
 }
 
 export const MealCard: React.FC<MealCardProps> = ({ meal }) => {
+  // Check if meal and recipe exist before accessing their properties
+  if (!meal || !meal.recipe) {
+    return (
+      <Card className="mb-3">
+        <CardContent className="p-3">
+          <p className="text-sm text-gray-500">Meal information unavailable</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Link to={`/recipe/${meal.recipe.id}`}>
       <Card className="mb-3 hover-scale">

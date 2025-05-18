@@ -1,9 +1,10 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import NewHomePage from "./pages/NewHomePage";
 import RecipesPage from "./pages/RecipesPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
 import PantryPage from "./pages/PantryPage";
@@ -21,6 +22,9 @@ import ShoppingListPage from "./pages/ShoppingListPage";
 import LoyaltyProgramPage from "./pages/LoyaltyProgramPage";
 import SubscriptionPage from "./pages/SubscriptionPage";
 import SettingsPage from "./pages/SettingsPage";
+import GlobalCuisinePage from "./pages/GlobalCuisinePage";
+import SharedRecipesPage from "./pages/SharedRecipesPage";
+import ChefAvatarPage from "./pages/ChefAvatarPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -40,7 +44,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<NewHomePage />} />
+          <Route path="/home" element={<NewHomePage />} />
           <Route path="/splash" element={<SplashScreen />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/recipes" element={<RecipesPage />} />
@@ -57,6 +62,9 @@ const App = () => (
           <Route path="/loyalty" element={<LoyaltyProgramPage />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
+          <Route path="/shared-recipes" element={<SharedRecipesPage />} />
+          <Route path="/chef-avatar" element={<ChefAvatarPage />} />
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

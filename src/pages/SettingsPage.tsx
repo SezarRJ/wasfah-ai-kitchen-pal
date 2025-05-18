@@ -1,39 +1,79 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
-import { mockUser } from '@/data/mockData';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Bell, Lock, Moon, CreditCard, Smartphone, Globe, Volume2 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { Globe, Moon, Smartphone, Volume2 } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
 
 export default function SettingsPage() {
-  const navigate = useNavigate();
-  const [notifications, setNotifications] = useState({
-    recipes: true,
-    mealPlan: true,
-    tips: false,
-    promotions: true,
-  });
+  const { toast } = useToast();
+  const [language, setLanguage] = useState('english');
+  const [darkMode, setDarkMode] = useState(false);
+  const [soundsEnabled, setSoundsEnabled] = useState(true);
+  const [hapticsEnabled, setHapticsEnabled] = useState(true);
+  const [connectedDevices, setConnectedDevices] = useState<string[]>([]);
 
-  const [appearance, setAppearance] = useState({
-    darkMode: false,
-    reducedMotion: false,
-    highContrast: false,
-  });
+  useEffect(() => {
+    // Mock loading of settings
+    const timer = setTimeout(() => {
+      // Simulate getting connected devices
+      setConnectedDevices(['Kitchen Smart Scale', 'Thermometer']); 
+    }, 1000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
-  const [privacy, setPrivacy] = useState({
-    shareData: true,
-    analytics: true,
-    locationServices: false,
-  });
+  const handleLanguageChange = (value: string) => {
+    setLanguage(value);
+    toast({
+      title: "Language changed",
+      description: value === 'english' ? "Language set to English" : "تم تغيير اللغة إلى العربية",
+    });
+  };
 
-  const handleSaveChanges = (section: string) => {
-    toast.success(`${section} settings saved successfully`);
+  const handleDarkModeToggle = (checked: boolean) => {
+    setDarkMode(checked);
+    // Apply dark mode to the document
+    if (checked) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    toast({
+      title: checked ? "Dark mode enabled" : "Light mode enabled",
+    });
+  };
+
+  const handleSoundsToggle = (checked: boolean) => {
+    setSoundsEnabled(checked);
+    toast({
+      title: checked ? "Sounds enabled" : "Sounds disabled",
+    });
+  };
+
+  const handleHapticsToggle = (checked: boolean) => {
+    setHapticsEnabled(checked);
+    toast({
+      title: checked ? "Haptic feedback enabled" : "Haptic feedback disabled",
+    });
+  };
+
+  const connectNewDevice = () => {
+    toast({
+      title: "Scanning for devices",
+      description: "Please make sure your device is in pairing mode",
+    });
+  };
+
+  const disconnectDevice = (device: string) => {
+    setConnectedDevices(connectedDevices.filter(d => d !== device));
+    toast({
+      title: "Device disconnected",
+      description: `${device} has been disconnected`,
+    });
   };
 
   return (
@@ -41,294 +81,109 @@ export default function SettingsPage() {
       header={{
         title: 'Settings',
         showBackButton: true,
-        actions: null,
       }}
     >
-      <div className="container px-4 py-4">
-        <div className="animate-fade-in space-y-6">
-          <Tabs defaultValue="notifications" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              <TabsTrigger value="notifications" className="text-xs">Notifications</TabsTrigger>
-              <TabsTrigger value="appearance" className="text-xs">Appearance</TabsTrigger>
-              <TabsTrigger value="privacy" className="text-xs">Privacy</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="notifications" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center">
-                    <Bell className="mr-2 h-5 w-5 text-wasfah-bright-teal" />
-                    Notification Settings
-                  </CardTitle>
-                  <CardDescription>Manage how and when Wasfah notifies you</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="recipe-updates">Recipe Updates</Label>
-                        <p className="text-sm text-gray-500">Get notified about new recipes</p>
-                      </div>
-                      <Switch 
-                        id="recipe-updates" 
-                        checked={notifications.recipes}
-                        onCheckedChange={(checked) => setNotifications({...notifications, recipes: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="meal-plan">Meal Plan Reminders</Label>
-                        <p className="text-sm text-gray-500">Reminders for your meal plans</p>
-                      </div>
-                      <Switch 
-                        id="meal-plan" 
-                        checked={notifications.mealPlan}
-                        onCheckedChange={(checked) => setNotifications({...notifications, mealPlan: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="cooking-tips">Cooking Tips</Label>
-                        <p className="text-sm text-gray-500">Weekly cooking tips and tricks</p>
-                      </div>
-                      <Switch 
-                        id="cooking-tips" 
-                        checked={notifications.tips}
-                        onCheckedChange={(checked) => setNotifications({...notifications, tips: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="promotions">Promotions</Label>
-                        <p className="text-sm text-gray-500">Special offers and promotions</p>
-                      </div>
-                      <Switch 
-                        id="promotions" 
-                        checked={notifications.promotions}
-                        onCheckedChange={(checked) => setNotifications({...notifications, promotions: checked})}
-                      />
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    onClick={() => handleSaveChanges('Notification')}
-                    className="w-full bg-wasfah-bright-teal hover:bg-wasfah-deep-teal transition-colors"
-                  >
-                    Save Notification Settings
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="appearance" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center">
-                    <Moon className="mr-2 h-5 w-5 text-wasfah-bright-teal" />
-                    Appearance Settings
-                  </CardTitle>
-                  <CardDescription>Customize how Wasfah looks for you</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="dark-mode">Dark Mode</Label>
-                        <p className="text-sm text-gray-500">Use dark theme</p>
-                      </div>
-                      <Switch 
-                        id="dark-mode" 
-                        checked={appearance.darkMode}
-                        onCheckedChange={(checked) => setAppearance({...appearance, darkMode: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="reduced-motion">Reduced Motion</Label>
-                        <p className="text-sm text-gray-500">Minimize animations</p>
-                      </div>
-                      <Switch 
-                        id="reduced-motion" 
-                        checked={appearance.reducedMotion}
-                        onCheckedChange={(checked) => setAppearance({...appearance, reducedMotion: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="high-contrast">High Contrast</Label>
-                        <p className="text-sm text-gray-500">Increase visual contrast</p>
-                      </div>
-                      <Switch 
-                        id="high-contrast" 
-                        checked={appearance.highContrast}
-                        onCheckedChange={(checked) => setAppearance({...appearance, highContrast: checked})}
-                      />
-                    </div>
-                    
+      <div className="space-y-6 pb-6">
+        <Card>
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-4">
+              <Globe className="mr-2 h-5 w-5 text-wasfah-bright-teal" /> Language
+            </h3>
+            <Select value={language} onValueChange={handleLanguageChange}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="english">English</SelectItem>
+                <SelectItem value="arabic">العربية (Arabic)</SelectItem>
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-4">
+              <Moon className="mr-2 h-5 w-5 text-wasfah-bright-teal" /> Appearance
+            </h3>
+            <div className="flex items-center justify-between">
+              <label htmlFor="dark-mode" className="text-sm font-medium">
+                Dark Mode
+              </label>
+              <Switch
+                id="dark-mode"
+                checked={darkMode}
+                onCheckedChange={handleDarkModeToggle}
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-4">
+              <Volume2 className="mr-2 h-5 w-5 text-wasfah-bright-teal" /> Sounds & Haptics
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label htmlFor="sounds" className="text-sm font-medium">
+                  Sounds
+                </label>
+                <Switch
+                  id="sounds"
+                  checked={soundsEnabled}
+                  onCheckedChange={handleSoundsToggle}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="haptics" className="text-sm font-medium">
+                  Haptic Feedback
+                </label>
+                <Switch
+                  id="haptics"
+                  checked={hapticsEnabled}
+                  onCheckedChange={handleHapticsToggle}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-4">
+              <Smartphone className="mr-2 h-5 w-5 text-wasfah-bright-teal" /> Connected Devices
+            </h3>
+            {connectedDevices.length > 0 ? (
+              <div className="space-y-3 mb-4">
+                {connectedDevices.map((device, index) => (
+                  <div key={index} className="flex items-center justify-between bg-wasfah-light-gray p-3 rounded-md">
                     <div>
-                      <Label htmlFor="font-size">Text Size</Label>
-                      <Input 
-                        id="font-size" 
-                        type="range" 
-                        min="80" 
-                        max="120" 
-                        defaultValue="100" 
-                        className="mt-2" 
-                      />
-                      <div className="flex justify-between mt-1">
-                        <span className="text-xs">A</span>
-                        <span className="text-lg">A</span>
-                      </div>
+                      <p className="font-medium text-sm">{device}</p>
+                      <p className="text-xs text-gray-500">Connected</p>
                     </div>
-                  </div>
-                  
-                  <Button 
-                    onClick={() => handleSaveChanges('Appearance')}
-                    className="w-full bg-wasfah-bright-teal hover:bg-wasfah-deep-teal transition-colors"
-                  >
-                    Save Appearance Settings
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            <TabsContent value="privacy" className="animate-fade-in">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center">
-                    <Lock className="mr-2 h-5 w-5 text-wasfah-bright-teal" />
-                    Privacy Settings
-                  </CardTitle>
-                  <CardDescription>Manage your data and privacy options</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="share-data">Share Usage Data</Label>
-                        <p className="text-sm text-gray-500">Help us improve Wasfah</p>
-                      </div>
-                      <Switch 
-                        id="share-data" 
-                        checked={privacy.shareData}
-                        onCheckedChange={(checked) => setPrivacy({...privacy, shareData: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="analytics">Analytics Cookies</Label>
-                        <p className="text-sm text-gray-500">Allow analytics to improve experience</p>
-                      </div>
-                      <Switch 
-                        id="analytics" 
-                        checked={privacy.analytics}
-                        onCheckedChange={(checked) => setPrivacy({...privacy, analytics: checked})}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <Label htmlFor="location">Location Services</Label>
-                        <p className="text-sm text-gray-500">Allow access to your location</p>
-                      </div>
-                      <Switch 
-                        id="location" 
-                        checked={privacy.locationServices}
-                        onCheckedChange={(checked) => setPrivacy({...privacy, locationServices: checked})}
-                      />
-                    </div>
-                  </div>
-                  
-                  <Button 
-                    onClick={() => handleSaveChanges('Privacy')}
-                    className="w-full bg-wasfah-bright-teal hover:bg-wasfah-deep-teal transition-colors"
-                  >
-                    Save Privacy Settings
-                  </Button>
-                  
-                  <div className="pt-4 border-t border-gray-200">
                     <Button 
-                      variant="outline" 
-                      className="w-full text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      onClick={() => disconnectDevice(device)}
                     >
-                      Delete My Account
+                      Disconnect
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-          
-          <div className="space-y-4 animate-fade-in" style={{ animationDelay: '150ms' }}>
-            <Card className="hover:shadow-md transition-shadow duration-300">
-              <CardContent className="p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                  <CreditCard size={18} className="text-wasfah-bright-teal mr-3" />
-                  <div>
-                    <h3 className="font-medium text-wasfah-deep-teal">Subscription</h3>
-                    <p className="text-sm text-gray-600">
-                      {mockUser.isPremium ? 'Premium Plan' : 'Free Plan'}
-                    </p>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm" onClick={() => navigate('/subscription')}>
-                  Manage
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-md transition-shadow duration-300">
-              <CardContent className="p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                  <Smartphone size={18} className="text-wasfah-bright-teal mr-3" />
-                  <div>
-                    <h3 className="font-medium text-wasfah-deep-teal">Connected Devices</h3>
-                    <p className="text-sm text-gray-600">2 devices</p>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm">
-                  View
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-md transition-shadow duration-300">
-              <CardContent className="p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                  <Globe size={18} className="text-wasfah-bright-teal mr-3" />
-                  <div>
-                    <h3 className="font-medium text-wasfah-deep-teal">Language</h3>
-                    <p className="text-sm text-gray-600">English (US)</p>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm">
-                  Change
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover:shadow-md transition-shadow duration-300">
-              <CardContent className="p-4 flex justify-between items-center">
-                <div className="flex items-center">
-                  <Volume2 size={18} className="text-wasfah-bright-teal mr-3" />
-                  <div>
-                    <h3 className="font-medium text-wasfah-deep-teal">Sounds & Haptics</h3>
-                    <p className="text-sm text-gray-600">Customize feedback</p>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm">
-                  Adjust
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm mb-4">No devices connected</p>
+            )}
+            <Button 
+              className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal"
+              onClick={connectNewDevice}
+            >
+              Connect a Device
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </PageContainer>
   );

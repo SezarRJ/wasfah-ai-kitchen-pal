@@ -18,6 +18,8 @@ export interface Recipe {
   tags: string[];
   isFavorite: boolean;
   tips?: string[]; // Added optional tips property
+  nutritionalInfo?: NutritionalInfo; // Added nutritional information
+  allergens?: string[]; // Added allergens list
 }
 
 export interface Ingredient {
@@ -37,6 +39,18 @@ export interface PantryItem {
   category: string;
   expiryDate: string;
   location: string;
+}
+
+// New Nutritional Information Type
+export interface NutritionalInfo {
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+  fiber?: number;
+  sugar?: number;
+  sodium?: number;
+  cholesterol?: number;
 }
 
 // User Types
@@ -85,6 +99,54 @@ export interface DailyNutritionLog {
   totalCarbs: number;
   totalFat: number;
   waterIntake: number;
+}
+
+// Chef Avatar Types
+export interface ChefAvatar {
+  id: string;
+  name: string;
+  personality: ChefPersonality;
+  level: number;
+  experiencePoints: number;
+  nextLevelPoints: number;
+  avatarImage: string;
+  accessories: ChefAccessory[];
+  preferences: ChefPreferences;
+}
+
+export interface ChefAccessory {
+  id: string;
+  name: string;
+  type: 'hat' | 'outfit' | 'tool' | 'background';
+  image: string;
+  isEquipped: boolean;
+  isLocked: boolean;
+  unlockRequirement?: string;
+}
+
+export interface ChefPreferences {
+  cuisines: string[];
+  ingredients: string[];
+  cookingMethods: string[];
+  flavorProfiles: string[];
+}
+
+export type ChefPersonality = 
+  | 'Traditional' 
+  | 'Adventurous' 
+  | 'Health-conscious' 
+  | 'Comfort Food' 
+  | 'Gourmet' 
+  | 'Speedy Chef' 
+  | 'Precision' 
+  | 'Creative';
+
+export interface ChefTip {
+  id: string;
+  content: string;
+  personality: ChefPersonality;
+  category: 'general' | 'ingredient' | 'technique' | 'nutrition' | 'time-saving';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
 }
 
 // Meal Plan Types

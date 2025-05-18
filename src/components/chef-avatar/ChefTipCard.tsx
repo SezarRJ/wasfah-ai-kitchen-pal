@@ -25,4 +25,3 @@ export const ChefTipCard: React.FC<ChefTipCardProps> = ({ tip, chefName }) => {
     </Card>
   );
 };
-

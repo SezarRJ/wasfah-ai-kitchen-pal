@@ -25,6 +25,8 @@ import SettingsPage from "./pages/SettingsPage";
 import GlobalCuisinePage from "./pages/GlobalCuisinePage";
 import SharedRecipesPage from "./pages/SharedRecipesPage";
 import ChefAvatarPage from "./pages/ChefAvatarPage";
+import HealthInformationPage from "./pages/HealthInformationPage";
+import DietaryPreferencesPage from "./pages/DietaryPreferencesPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -57,6 +59,8 @@ const App = () => (
           <Route path="/create-recipe" element={<CreateRecipePage />} />
           <Route path="/nutrition-goals" element={<NutritionGoalsPage />} />
           <Route path="/health-tracking" element={<HealthTrackingPage />} />
+          <Route path="/health-information" element={<HealthInformationPage />} />
+          <Route path="/dietary-preferences" element={<DietaryPreferencesPage />} />
           <Route path="/ingredient-swap" element={<IngredientSwapPage />} />
           <Route path="/shopping-list" element={<ShoppingListPage />} />
           <Route path="/loyalty" element={<LoyaltyProgramPage />} />

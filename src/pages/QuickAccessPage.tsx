@@ -4,7 +4,8 @@ import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, Globe,
-  Heart, History, Share2, CalendarDays, Settings, User, Search, Award } from 'lucide-react';
+  Heart, History, Share2, CalendarDays, Settings, User, Search, Award, 
+  CreditCard, Languages } from 'lucide-react';
 
 export default function QuickAccessPage() {
   const featureSections = [
@@ -42,8 +43,10 @@ export default function QuickAccessPage() {
       ]
     },
     {
-      title: "Settings",
+      title: "Account & Payments",
       items: [
+        { icon: <CreditCard className="h-6 w-6 text-wasfah-bright-teal" />, label: "Subscription", path: "/subscription" },
+        { icon: <Languages className="h-6 w-6 text-wasfah-bright-teal" />, label: "Language", path: "/language-settings" },
         { icon: <Settings className="h-6 w-6 text-gray-600" />, label: "Settings", path: "/settings" },
         { icon: <User className="h-6 w-6 text-gray-600" />, label: "Profile", path: "/profile" },
       ]

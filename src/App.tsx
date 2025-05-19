@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import NewHomePage from "./pages/NewHomePage";
 import HomePage from "./pages/HomePage";
 import RecipesPage from "./pages/RecipesPage";
@@ -32,6 +33,7 @@ import SharedRecipesTrackingPage from "./pages/SharedRecipesTrackingPage";
 import HealthTrackingHomePage from "./pages/HealthTrackingHomePage";
 import FindByIngredientsPage from "./pages/FindByIngredientsPage";
 import QuickAccessPage from "./pages/QuickAccessPage";
+import LanguageSettingsPage from "./pages/LanguageSettingsPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -41,6 +43,11 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminRecipes from "./pages/admin/AdminRecipes";
 import AdminSystemMonitoring from "./pages/admin/AdminSystemMonitoring";
 import AdminContentLibrary from "./pages/admin/AdminContentLibrary";
+import AdminLanguageManager from "./pages/admin/AdminLanguageManager";
+import AdminRewardsManager from "./pages/admin/AdminRewardsManager";
+import AdminAccountingManager from "./pages/admin/AdminAccountingManager";
+import AdminIntegrationsManager from "./pages/admin/AdminIntegrationsManager";
+import AdminUserTypesManager from "./pages/admin/AdminUserTypesManager";
 import AdminAuthGuard from "./components/admin/AdminAuthGuard";
 
 // Initialize admin demo
@@ -51,66 +58,74 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/new-home" element={<NewHomePage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/splash" element={<SplashScreen />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/recipes" element={<RecipesPage />} />
-          <Route path="/recipe/:id" element={<RecipeDetailPage />} />
-          <Route path="/pantry" element={<PantryPage />} />
-          <Route path="/meal-plan" element={<MealPlanPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/create-recipe" element={<CreateRecipePage />} />
-          <Route path="/nutrition-goals" element={<NutritionGoalsPage />} />
-          <Route path="/health-tracking" element={<HealthTrackingPage />} />
-          <Route path="/health-information" element={<HealthInformationPage />} />
-          <Route path="/dietary-preferences" element={<DietaryPreferencesPage />} />
-          <Route path="/ingredient-swap" element={<IngredientSwapPage />} />
-          <Route path="/shopping-list" element={<ShoppingListPage />} />
-          <Route path="/loyalty" element={<LoyaltyProgramPage />} />
-          <Route path="/subscription" element={<SubscriptionPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
-          <Route path="/shared-recipes" element={<SharedRecipesPage />} />
-          <Route path="/chef-avatar" element={<ChefAvatarPage />} />
-          <Route path="/favorites" element={<RecipesPage />} />
-          <Route path="/history" element={<HealthTrackingPage />} />
-          <Route path="/share-recipe" element={<CreateRecipePage />} />
-          <Route path="/quick-access" element={<QuickAccessPage />} />
-          
-          {/* New Routes */}
-          <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
-          <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
-          <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin/login" element={<AdminLoginPage />} />
-          <Route 
-            path="/admin" 
-            element={
-              <AdminAuthGuard>
-                <AdminPage />
-              </AdminAuthGuard>
-            }
-          >
-            <Route index element={<AdminDashboard />} />
-            <Route path="users" element={<AdminUsers />} />
-            <Route path="recipes" element={<AdminRecipes />} />
-            <Route path="content" element={<AdminContentLibrary />} />
-            <Route path="system" element={<AdminSystemMonitoring />} />
-          </Route>
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/new-home" element={<NewHomePage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/splash" element={<SplashScreen />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/recipes" element={<RecipesPage />} />
+            <Route path="/recipe/:id" element={<RecipeDetailPage />} />
+            <Route path="/pantry" element={<PantryPage />} />
+            <Route path="/meal-plan" element={<MealPlanPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/create-recipe" element={<CreateRecipePage />} />
+            <Route path="/nutrition-goals" element={<NutritionGoalsPage />} />
+            <Route path="/health-tracking" element={<HealthTrackingPage />} />
+            <Route path="/health-information" element={<HealthInformationPage />} />
+            <Route path="/dietary-preferences" element={<DietaryPreferencesPage />} />
+            <Route path="/ingredient-swap" element={<IngredientSwapPage />} />
+            <Route path="/shopping-list" element={<ShoppingListPage />} />
+            <Route path="/loyalty" element={<LoyaltyProgramPage />} />
+            <Route path="/subscription" element={<SubscriptionPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
+            <Route path="/shared-recipes" element={<SharedRecipesPage />} />
+            <Route path="/chef-avatar" element={<ChefAvatarPage />} />
+            <Route path="/favorites" element={<RecipesPage />} />
+            <Route path="/history" element={<HealthTrackingPage />} />
+            <Route path="/share-recipe" element={<CreateRecipePage />} />
+            <Route path="/quick-access" element={<QuickAccessPage />} />
+            <Route path="/language-settings" element={<LanguageSettingsPage />} />
+            
+            {/* New Routes */}
+            <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
+            <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
+            <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLoginPage />} />
+            <Route 
+              path="/admin" 
+              element={
+                <AdminAuthGuard>
+                  <AdminPage />
+                </AdminAuthGuard>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="recipes" element={<AdminRecipes />} />
+              <Route path="content" element={<AdminContentLibrary />} />
+              <Route path="system" element={<AdminSystemMonitoring />} />
+              <Route path="languages" element={<AdminLanguageManager />} />
+              <Route path="rewards" element={<AdminRewardsManager />} />
+              <Route path="accounting" element={<AdminAccountingManager />} />
+              <Route path="integrations" element={<AdminIntegrationsManager />} />
+              <Route path="user-types" element={<AdminUserTypesManager />} />
+            </Route>
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Recipe } from '@/types';
-import { Bookmark, Clock, ChefHat, Fire, Users } from 'lucide-react';
+import { Bookmark, Clock, ChefHat, Flame, Users } from 'lucide-react';
 import { RecipeSocialInteractions } from './RecipeSocialInteractions';
 
 interface RecipeDetailProps {
@@ -64,7 +64,7 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, onStartCooki
           <span>Difficulty: {recipe.difficulty}</span>
         </div>
         <div className="flex items-center text-sm text-gray-600">
-          <Fire className="h-4 w-4 mr-1" />
+          <Flame className="h-4 w-4 mr-1" />
           <span>{recipe.calories} cal</span>
         </div>
       </div>

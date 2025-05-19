@@ -12,7 +12,12 @@ import {
   Settings, 
   Shield, 
   Bell, 
-  Wrench 
+  Wrench,
+  Languages,
+  Award,
+  DollarSign,
+  Cpu,
+  UserCog
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { WasfahLogo } from '../icons/WasfahLogo';
@@ -30,8 +35,8 @@ const SidebarItem = ({ icon: Icon, label, href, isActive }: SidebarItemProps) =>
     <Link
       to={href}
       className={cn(
-        'flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:bg-sidebar-accent text-white/90 hover:text-white',
-        isActive && 'bg-sidebar-accent text-white'
+        'flex items-center gap-3 px-3 py-2 rounded-md transition-colors hover:bg-slate-700/50 text-white/90 hover:text-white',
+        isActive && 'bg-slate-700/70 text-white'
       )}
     >
       <Icon className="h-5 w-5" />
@@ -47,9 +52,14 @@ export const AdminSidebar = () => {
   const mainItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
     { icon: Users, label: 'Users', href: '/admin/users' },
+    { icon: UserCog, label: 'User Types', href: '/admin/user-types' },
     { icon: ChefHat, label: 'Recipes', href: '/admin/recipes' },
     { icon: ShoppingBag, label: 'Ingredients', href: '/admin/ingredients' },
     { icon: CreditCard, label: 'Subscriptions', href: '/admin/subscriptions' },
+    { icon: DollarSign, label: 'Accounting', href: '/admin/accounting' },
+    { icon: Award, label: 'Rewards', href: '/admin/rewards' },
+    { icon: Languages, label: 'Languages', href: '/admin/languages' },
+    { icon: Cpu, label: 'Integrations', href: '/admin/integrations' },
     { icon: Server, label: 'System', href: '/admin/system' },
     { icon: BarChart, label: 'Analytics', href: '/admin/analytics' },
     { icon: Bell, label: 'Communications', href: '/admin/communications' },
@@ -59,7 +69,7 @@ export const AdminSidebar = () => {
   ];
 
   return (
-    <div className="w-64 hidden md:flex flex-col h-screen bg-sidebar-background border-r dark:border-gray-700 sticky top-0">
+    <div className="w-64 hidden md:flex flex-col h-screen bg-gray-900 border-r dark:border-gray-700 sticky top-0">
       <div className="p-4 flex items-center">
         <WasfahLogo className="h-8 w-8" />
         <span className="ml-2 font-bold text-xl text-white">Wasfah Admin</span>
@@ -77,10 +87,10 @@ export const AdminSidebar = () => {
         ))}
       </nav>
       
-      <div className="p-4 border-t border-sidebar-border">
+      <div className="p-4 border-t border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-sidebar-primary flex items-center justify-center text-sidebar-primary-foreground">
+            <div className="w-8 h-8 rounded-full bg-wasfah-bright-teal flex items-center justify-center text-white">
               A
             </div>
             <div className="ml-3">

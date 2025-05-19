@@ -1,11 +1,14 @@
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ChefHat, CalendarDays, ShoppingCart, User, Menu } from 'lucide-react';
+import { Home, ChefHat, CalendarDays, ShoppingCart, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
 
 export const MobileNavbar: React.FC = () => {
   const location = useLocation();
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
   const navItems = [
     {
@@ -36,7 +39,12 @@ export const MobileNavbar: React.FC = () => {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-800 z-50">
+    <div className={cn(
+      "fixed bottom-0 left-0 right-0 border-t z-50",
+      isDarkMode
+        ? "bg-gray-900 border-gray-800 text-white"
+        : "bg-white border-gray-200"
+    )}>
       <nav className="flex justify-around py-3">
         {navItems.map((item, index) => (
           <Link
@@ -46,7 +54,9 @@ export const MobileNavbar: React.FC = () => {
               'flex flex-col items-center px-3 py-2 rounded-md transition-all duration-300',
               location.pathname === item.href
                 ? 'text-wasfah-bright-teal scale-110'
-                : 'text-gray-500 dark:text-gray-400 hover:text-wasfah-deep-teal'
+                : isDarkMode
+                  ? 'text-gray-400 hover:text-wasfah-deep-teal'
+                  : 'text-gray-500 hover:text-wasfah-deep-teal'
             )}
           >
             <item.icon size={20} />

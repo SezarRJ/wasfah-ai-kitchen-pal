@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { RecommendedRecipes } from '@/components/home/RecommendedRecipes';

@@ -8,7 +8,7 @@ interface ChefTipCardProps {
   tip: string;
   chefName: string;
   personality?: string;
-  onApply?: () => void;
+  onApply?: (tip: string) => void;
 }
 
 export const ChefTipCard: React.FC<ChefTipCardProps> = ({ 
@@ -35,7 +35,7 @@ export const ChefTipCard: React.FC<ChefTipCardProps> = ({
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  onClick={onApply}
+                  onClick={() => onApply(tip)}
                   className="text-xs border-wasfah-bright-teal text-wasfah-bright-teal hover:bg-wasfah-bright-teal hover:text-white"
                 >
                   Apply Tip

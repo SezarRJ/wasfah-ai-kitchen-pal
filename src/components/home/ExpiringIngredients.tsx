@@ -7,10 +7,20 @@ import { PantryItem } from '@/types';
 
 interface ExpiringIngredientsProps {
   expiringItems: PantryItem[];
+  onAddIngredient?: (itemName: string) => void;
 }
 
-export const ExpiringIngredients: React.FC<ExpiringIngredientsProps> = ({ expiringItems }) => {
+export const ExpiringIngredients: React.FC<ExpiringIngredientsProps> = ({ 
+  expiringItems,
+  onAddIngredient 
+}) => {
   if (expiringItems.length === 0) return null;
+  
+  const handleAddIngredient = (itemName: string) => {
+    if (onAddIngredient) {
+      onAddIngredient(itemName);
+    }
+  };
   
   return (
     <div className="mb-6 animate-scale-in">
@@ -36,9 +46,12 @@ export const ExpiringIngredients: React.FC<ExpiringIngredientsProps> = ({ expiri
               {item.name}
             </div>
           ))}
-          <div className="px-3 py-2 bg-wasfah-light-gray rounded-md text-wasfah-bright-teal text-sm font-medium whitespace-nowrap flex-shrink-0 border border-wasfah-bright-teal flex items-center transform transition-all duration-300 hover:scale-105 hover:bg-wasfah-bright-teal hover:text-white cursor-pointer">
+          <button 
+            className="px-3 py-2 bg-wasfah-light-gray rounded-md text-wasfah-bright-teal text-sm font-medium whitespace-nowrap flex-shrink-0 border border-wasfah-bright-teal flex items-center transform transition-all duration-300 hover:scale-105 hover:bg-wasfah-bright-teal hover:text-white cursor-pointer"
+            onClick={() => handleAddIngredient("Custom Ingredient")}
+          >
             + Add
-          </div>
+          </button>
         </div>
         <Button className="w-full mt-3 bg-wasfah-bright-teal hover:bg-wasfah-teal text-white transition-all duration-300 transform hover:translate-y-[-1px]">
           <Utensils size={16} className="mr-2" />

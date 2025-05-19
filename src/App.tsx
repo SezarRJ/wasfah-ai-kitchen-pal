@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NewHomePage from "./pages/NewHomePage";
+import HomePage from "./pages/HomePage";
 import RecipesPage from "./pages/RecipesPage";
 import RecipeDetailPage from "./pages/RecipeDetailPage";
 import PantryPage from "./pages/PantryPage";
@@ -46,8 +47,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NewHomePage />} />
-          <Route path="/home" element={<NewHomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/new-home" element={<NewHomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/splash" element={<SplashScreen />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/recipes" element={<RecipesPage />} />
@@ -69,6 +71,9 @@ const App = () => (
           <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
           <Route path="/shared-recipes" element={<SharedRecipesPage />} />
           <Route path="/chef-avatar" element={<ChefAvatarPage />} />
+          <Route path="/favorites" element={<RecipesPage />} />
+          <Route path="/history" element={<HealthTrackingPage />} />
+          <Route path="/share-recipe" element={<CreateRecipePage />} />
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

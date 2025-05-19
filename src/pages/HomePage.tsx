@@ -9,6 +9,12 @@ import { LoyaltyCard } from '@/components/home/LoyaltyCard';
 import { SubscriptionBanner } from '@/components/home/SubscriptionBanner';
 import { AdminLink } from '@/components/admin/AdminLink';
 import { Recipe, PantryItem, MealPlan, Meal } from '@/types';
+import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
+import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
+import { Button } from '@/components/ui/button';
+import { ChefHat, Book } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 // Mock data for components
 const mockRecipes: Recipe[] = [
@@ -88,7 +94,7 @@ const mockRecipes: Recipe[] = [
 
 const mockCategories = ['Italian', 'Indian', 'Chinese', 'Mexican', 'American'];
 
-// Create properly structured meal plan with meal objects that match the Meal type
+// Create properly structured meal plan with meal objects
 const mockMealPlan: MealPlan = {
   id: '1',
   date: new Date().toISOString(),
@@ -175,25 +181,88 @@ const mockExpiringItems: PantryItem[] = [
   { id: '4', name: 'Tomatoes', quantity: 4, unit: 'pcs', category: 'Vegetables', expiryDate: new Date(Date.now() + 345600000).toISOString(), location: 'Refrigerator' }
 ];
 
+const mockChefTips = [
+  "Try adding a splash of vinegar when poaching eggs to help them keep their shape.",
+  "Use a wooden spoon to check if your oil is hot enough for frying - if bubbles form around it, the oil is ready.",
+  "Let meat rest for a few minutes after cooking to allow juices to redistribute."
+];
+
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const { toast } = useToast();
   const header = {
     showLogo: true,
     showSearch: true,
     actions: null,
   };
 
+  const handleAddIngredient = (item: string) => {
+    toast({
+      title: "Ingredient Added",
+      description: `${item} has been added to your cooking list.`
+    });
+  };
+
+  const handleApplyTip = (tip: string) => {
+    toast({
+      title: "Tip Saved",
+      description: "Cooking tip saved to your favorites."
+    });
+  };
+
   return (
     <PageContainer header={header}>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-24">
+        {/* Chef Avatar */}
+        <div className="mb-6">
+          <ChefAvatarDisplay 
+            name="Chef Alex"
+            level={5}
+            experience={340}
+            nextLevelExperience={500}
+            personality="Creative"
+            avatarUrl="/placeholder.svg"
+            achievements={[
+              { id: '1', title: 'Recipe Master', icon: <Book size={14} /> },
+              { id: '2', title: 'Social Cook', icon: <ChefHat size={14} /> }
+            ]}
+          />
+          
+          <div className="mt-3 flex justify-center">
+            <Link to="/chef-avatar">
+              <Button 
+                variant="outline" 
+                className="border-wasfah-bright-teal text-wasfah-bright-teal hover:bg-wasfah-bright-teal hover:text-white"
+              >
+                <ChefHat size={16} className="mr-2" />
+                View Chef Profile
+              </Button>
+            </Link>
+          </div>
+        </div>
+      
+        {/* Chef Tip */}
+        <ChefTipCard 
+          tip={mockChefTips[Math.floor(Math.random() * mockChefTips.length)]} 
+          chefName="Chef Alex"
+          personality="Creative"
+          onApply={handleApplyTip}
+        />
+        
         <RecommendedRecipes 
           recipes={mockRecipes}
           categories={mockCategories}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
+        
         <TodayMealPlan mealPlan={mockMealPlan} />
-        <ExpiringIngredients expiringItems={mockExpiringItems} />
+        
+        <ExpiringIngredients 
+          expiringItems={mockExpiringItems} 
+          onAddIngredient={handleAddIngredient} 
+        />
+        
         <QuickActionsSection />
         <LoyaltyCard />
         <SubscriptionBanner />

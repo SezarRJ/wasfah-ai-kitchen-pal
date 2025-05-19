@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ChefHat, CalendarDays, ShoppingCart, User } from 'lucide-react';
+import { Home, ChefHat, CalendarDays, ShoppingCart, User, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const MobileNavbar: React.FC = () => {
@@ -29,9 +29,9 @@ export const MobileNavbar: React.FC = () => {
       href: '/pantry',
     },
     {
-      icon: User,
-      label: 'Profile',
-      href: '/profile',
+      icon: Menu,
+      label: 'More',
+      href: '/quick-access',
     },
   ];
 

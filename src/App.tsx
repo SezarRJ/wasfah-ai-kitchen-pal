@@ -31,6 +31,7 @@ import DietaryPreferencesPage from "./pages/DietaryPreferencesPage";
 import SharedRecipesTrackingPage from "./pages/SharedRecipesTrackingPage";
 import HealthTrackingHomePage from "./pages/HealthTrackingHomePage";
 import FindByIngredientsPage from "./pages/FindByIngredientsPage";
+import QuickAccessPage from "./pages/QuickAccessPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -39,7 +40,12 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminRecipes from "./pages/admin/AdminRecipes";
 import AdminSystemMonitoring from "./pages/admin/AdminSystemMonitoring";
+import AdminContentLibrary from "./pages/admin/AdminContentLibrary";
 import AdminAuthGuard from "./components/admin/AdminAuthGuard";
+
+// Initialize admin demo
+import { initializeAdminDemo } from "@/lib/adminAuth";
+initializeAdminDemo(); // This sets up the demo admin account for testing
 
 const queryClient = new QueryClient();
 
@@ -77,6 +83,7 @@ const App = () => (
           <Route path="/favorites" element={<RecipesPage />} />
           <Route path="/history" element={<HealthTrackingPage />} />
           <Route path="/share-recipe" element={<CreateRecipePage />} />
+          <Route path="/quick-access" element={<QuickAccessPage />} />
           
           {/* New Routes */}
           <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
@@ -96,8 +103,8 @@ const App = () => (
             <Route index element={<AdminDashboard />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="recipes" element={<AdminRecipes />} />
+            <Route path="content" element={<AdminContentLibrary />} />
             <Route path="system" element={<AdminSystemMonitoring />} />
-            {/* Other admin routes will be added here as needed */}
           </Route>
           
           <Route path="*" element={<NotFound />} />

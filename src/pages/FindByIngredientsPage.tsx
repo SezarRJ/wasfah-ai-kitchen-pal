@@ -7,9 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Recipe } from '@/types';
-import { ChevronDown, Plus, Search } from 'lucide-react';
+import { ChevronDown, Plus, Search, Filter, Utensils, Dessert, Wine } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { mockRecipes } from '@/data/mockData';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { CategoryFilters } from '@/components/recipe/CategoryFilters';
 
 // Mock categories with their ingredients
 const ingredientCategories = [
@@ -35,12 +37,29 @@ const ingredientCategories = [
   }
 ];
 
+// Main recipe categories
+const mainCategories = ['Foods', 'Desserts', 'Drinks'];
+
+// Subcategories based on main category
+const subcategories = {
+  'Foods': ['Main Dishes', 'Appetizers', 'Pickles', 'Soups', 'Sauces', 'Others'],
+  'Desserts': ['Traditional', 'Western', 'Pastries', 'Ice Cream', 'Others'],
+  'Drinks': ['Detox', 'Cocktails', 'Alcoholic', 'Hot Drinks', 'Others']
+};
+
 export default function FindByIngredientsPage() {
   const [selectedTab, setSelectedTab] = useState('add');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  
+  // New state for categories and filters
+  const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [dietaryFilter, setDietaryFilter] = useState('');
+  const [cookingTimeFilter, setCookingTimeFilter] = useState('');
+  const [difficultyFilter, setDifficultyFilter] = useState('');
   
   const toggleCategory = (categoryName: string) => {
     if (expandedCategory === categoryName) {
@@ -58,6 +77,14 @@ export default function FindByIngredientsPage() {
     }
   };
   
+  const toggleSubcategory = (subcategory: string) => {
+    if (selectedSubcategories.includes(subcategory)) {
+      setSelectedSubcategories(selectedSubcategories.filter(item => item !== subcategory));
+    } else {
+      setSelectedSubcategories([...selectedSubcategories, subcategory]);
+    }
+  };
+  
   const handleSearch = () => {
     if (selectedIngredients.length === 0) {
       toast({
@@ -69,19 +96,34 @@ export default function FindByIngredientsPage() {
     }
     
     // Mock search functionality - in a real app, this would call an API
-    const results = mockRecipes.filter(recipe => 
-      // Normally we'd check recipe.ingredients here, but our mock data doesn't have detailed ingredients
-      // This is just a simulation
-      Math.random() > 0.5
-    );
+    // Filter based on selected ingredients, categories, subcategories, and other filters
+    const results = mockRecipes.filter(recipe => {
+      // This is just a simulation since mockRecipes doesn't have detailed properties
+      // In a real app, these filters would be applied properly
+      return Math.random() > 0.3;
+    });
     
     setFilteredRecipes(results);
     setSelectedTab('results');
     
     toast({
       title: "Recipes Found",
-      description: `Found ${results.length} recipes with your selected ingredients.`
+      description: `Found ${results.length} recipes with your selected ingredients and filters.`
     });
+  };
+
+  // Get icon for main category
+  const getCategoryIcon = (category: string) => {
+    switch(category) {
+      case 'Foods':
+        return <Utensils size={16} className="mr-2" />;
+      case 'Desserts':
+        return <Dessert size={16} className="mr-2" />;
+      case 'Drinks':
+        return <Wine size={16} className="mr-2" />;
+      default:
+        return null;
+    }
   };
 
   // Filter ingredients based on search
@@ -128,6 +170,100 @@ export default function FindByIngredientsPage() {
               </div>
             )}
           </div>
+          
+          {/* Main Categories (horizontal scroll) */}
+          <div className="overflow-x-auto pb-2">
+            <div className="flex space-x-2 min-w-max">
+              {mainCategories.map((category) => (
+                <Button 
+                  key={category}
+                  variant={selectedMainCategory === category ? "default" : "outline"}
+                  className={selectedMainCategory === category ? 
+                    "bg-wasfah-bright-teal hover:bg-wasfah-teal" : 
+                    "border-wasfah-bright-teal text-wasfah-bright-teal"}
+                  onClick={() => setSelectedMainCategory(category)}
+                >
+                  {getCategoryIcon(category)}
+                  {category}
+                </Button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Subcategories */}
+          <div className="overflow-x-auto pb-2">
+            <div className="flex space-x-2 min-w-max">
+              {subcategories[selectedMainCategory as keyof typeof subcategories].map((subcat) => (
+                <Button 
+                  key={subcat}
+                  variant="outline"
+                  size="sm"
+                  className={selectedSubcategories.includes(subcat) ? 
+                    "bg-wasfah-deep-teal text-white border-wasfah-deep-teal" : 
+                    "border-wasfah-deep-teal text-wasfah-deep-teal"}
+                  onClick={() => toggleSubcategory(subcat)}
+                >
+                  {subcat}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Advanced Filters */}
+          <Card className="p-4">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-semibold text-wasfah-deep-teal flex items-center">
+                <Filter size={16} className="mr-2" />
+                Advanced Filters
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Dietary</label>
+                <Select value={dietaryFilter} onValueChange={setDietaryFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="vegetarian">Vegetarian</SelectItem>
+                    <SelectItem value="vegan">Vegan</SelectItem>
+                    <SelectItem value="gluten-free">Gluten Free</SelectItem>
+                    <SelectItem value="keto">Keto</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Cooking Time</label>
+                <Select value={cookingTimeFilter} onValueChange={setCookingTimeFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="under15">Under 15 mins</SelectItem>
+                    <SelectItem value="under30">Under 30 mins</SelectItem>
+                    <SelectItem value="under60">Under 60 mins</SelectItem>
+                    <SelectItem value="over60">Over 60 mins</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Difficulty</label>
+                <Select value={difficultyFilter} onValueChange={setDifficultyFilter}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="easy">Easy</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="hard">Hard</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </Card>
           
           <div className="space-y-3">
             {ingredientCategories.map(category => {
@@ -207,6 +343,22 @@ export default function FindByIngredientsPage() {
                 </div>
               ))}
             </div>
+            
+            {selectedSubcategories.length > 0 && (
+              <div className="mb-4">
+                <p className="text-sm text-gray-600 mb-2">Categories:</p>
+                <div className="flex flex-wrap gap-2">
+                  <div className="bg-wasfah-deep-teal text-white px-3 py-1 rounded-full text-xs">
+                    {selectedMainCategory}
+                  </div>
+                  {selectedSubcategories.map(subcat => (
+                    <div key={subcat} className="bg-wasfah-deep-teal text-white px-3 py-1 rounded-full text-xs">
+                      {subcat}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             
             {filteredRecipes.length > 0 ? (
               <RecipeGrid recipes={filteredRecipes} columns={2} cardSize="medium" />

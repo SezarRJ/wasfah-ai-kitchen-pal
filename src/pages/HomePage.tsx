@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ChefHat, Search, Activity, Heart, Users, Star, Award } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
+import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
 import { RecommendedRecipes } from '@/components/home/RecommendedRecipes';
 import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 import { ExpiringIngredients } from '@/components/home/ExpiringIngredients';
-import { QuickActionsSection } from '@/components/home/QuickActionsSection';
 import { LoyaltyCard } from '@/components/home/LoyaltyCard';
-import { SubscriptionBanner } from '@/components/home/SubscriptionBanner';
 import { AdminLink } from '@/components/admin/AdminLink';
-import { Recipe, PantryItem, MealPlan, Meal } from '@/types';
-import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
-import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
-import { Button } from '@/components/ui/button';
-import { ChefHat, Book } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Recipe, PantryItem, MealPlan } from '@/types';
 import { useToast } from '@/hooks/use-toast';
 
 // Mock data for components
@@ -51,42 +51,6 @@ const mockRecipes: Recipe[] = [
     ingredients: [],
     instructions: [],
     tags: ['Indian', 'Spicy'],
-    isFavorite: false 
-  },
-  { 
-    id: '3', 
-    title: 'Vegetable Stir-Fry', 
-    image: '/placeholder.svg', 
-    description: 'Quick and healthy vegetable stir-fry.',
-    prepTime: 10,
-    cookTime: 10,
-    servings: 2,
-    difficulty: 'Easy', 
-    calories: 320, 
-    rating: 4.5, 
-    ratingCount: 156,
-    cuisineType: 'Chinese',
-    ingredients: [],
-    instructions: [],
-    tags: ['Vegetarian', 'Quick'],
-    isFavorite: true 
-  },
-  { 
-    id: '4', 
-    title: 'Beef Stew', 
-    image: '/placeholder.svg', 
-    description: 'Hearty beef stew with vegetables and gravy.',
-    prepTime: 20,
-    cookTime: 70,
-    servings: 6,
-    difficulty: 'Hard', 
-    calories: 480, 
-    rating: 4.7, 
-    ratingCount: 203,
-    cuisineType: 'American',
-    ingredients: [],
-    instructions: [],
-    tags: ['Beef', 'Comfort Food'],
     isFavorite: false 
   }
 ];
@@ -141,43 +105,19 @@ const mockMealPlan: MealPlan = {
         tags: ['Salad', 'Lunch'],
         isFavorite: false
       }
-    },
-    {
-      id: '3',
-      type: 'Dinner',
-      recipe: {
-        id: '7',
-        title: 'Grilled Salmon',
-        description: 'Oven-baked salmon fillet with seasonal vegetables.',
-        image: '/placeholder.svg',
-        prepTime: 10,
-        cookTime: 15,
-        servings: 1,
-        difficulty: 'Medium',
-        calories: 550,
-        rating: 4.6,
-        ratingCount: 156,
-        cuisineType: 'International',
-        ingredients: [],
-        instructions: [],
-        tags: ['Fish', 'Dinner'],
-        isFavorite: false
-      }
     }
   ],
   nutritionSummary: {
-    calories: 1350,
-    protein: 90,
-    carbs: 140,
-    fat: 50
+    calories: 800,
+    protein: 35,
+    carbs: 90,
+    fat: 30
   }
 };
 
 const mockExpiringItems: PantryItem[] = [
   { id: '1', name: 'Spinach', quantity: 300, unit: 'g', category: 'Vegetables', expiryDate: new Date(Date.now() + 86400000).toISOString(), location: 'Refrigerator' },
-  { id: '2', name: 'Chicken', quantity: 500, unit: 'g', category: 'Meat & Poultry', expiryDate: new Date(Date.now() + 172800000).toISOString(), location: 'Refrigerator' },
-  { id: '3', name: 'Yogurt', quantity: 500, unit: 'ml', category: 'Dairy & Eggs', expiryDate: new Date(Date.now() + 259200000).toISOString(), location: 'Refrigerator' },
-  { id: '4', name: 'Tomatoes', quantity: 4, unit: 'pcs', category: 'Vegetables', expiryDate: new Date(Date.now() + 345600000).toISOString(), location: 'Refrigerator' }
+  { id: '2', name: 'Chicken', quantity: 500, unit: 'g', category: 'Meat & Poultry', expiryDate: new Date(Date.now() + 172800000).toISOString(), location: 'Refrigerator' }
 ];
 
 const mockChefTips = [
@@ -187,7 +127,7 @@ const mockChefTips = [
 ];
 
 const HomePage = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = React.useState('All');
   const { toast } = useToast();
   const header = {
     showLogo: true,
@@ -212,7 +152,7 @@ const HomePage = () => {
   return (
     <PageContainer header={header}>
       <div className="space-y-6 pb-24">
-        {/* Chef Avatar */}
+        {/* Chef Avatar Section */}
         <div className="mb-6">
           <ChefAvatarDisplay 
             name="Chef Alex"
@@ -222,24 +162,12 @@ const HomePage = () => {
             personality="Creative"
             avatarUrl="/placeholder.svg"
             achievements={[
-              { id: '1', title: 'Recipe Master', icon: <Book size={14} /> },
-              { id: '2', title: 'Social Cook', icon: <ChefHat size={14} /> }
+              { id: '1', title: 'Recipe Master', icon: <Star size={14} /> },
+              { id: '2', title: 'Social Cook', icon: <Users size={14} /> }
             ]}
           />
-          
-          <div className="mt-3 flex justify-center">
-            <Link to="/chef-avatar">
-              <Button 
-                variant="outline" 
-                className="border-wasfah-bright-teal text-wasfah-bright-teal hover:bg-wasfah-bright-teal hover:text-white"
-              >
-                <ChefHat size={16} className="mr-2" />
-                View Chef Profile
-              </Button>
-            </Link>
-          </div>
         </div>
-      
+        
         {/* Chef Tip */}
         <ChefTipCard 
           tip={mockChefTips[Math.floor(Math.random() * mockChefTips.length)]} 
@@ -248,23 +176,110 @@ const HomePage = () => {
           onApply={handleApplyTip}
         />
         
-        <RecommendedRecipes 
-          recipes={mockRecipes}
-          categories={mockCategories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-        />
+        {/* Main Feature Navigation Cards */}
+        <div className="grid grid-cols-1 gap-4">
+          <Link to="/chef-avatar">
+            <Card className="hover:shadow-md transition-shadow border-wasfah-bright-teal/20">
+              <CardContent className="p-4 flex items-center">
+                <div className="p-3 bg-wasfah-bright-teal rounded-full mr-4">
+                  <ChefHat className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-wasfah-deep-teal">Chef Avatar</h2>
+                  <p className="text-sm text-gray-600">Personalized cooking assistant & tips</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          
+          <Link to="/find-by-ingredients">
+            <Card className="hover:shadow-md transition-shadow border-wasfah-bright-teal/20">
+              <CardContent className="p-4 flex items-center">
+                <div className="p-3 bg-wasfah-deep-teal rounded-full mr-4">
+                  <Search className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-wasfah-deep-teal">Find Recipes by Ingredients</h2>
+                  <p className="text-sm text-gray-600">Browse recipes based on what you have</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+          
+          <Link to="/health-tracking-home">
+            <Card className="hover:shadow-md transition-shadow border-wasfah-bright-teal/20">
+              <CardContent className="p-4 flex items-center">
+                <div className="p-3 bg-green-500 rounded-full mr-4">
+                  <Activity className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-bold text-wasfah-deep-teal">Health & Tracking</h2>
+                  <p className="text-sm text-gray-600">Monitor nutrition goals and progress</p>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
         
-        <TodayMealPlan mealPlan={mockMealPlan} />
+        {/* Additional Feature Cards */}
+        <h2 className="font-bold text-lg text-wasfah-deep-teal mt-6">More Features</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <Link to="/global-cuisine">
+            <Card className="hover:shadow-sm transition-shadow h-full">
+              <CardContent className="p-3 flex flex-col items-center justify-center h-full">
+                <Search className="h-5 w-5 text-wasfah-bright-teal mb-2" />
+                <p className="text-sm text-center font-medium">Global Cuisine</p>
+              </CardContent>
+            </Card>
+          </Link>
+          
+          <Link to="/shared-recipes-tracking">
+            <Card className="hover:shadow-sm transition-shadow h-full">
+              <CardContent className="p-3 flex flex-col items-center justify-center h-full">
+                <Users className="h-5 w-5 text-wasfah-bright-teal mb-2" />
+                <p className="text-sm text-center font-medium">Shared Recipes</p>
+              </CardContent>
+            </Card>
+          </Link>
+          
+          <Link to="/favorites">
+            <Card className="hover:shadow-sm transition-shadow h-full">
+              <CardContent className="p-3 flex flex-col items-center justify-center h-full">
+                <Heart className="h-5 w-5 text-red-500 mb-2" />
+                <p className="text-sm text-center font-medium">Favorites</p>
+              </CardContent>
+            </Card>
+          </Link>
+          
+          <Link to="/loyalty">
+            <Card className="hover:shadow-sm transition-shadow h-full">
+              <CardContent className="p-3 flex flex-col items-center justify-center h-full">
+                <Award className="h-5 w-5 text-amber-500 mb-2" />
+                <p className="text-sm text-center font-medium">Loyalty Program</p>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
         
-        <ExpiringIngredients 
-          expiringItems={mockExpiringItems} 
-          onAddIngredient={handleAddIngredient} 
-        />
-        
-        <QuickActionsSection />
-        <LoyaltyCard />
-        <SubscriptionBanner />
+        {/* Recent Activity */}
+        <h2 className="font-bold text-lg text-wasfah-deep-teal mt-6">Recent Activity</h2>
+        <div className="space-y-4">
+          <RecommendedRecipes 
+            recipes={mockRecipes}
+            categories={mockCategories}
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+          
+          <TodayMealPlan mealPlan={mockMealPlan} />
+          
+          <ExpiringIngredients 
+            expiringItems={mockExpiringItems} 
+            onAddIngredient={handleAddIngredient} 
+          />
+          
+          <LoyaltyCard />
+        </div>
       </div>
       <AdminLink />
     </PageContainer>

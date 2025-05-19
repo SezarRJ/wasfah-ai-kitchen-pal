@@ -1,214 +1,257 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '@/components/ui/card';
-import { ChefAvatar } from '@/components/chef-avatar/ChefAvatar';
+import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
 import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
-import { ChefHat, Award, Star, Utensils, Clock, BookOpen } from 'lucide-react';
+import { ChefPersonality } from '@/types';
+import { Book, ChefHat, Sparkles, Target, Award } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
-const ChefAvatarPage = () => {
-  const [activeTab, setActiveTab] = useState('profile');
+// Mock chef tips
+const mockChefTips = [
+  "Try adding a splash of vinegar when poaching eggs to help them keep their shape.",
+  "Use a wooden spoon to check if your oil is hot enough for frying - if bubbles form around it, the oil is ready.",
+  "Let meat rest for a few minutes after cooking to allow juices to redistribute.",
+  "Toast your spices before using them to enhance their flavor.",
+  "When making dough, always use cold butter for a flakier texture."
+];
+
+// Mock personalities
+const personalities: ChefPersonality[] = [
+  'Traditional', 'Adventurous', 'Health-conscious', 'Comfort Food', 
+  'Gourmet', 'Speedy Chef', 'Precision', 'Creative'
+];
+
+// Mock learning patterns
+const learningPatterns = [
+  { name: 'Cuisine patterns', description: 'Preferences for specific cuisines (Italian, Thai, Mexican, etc.)' },
+  { name: 'Ingredient affinities', description: 'Frequently used or highly rated ingredients' },
+  { name: 'Cooking method preferences', description: 'Preferred techniques (baking, grilling, stir-frying)' },
+  { name: 'Complexity comfort', description: 'Skill level and comfort with recipe complexity' },
+  { name: 'Health consciousness', description: 'Patterns related to nutritional choices' }
+];
+
+export default function ChefAvatarPage() {
+  const { toast } = useToast();
   
-  // Mock chef data
-  const chefData = {
-    name: 'Chef Alex',
-    level: 5,
-    experience: 340,
-    nextLevelExperience: 500,
-    personality: 'Creative',
-    avatarUrl: '/placeholder.svg',
-    preferences: ['Italian', 'Mediterranean', 'Spicy'],
-    achievements: [
-      { id: '1', title: 'Recipe Master', description: 'Created 10 recipes', icon: <ChefHat size={16} /> },
-      { id: '2', title: 'Social Cook', description: 'Shared 5 recipes', icon: <Star size={16} /> },
-      { id: '3', title: 'Quick Learner', description: 'Followed 20 recipes', icon: <BookOpen size={16} /> },
-    ],
-    stats: {
-      recipesCreated: 12,
-      recipesFollowed: 38,
-      favoriteCuisine: 'Italian',
-      cookingTime: '2.5 hours/week',
-    },
-    personalizedTips: [
-      { id: '1', text: 'Based on your cooking patterns, try adding more fresh herbs to your pasta dishes.' },
-      { id: '2', text: 'You seem to enjoy Mediterranean cuisine. Have you tried cooking with za\'atar?' },
-      { id: '3', text: 'For your next dish, consider using olive oil instead of vegetable oil for a richer flavor.' },
-    ]
+  const handleApplyTip = (tip: string) => {
+    toast({
+      title: "Tip Saved",
+      description: "Cooking tip saved to your favorites."
+    });
   };
   
-  // Available personalities for customization
-  const availablePersonalities = [
-    'Traditional', 'Adventurous', 'Health-conscious', 'Comfort Food', 
-    'Gourmet', 'Speedy Chef', 'Precision', 'Creative'
-  ];
-
   return (
-    <PageContainer
-      header={{
-        title: 'My Chef Avatar',
-        showBackButton: true,
-      }}
-    >
-      <div className="space-y-6 pb-20">
-        <ChefAvatar 
-          name={chefData.name}
-          level={chefData.level}
-          experience={chefData.experience}
-          nextLevelExperience={chefData.nextLevelExperience}
-          personality={chefData.personality}
-          avatarUrl={chefData.avatarUrl}
+    <PageContainer header={{ title: 'Chef Avatar', showBackButton: true }}>
+      <div className="space-y-6 pb-24">
+        {/* Chef Avatar */}
+        <ChefAvatarDisplay 
+          name="Chef Alex"
+          level={5}
+          experience={340}
+          nextLevelExperience={500}
+          personality="Creative"
+          avatarUrl="/placeholder.svg"
+          achievements={[
+            { id: '1', title: 'Recipe Master', icon: <Book size={14} /> },
+            { id: '2', title: 'Social Cook', icon: <ChefHat size={14} /> }
+          ]}
         />
         
-        <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-3 mb-4">
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="tips">Chef Tips</TabsTrigger>
-            <TabsTrigger value="customize">Customize</TabsTrigger>
+        <Tabs defaultValue="model">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="model">Chef Model</TabsTrigger>
+            <TabsTrigger value="learning">Learning</TabsTrigger>
+            <TabsTrigger value="personalization">Engine</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="profile">
-            <div className="space-y-4">
-              <Card>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-3">
-                    <Utensils size={18} className="mr-2 text-wasfah-bright-teal" />
-                    Cooking Style
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {chefData.preferences.map((pref, index) => (
-                      <div 
-                        key={index} 
-                        className="px-3 py-1 bg-wasfah-light-gray rounded-full text-wasfah-deep-teal text-sm"
-                      >
-                        {pref}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-3">
-                    <Award size={18} className="mr-2 text-wasfah-bright-teal" />
-                    Achievements
-                  </h3>
-                  <div className="space-y-3">
-                    {chefData.achievements.map((achievement) => (
-                      <div key={achievement.id} className="flex items-center">
-                        <div className="h-8 w-8 rounded-full bg-wasfah-light-gray flex items-center justify-center mr-3 text-wasfah-bright-teal">
-                          {achievement.icon}
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-sm">{achievement.title}</h4>
-                          <p className="text-xs text-gray-500">{achievement.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-wasfah-deep-teal flex items-center mb-3">
-                    <Clock size={18} className="mr-2 text-wasfah-bright-teal" />
-                    Cooking Stats
-                  </h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <p className="text-xs text-gray-500">Recipes Created</p>
-                      <p className="font-semibold">{chefData.stats.recipesCreated}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Recipes Followed</p>
-                      <p className="font-semibold">{chefData.stats.recipesFollowed}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Favorite Cuisine</p>
-                      <p className="font-semibold">{chefData.stats.favoriteCuisine}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-gray-500">Average Cooking Time</p>
-                      <p className="font-semibold">{chefData.stats.cookingTime}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="tips">
-            <div className="space-y-4">
-              {chefData.personalizedTips.map((tip) => (
-                <ChefTipCard 
-                  key={tip.id} 
-                  tip={tip.text} 
-                  chefName={chefData.name} 
-                />
-              ))}
-              
-              <Button className="w-full bg-wasfah-deep-teal hover:bg-wasfah-deep-teal/90">
-                Get More Personalized Tips
-              </Button>
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="customize">
+          <TabsContent value="model" className="space-y-4">
             <Card>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-wasfah-deep-teal mb-3">Change Chef Personality</h3>
-                <div className="grid grid-cols-2 gap-2 mb-4">
-                  {availablePersonalities.map((personality, index) => (
-                    <Button 
-                      key={index}
-                      variant={personality === chefData.personality ? "default" : "outline"}
-                      className={personality === chefData.personality ? 
-                        "bg-wasfah-bright-teal hover:bg-wasfah-teal" : 
-                        "border-wasfah-bright-teal text-wasfah-deep-teal"}
-                    >
-                      {personality}
-                    </Button>
+              <CardHeader>
+                <CardTitle className="text-lg text-wasfah-deep-teal">Chef Avatar Model</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <h3 className="font-semibold mb-2">Personality</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {personalities.map((personality) => (
+                      <div 
+                        key={personality}
+                        className={`px-3 py-1 rounded-full text-sm ${
+                          personality === 'Creative' 
+                            ? 'bg-wasfah-bright-teal text-white' 
+                            : 'bg-gray-100 text-gray-600'
+                        }`}
+                      >
+                        {personality}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">Experience System</h3>
+                  <p className="text-sm text-gray-600 mb-2">
+                    Your chef gains experience through various cooking activities:
+                  </p>
+                  <ul className="list-disc list-inside text-sm text-gray-600">
+                    <li>Completing recipes: +10-50 XP</li>
+                    <li>Sharing your creations: +15 XP</li>
+                    <li>Getting likes on recipes: +5 XP each</li>
+                    <li>Creating original recipes: +100 XP</li>
+                    <li>Using ingredient substitutions: +5 XP</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">Preferences</h3>
+                  <div className="space-y-2">
+                    <p className="text-sm">
+                      <span className="font-medium">Favorite cuisines:</span> Italian, Japanese, Mediterranean
+                    </p>
+                    <p className="text-sm">
+                      <span className="font-medium">Preferred cooking methods:</span> Grilling, Baking
+                    </p>
+                    <p className="text-sm">
+                      <span className="font-medium">Favorite ingredients:</span> Garlic, Olive oil, Fresh herbs
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <ChefTipCard 
+              tip={mockChefTips[0]}
+              chefName="Chef Alex"
+              personality="Creative"
+              onApply={handleApplyTip}
+            />
+          </TabsContent>
+          
+          <TabsContent value="learning" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg text-wasfah-deep-teal">Learning System</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Your chef avatar learns from your cooking habits and preferences over time,
+                  creating a personalized cooking assistant that understands your unique style.
+                </p>
+                
+                <div className="space-y-3">
+                  <h3 className="font-semibold">Learning Patterns</h3>
+                  
+                  {learningPatterns.map((pattern, index) => (
+                    <Card key={index} className="p-3 border-wasfah-bright-teal/20">
+                      <div className="flex items-start">
+                        {index === 0 && <Target size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />}
+                        {index === 1 && <Sparkles size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />}
+                        {index === 2 && <ChefHat size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />}
+                        {index === 3 && <Award size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />}
+                        {index === 4 && <Book size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />}
+                        <div>
+                          <h4 className="font-medium text-sm">{pattern.name}</h4>
+                          <p className="text-xs text-gray-500">{pattern.description}</p>
+                        </div>
+                      </div>
+                    </Card>
                   ))}
                 </div>
                 
-                <h3 className="font-semibold text-wasfah-deep-teal mb-3">Chef Name</h3>
-                <div className="flex space-x-2 mb-4">
-                  <input 
-                    type="text" 
-                    className="flex-1 px-3 py-2 border rounded-md"
-                    value={chefData.name}
-                    readOnly
-                  />
-                  <Button className="bg-wasfah-bright-teal hover:bg-wasfah-teal">
-                    Change
-                  </Button>
+                <div>
+                  <h3 className="font-semibold mb-2">Data Sources</h3>
+                  <ul className="list-disc list-inside text-sm text-gray-600">
+                    <li>Recipes you cook</li>
+                    <li>Ratings and feedback you provide</li>
+                    <li>Modifications you make to recipes</li>
+                    <li>Cooking frequency and patterns</li>
+                    <li>Ingredient substitutions</li>
+                  </ul>
                 </div>
-                
-                <h3 className="font-semibold text-wasfah-deep-teal mb-3">Chef Avatar</h3>
-                <div className="flex items-center justify-center p-4 border-2 border-dashed rounded-md mb-4">
-                  <div className="text-center">
-                    <div className="h-24 w-24 rounded-full overflow-hidden border-2 border-wasfah-bright-teal mx-auto mb-3">
-                      <img src={chefData.avatarUrl} alt={chefData.name} className="h-full w-full object-cover" />
-                    </div>
-                    <Button className="bg-wasfah-bright-teal hover:bg-wasfah-teal">
-                      Upload Photo
-                    </Button>
-                  </div>
-                </div>
-                
-                <Button className="w-full bg-wasfah-deep-teal hover:bg-wasfah-deep-teal/90">
-                  Save Changes
-                </Button>
               </CardContent>
             </Card>
+            
+            <ChefTipCard 
+              tip={mockChefTips[1]}
+              chefName="Chef Alex"
+              personality="Creative"
+              onApply={handleApplyTip}
+            />
+          </TabsContent>
+          
+          <TabsContent value="personalization" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg text-wasfah-deep-teal">Personalization Engine</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Based on what your chef avatar learns, it provides personalized assistance
+                  that evolves over time as your cooking skills and preferences change.
+                </p>
+                
+                <div>
+                  <h3 className="font-semibold mb-2">Personalization Features</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start">
+                      <ChefHat size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Adaptive Personality</p>
+                        <p className="text-xs text-gray-500">Your chef's personality evolves to match your cooking style</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <Sparkles size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Personalized Tips</p>
+                        <p className="text-xs text-gray-500">Get cooking tips customized to your skill level and interests</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <Book size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Recipe Recommendations</p>
+                        <p className="text-xs text-gray-500">Discover new recipes aligned with your taste preferences</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <Target size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Technique Improvements</p>
+                        <p className="text-xs text-gray-500">Suggestions to enhance your cooking techniques</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start">
+                      <Award size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
+                      <div>
+                        <p className="text-sm font-medium">Ingredient Discovery</p>
+                        <p className="text-xs text-gray-500">New ingredients recommended based on your preferences</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <div className="flex justify-center">
+              <Button className="bg-wasfah-bright-teal hover:bg-wasfah-teal">
+                <ChefHat className="mr-2 h-4 w-4" /> Customize Chef Avatar
+              </Button>
+            </div>
+            
+            <ChefTipCard 
+              tip={mockChefTips[2]}
+              chefName="Chef Alex"
+              personality="Creative"
+              onApply={handleApplyTip}
+            />
           </TabsContent>
         </Tabs>
       </div>
     </PageContainer>
   );
-};
-
-export default ChefAvatarPage;
+}

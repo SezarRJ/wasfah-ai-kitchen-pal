@@ -28,6 +28,9 @@ import SharedRecipesPage from "./pages/SharedRecipesPage";
 import ChefAvatarPage from "./pages/ChefAvatarPage";
 import HealthInformationPage from "./pages/HealthInformationPage";
 import DietaryPreferencesPage from "./pages/DietaryPreferencesPage";
+import SharedRecipesTrackingPage from "./pages/SharedRecipesTrackingPage";
+import HealthTrackingHomePage from "./pages/HealthTrackingHomePage";
+import FindByIngredientsPage from "./pages/FindByIngredientsPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -74,6 +77,11 @@ const App = () => (
           <Route path="/favorites" element={<RecipesPage />} />
           <Route path="/history" element={<HealthTrackingPage />} />
           <Route path="/share-recipe" element={<CreateRecipePage />} />
+          
+          {/* New Routes */}
+          <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
+          <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
+          <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
           
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLoginPage />} />

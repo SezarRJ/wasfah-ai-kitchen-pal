@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Award, Star, Gift, Medal, Trophy, Target, Clock, Sparkles } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 // Sample rewards data
 const rewards = [
@@ -14,7 +15,7 @@ const rewards = [
     title: 'Premium Recipe Collection',
     description: 'Unlock 25 premium recipes from world-class chefs.',
     pointsCost: 500,
-    image: 'https://images.unsplash.com/photo-1607877742574-a097c6bec49e?q=80&w=200',
+    image: '/placeholder.svg',
     isAvailable: true,
   },
   {
@@ -22,7 +23,7 @@ const rewards = [
     title: 'Ad-Free Experience',
     description: 'Enjoy WasfahAI without any advertisements for 30 days.',
     pointsCost: 750,
-    image: 'https://images.unsplash.com/photo-1622021142947-da7dedc7c39a?q=80&w=200',
+    image: '/placeholder.svg',
     isAvailable: true,
   },
   {
@@ -30,7 +31,7 @@ const rewards = [
     title: 'Chef consultation',
     description: '15-minute video call with a professional chef.',
     pointsCost: 2000,
-    image: 'https://images.unsplash.com/photo-1642619309915-b1e0ba9a5762?q=80&w=200',
+    image: '/placeholder.svg',
     isAvailable: false,
   },
 ];
@@ -80,6 +81,15 @@ const achievements = [
 ];
 
 export default function LoyaltyProgramPage() {
+  const { toast } = useToast();
+  
+  const handleRedeemReward = (reward: typeof rewards[0]) => {
+    toast({
+      title: "Reward Redeemed",
+      description: `You've redeemed "${reward.title}" for ${reward.pointsCost} points.`
+    });
+  };
+  
   return (
     <PageContainer header={{ title: 'Loyalty Program', showBackButton: true }}>
       <div className="space-y-6 pb-6">
@@ -159,6 +169,7 @@ export default function LoyaltyProgramPage() {
                           <Button 
                             className="bg-wasfah-bright-teal hover:bg-wasfah-teal"
                             disabled={!reward.isAvailable || reward.pointsCost > 850}
+                            onClick={() => handleRedeemReward(reward)}
                           >
                             Redeem
                           </Button>

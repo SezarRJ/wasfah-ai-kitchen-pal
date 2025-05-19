@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mockRecipes } from '@/data/mockData';
+import { Flag, Utensils, Dessert, Cocktail } from 'lucide-react';
 
 const GlobalCuisinePage = () => {
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
@@ -19,10 +20,23 @@ const GlobalCuisinePage = () => {
     'Drinks': ['Detox', 'Cocktails', 'Alcoholic', 'Hot Drinks', 'Others']
   };
 
-  // List of cuisine countries
+  // List of cuisine countries with flag emoji
   const cuisines = [
-    'Levant', 'Italian', 'Mexican', 'Chinese', 'Indian', 'Japanese', 'Thai', 
-    'Turkish', 'Syrian', 'Iraqi', 'Yemeni', 'American', 'Moroccan', 'Lebanese', 'German'
+    { name: 'Levant', flag: '🇱🇧' },
+    { name: 'Italian', flag: '🇮🇹' },
+    { name: 'Mexican', flag: '🇲🇽' },
+    { name: 'Chinese', flag: '🇨🇳' },
+    { name: 'Indian', flag: '🇮🇳' },
+    { name: 'Japanese', flag: '🇯🇵' },
+    { name: 'Thai', flag: '🇹🇭' },
+    { name: 'Turkish', flag: '🇹🇷' },
+    { name: 'Syrian', flag: '🇸🇾' },
+    { name: 'Iraqi', flag: '🇮🇶' },
+    { name: 'Yemeni', flag: '🇾🇪' },
+    { name: 'American', flag: '🇺🇸' },
+    { name: 'Moroccan', flag: '🇲🇦' },
+    { name: 'Lebanese', flag: '🇱🇧' },
+    { name: 'German', flag: '🇩🇪' }
   ];
 
   const toggleSubcategory = (subcategory: string) => {
@@ -30,6 +44,20 @@ const GlobalCuisinePage = () => {
       setSelectedSubcategories(selectedSubcategories.filter(item => item !== subcategory));
     } else {
       setSelectedSubcategories([...selectedSubcategories, subcategory]);
+    }
+  };
+
+  // Get icon for main category
+  const getCategoryIcon = (category: string) => {
+    switch(category) {
+      case 'Foods':
+        return <Utensils size={16} className="mr-2" />;
+      case 'Desserts':
+        return <Dessert size={16} className="mr-2" />;
+      case 'Drinks':
+        return <Cocktail size={16} className="mr-2" />;
+      default:
+        return null;
     }
   };
 
@@ -42,17 +70,20 @@ const GlobalCuisinePage = () => {
       }}
     >
       <div className="space-y-6 pb-20">
-        {/* Filter Section - Cuisine Country */}
+        {/* Filter Section - Cuisine Country with flags */}
         <Card className="p-4">
-          <h3 className="font-semibold text-wasfah-deep-teal mb-3">Select Cuisine</h3>
+          <div className="flex items-center mb-3">
+            <Flag className="h-5 w-5 text-wasfah-deep-teal mr-2" />
+            <h3 className="font-semibold text-wasfah-deep-teal">Select Cuisine</h3>
+          </div>
           <Select value={selectedCuisine} onValueChange={setSelectedCuisine}>
             <SelectTrigger>
               <SelectValue placeholder="Select cuisine country" />
             </SelectTrigger>
             <SelectContent>
               {cuisines.map((cuisine) => (
-                <SelectItem key={cuisine} value={cuisine.toLowerCase()}>
-                  {cuisine}
+                <SelectItem key={cuisine.name} value={cuisine.name.toLowerCase()}>
+                  <span className="mr-2">{cuisine.flag}</span> {cuisine.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -71,6 +102,7 @@ const GlobalCuisinePage = () => {
                   "border-wasfah-bright-teal text-wasfah-bright-teal"}
                 onClick={() => setSelectedMainCategory(category)}
               >
+                {getCategoryIcon(category)}
                 {category}
               </Button>
             ))}
@@ -99,7 +131,14 @@ const GlobalCuisinePage = () => {
         {/* Recipe Results */}
         <div className="mt-6">
           <h2 className="text-lg font-bold text-wasfah-deep-teal mb-4">
-            {selectedCuisine ? `${selectedCuisine} Recipes` : 'Recommended for you'}
+            {selectedCuisine ? (
+              <div className="flex items-center">
+                <span className="mr-2">
+                  {cuisines.find(c => c.name.toLowerCase() === selectedCuisine)?.flag}
+                </span>
+                {selectedCuisine.charAt(0).toUpperCase() + selectedCuisine.slice(1)} Recipes
+              </div>
+            ) : 'Recommended for you'}
           </h2>
           <RecipeGrid recipes={mockRecipes} columns={2} cardSize="medium" />
         </div>

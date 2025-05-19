@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mockRecipes } from '@/data/mockData';
-import { Flag, Utensils, Dessert, Cocktail } from 'lucide-react';
+import { Flag, Utensils, Dessert, Wine, Martini } from 'lucide-react';
 
 const GlobalCuisinePage = () => {
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
@@ -55,7 +55,7 @@ const GlobalCuisinePage = () => {
       case 'Desserts':
         return <Dessert size={16} className="mr-2" />;
       case 'Drinks':
-        return <Cocktail size={16} className="mr-2" />;
+        return <Martini size={16} className="mr-2" />;
       default:
         return null;
     }

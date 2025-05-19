@@ -17,6 +17,29 @@ export default function HealthTrackingHomePage() {
     console.log('Applied tip:', tip);
   };
 
+  // Mock data for nutrition progress chart
+  const mockNutritionData = [
+    { date: 'Mon', calories: 1800, protein: 85, carbs: 210, fat: 55 },
+    { date: 'Tue', calories: 2100, protein: 95, carbs: 240, fat: 60 },
+    { date: 'Wed', calories: 1950, protein: 90, carbs: 225, fat: 58 },
+    { date: 'Thu', calories: 2000, protein: 92, carbs: 230, fat: 59 },
+    { date: 'Fri', calories: 1900, protein: 88, carbs: 220, fat: 57 },
+    { date: 'Sat', calories: 2200, protein: 100, carbs: 250, fat: 62 },
+    { date: 'Sun', calories: 1850, protein: 86, carbs: 215, fat: 56 },
+  ];
+
+  const handleNutritionSubmit = (data: {
+    date: Date;
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+    mealType: string;
+  }) => {
+    console.log('Nutrition data submitted:', data);
+    // Here you would typically save the data or update state
+  };
+
   return (
     <PageContainer header={{ title: 'Health & Tracking', showBackButton: true }}>
       <div className="space-y-6 pb-20">
@@ -47,19 +70,17 @@ export default function HealthTrackingHomePage() {
             <Card>
               <CardContent className="pt-6">
                 <NutritionSummary 
-                  calories={{consumed: 1450, goal: 2000}}
-                  macros={{
-                    protein: {consumed: 75, goal: 120},
-                    carbs: {consumed: 180, goal: 240},
-                    fat: {consumed: 48, goal: 65}
-                  }}
+                  calories={{consumed: 1450, target: 2000}}
+                  protein={{consumed: 75, target: 120}}
+                  carbs={{consumed: 180, target: 240}}
+                  fat={{consumed: 48, target: 65}}
                 />
               </CardContent>
             </Card>
             
             <div className="space-y-2">
               <h3 className="text-lg font-semibold text-wasfah-deep-teal">Add Today's Nutrition</h3>
-              <NutritionEntryForm />
+              <NutritionEntryForm onSubmit={handleNutritionSubmit} />
             </div>
             
             <div className="flex flex-col gap-2">
@@ -102,7 +123,10 @@ export default function HealthTrackingHomePage() {
               <CardContent className="pt-6">
                 <div className="mb-4">
                   <h3 className="text-lg font-semibold text-wasfah-deep-teal mb-2">Weekly Progress</h3>
-                  <NutritionProgressChart />
+                  <NutritionProgressChart 
+                    data={mockNutritionData}
+                    type="weekly"
+                  />
                 </div>
               </CardContent>
             </Card>

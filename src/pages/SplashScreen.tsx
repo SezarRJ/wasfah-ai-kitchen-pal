@@ -127,8 +127,7 @@ export default function SplashScreen() {
         
         <Progress 
           value={progress} 
-          className="h-1 mb-6 bg-white/20" 
-          indicatorClassName="bg-white" 
+          className="h-1 mb-6 bg-white/20"
         />
         
         <Button

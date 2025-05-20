@@ -26,6 +26,8 @@ export interface Recipe {
   categories: string[];
   tags: string[];
   isFavorite: boolean;
+  tips?: string[]; // Add tips property
+  cuisineType?: string; // Add cuisineType property
   nutritionalInfo?: {
     protein: number;
     carbs: number;
@@ -40,20 +42,41 @@ export interface User {
   name: string;
   email: string;
   avatar?: string;
+  isPremium?: boolean; // Add isPremium property
   dietaryPreferences?: string[];
   allergies?: string[];
+  allergens?: string[]; // Add allergens property
   favoriteRecipes?: string[];
+  recipesSaved?: number; // Add recipesSaved property
+  recipesCreated?: number; // Add recipesCreated property
+  followersCount?: number; // Add followersCount property
+  cuisinePreferences?: string[]; // Add cuisinePreferences property
+  chefAvatar?: string; // Add chefAvatar property
+  nutritionalGoals?: { // Add nutritionalGoals property
+    calories: number;
+    protein: number;
+    carbs?: number;
+    fat?: number;
+  };
 }
 
 export interface MealPlan {
   id: string;
-  date: Date;
-  meals: {
-    id: string;
-    type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
-    recipeId: string;
-    completed: boolean;
-  }[];
+  date: string; // Change to string for easier comparison
+  meals: Meal[];
+  nutritionSummary?: { // Add nutritionSummary property
+    calories: number;
+    protein: number;
+    carbs: number;
+    fat: number;
+  };
+}
+
+export interface Meal {
+  id: string;
+  type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+  recipe: Recipe;
+  completed: boolean;
 }
 
 export interface PantryItem {
@@ -62,8 +85,9 @@ export interface PantryItem {
   category: string;
   quantity: number;
   unit: string;
-  expiryDate?: Date;
+  expiryDate?: string; // Change to string for easier date handling
   image?: string;
+  location?: string; // Add location property
 }
 
 export interface NutritionGoal {
@@ -75,7 +99,7 @@ export interface NutritionGoal {
 
 export interface HealthRecord {
   id: string;
-  date: Date;
+  date: string; // Change to string for easier date handling
   weight?: number;
   height?: number;
   bmi?: number;

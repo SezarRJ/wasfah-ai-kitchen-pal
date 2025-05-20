@@ -5,7 +5,7 @@ import { mockMealPlans } from '@/data/mockData';
 import { MealCard } from '@/components/meal-plan/MealCard';
 import { Button } from '@/components/ui/button';
 import { Plus, ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
-import { format, addDays, startOfWeek, isSameDay } from 'date-fns';
+import { format, addDays, startOfWeek, isSameDay, parseISO } from 'date-fns';
 
 export default function MealPlanPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -73,12 +73,12 @@ export default function MealPlanPage() {
         {mealPlan ? (
           <>
             <div className="space-y-6">
-              {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map(mealType => {
+              {['breakfast', 'lunch', 'dinner', 'snack'].map(mealType => {
                 const meal = mealPlan.meals.find(m => m.type === mealType);
                 
                 return (
                   <div key={mealType}>
-                    <h3 className="font-bold mb-2 text-wasfah-deep-teal">{mealType}</h3>
+                    <h3 className="font-bold mb-2 text-wasfah-deep-teal">{mealType.charAt(0).toUpperCase() + mealType.slice(1)}</h3>
                     {meal ? (
                       <MealCard meal={meal} />
                     ) : (
@@ -95,39 +95,41 @@ export default function MealPlanPage() {
               })}
             </div>
             
-            <div className="mt-8 bg-white p-4 rounded-lg shadow-sm">
-              <h3 className="font-bold text-wasfah-deep-teal mb-3">Daily Nutrition</h3>
-              
-              <div className="grid grid-cols-4 gap-2">
-                <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
-                  <p className="font-bold text-wasfah-deep-teal">
-                    {mealPlan.nutritionSummary.calories}
-                  </p>
-                  <p className="text-xs text-gray-500">Calories</p>
-                </div>
+            {mealPlan.nutritionSummary && (
+              <div className="mt-8 bg-white p-4 rounded-lg shadow-sm">
+                <h3 className="font-bold text-wasfah-deep-teal mb-3">Daily Nutrition</h3>
                 
-                <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
-                  <p className="font-bold text-wasfah-deep-teal">
-                    {mealPlan.nutritionSummary.protein}g
-                  </p>
-                  <p className="text-xs text-gray-500">Protein</p>
-                </div>
-                
-                <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
-                  <p className="font-bold text-wasfah-deep-teal">
-                    {mealPlan.nutritionSummary.carbs}g
-                  </p>
-                  <p className="text-xs text-gray-500">Carbs</p>
-                </div>
-                
-                <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
-                  <p className="font-bold text-wasfah-deep-teal">
-                    {mealPlan.nutritionSummary.fat}g
-                  </p>
-                  <p className="text-xs text-gray-500">Fat</p>
+                <div className="grid grid-cols-4 gap-2">
+                  <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
+                    <p className="font-bold text-wasfah-deep-teal">
+                      {mealPlan.nutritionSummary.calories}
+                    </p>
+                    <p className="text-xs text-gray-500">Calories</p>
+                  </div>
+                  
+                  <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
+                    <p className="font-bold text-wasfah-deep-teal">
+                      {mealPlan.nutritionSummary.protein}g
+                    </p>
+                    <p className="text-xs text-gray-500">Protein</p>
+                  </div>
+                  
+                  <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
+                    <p className="font-bold text-wasfah-deep-teal">
+                      {mealPlan.nutritionSummary.carbs}g
+                    </p>
+                    <p className="text-xs text-gray-500">Carbs</p>
+                  </div>
+                  
+                  <div className="text-center p-2 bg-wasfah-light-gray rounded-md">
+                    <p className="font-bold text-wasfah-deep-teal">
+                      {mealPlan.nutritionSummary.fat}g
+                    </p>
+                    <p className="text-xs text-gray-500">Fat</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             
             <Button className="w-full mt-6 bg-wasfah-bright-teal hover:bg-wasfah-teal text-white">
               <ShoppingCart size={16} className="mr-2" />

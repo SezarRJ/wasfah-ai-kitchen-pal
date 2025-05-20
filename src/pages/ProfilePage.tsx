@@ -71,7 +71,7 @@ export default function ProfilePage() {
             
             <div className="flex flex-col items-center mb-4">
               <Avatar className="h-20 w-20 mb-4 animate-scale-in ring-2 ring-wasfah-bright-teal ring-offset-2">
-                <AvatarImage src={mockUser.avatar || mockUser.avatarUrl || ''} alt={mockUser.name} />
+                <AvatarImage src={mockUser.avatar || ''} alt={mockUser.name} />
                 <AvatarFallback className="text-xl bg-wasfah-bright-teal text-white">
                   {getInitials(mockUser.name)}
                 </AvatarFallback>
@@ -118,7 +118,7 @@ export default function ProfilePage() {
               <div className="flex-1">
                 <h3 className="font-medium text-wasfah-deep-teal">Dietary Preferences</h3>
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {mockUser.dietaryPreferences.map((pref, idx) => (
+                  {mockUser.dietaryPreferences?.map((pref, idx) => (
                     <span key={idx} className="text-xs bg-wasfah-light-gray text-wasfah-deep-teal rounded-full px-2 py-1">
                       {pref}
                     </span>
@@ -134,7 +134,7 @@ export default function ProfilePage() {
               <div className="flex-1">
                 <h3 className="font-medium text-wasfah-deep-teal">Cuisine Preferences</h3>
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {mockUser.cuisinePreferences.map((cuisine, idx) => (
+                  {mockUser.cuisinePreferences?.map((cuisine, idx) => (
                     <span key={idx} className="text-xs bg-wasfah-light-gray text-wasfah-deep-teal rounded-full px-2 py-1">
                       {cuisine}
                     </span>
@@ -150,7 +150,7 @@ export default function ProfilePage() {
               <div className="flex-1">
                 <h3 className="font-medium text-wasfah-deep-teal">Allergens</h3>
                 <div className="flex flex-wrap gap-1 mt-1">
-                  {mockUser.allergens.map((allergen, idx) => (
+                  {mockUser.allergies?.map((allergen, idx) => (
                     <span key={idx} className="text-xs bg-wasfah-light-gray text-wasfah-deep-teal rounded-full px-2 py-1">
                       {allergen}
                     </span>
@@ -176,8 +176,14 @@ export default function ProfilePage() {
               <div>
                 <h3 className="font-medium text-wasfah-deep-teal">Nutritional Goals</h3>
                 <p className="text-sm text-gray-600">
-                  Protein: {mockUser.nutritionalGoals.protein}g, 
-                  Calories: {mockUser.nutritionalGoals.calories}
+                  {mockUser.nutritionalGoals ? (
+                    <>
+                      Protein: {mockUser.nutritionalGoals.protein}g, 
+                      Calories: {mockUser.nutritionalGoals.calories}
+                    </>
+                  ) : (
+                    "No goals set"
+                  )}
                 </p>
                 <Link to="/nutrition-goals" className="inline-flex items-center text-xs text-wasfah-bright-teal mt-1">
                   View details <ExternalLink size={12} className="ml-1" />

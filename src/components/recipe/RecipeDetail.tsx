@@ -1,113 +1,174 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Recipe } from '@/types';
-import { Bookmark, Clock, ChefHat, Flame, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Clock, ChefHat, Users, ArrowUpRight, Heart, Share, Info } from 'lucide-react';
 import { RecipeSocialInteractions } from './RecipeSocialInteractions';
 
 interface RecipeDetailProps {
   recipe: Recipe;
-  onStartCooking: () => void;
+  onAddToShoppingList: () => void;
+  onStartCookingMode: () => void;
 }
 
-export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, onStartCooking }) => {
-  // Mock social data (in a real app, this would come from an API)
-  const socialData = {
-    views: Math.floor(Math.random() * 500) + 100,
-    likes: Math.floor(Math.random() * 100) + 10,
-    comments: Math.floor(Math.random() * 30) + 5,
-    shares: Math.floor(Math.random() * 20),
-    usedCount: Math.floor(Math.random() * 50) + 10
-  };
-
+export const RecipeDetail: React.FC<RecipeDetailProps> = ({
+  recipe,
+  onAddToShoppingList,
+  onStartCookingMode,
+}) => {
   return (
-    <div className="space-y-6">
-      <div className="relative h-64 rounded-lg overflow-hidden">
-        <img
-          src={recipe.image}
-          alt={recipe.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-          <h1 className="text-2xl font-bold text-white">{recipe.title}</h1>
-        </div>
-      </div>
-
-      <RecipeSocialInteractions
-        recipeId={recipe.id}
-        views={socialData.views}
-        likes={socialData.likes}
-        comments={socialData.comments}
-        shares={socialData.shares}
-        rating={recipe.rating}
-        ratingCount={recipe.ratingCount}
-        usedCount={socialData.usedCount}
-        isLiked={recipe.isFavorite}
+    <div>
+      <div 
+        className="w-full h-56 bg-cover bg-center"
+        style={{ backgroundImage: `url(${recipe.image})` }}
       />
-
-      <div className="flex flex-wrap justify-between gap-2">
-        <div className="flex items-center text-sm text-gray-600">
-          <Clock className="h-4 w-4 mr-1" />
-          <span>Prep: {recipe.prepTime} min</span>
+      
+      <div className="container px-4 py-4">
+        <h1 className="recipe-title text-2xl font-bold text-wasfah-deep-teal">
+          {recipe.title}
+        </h1>
+        
+        <div className="flex items-center mt-1 text-sm">
+          <span className="text-wasfah-mint">★</span>
+          <span className="ml-1 text-gray-700">{recipe.rating}</span>
+          <span className="mx-1 text-gray-400">|</span>
+          <span className="text-gray-700">{recipe.ratingCount} ratings</span>
         </div>
-        <div className="flex items-center text-sm text-gray-600">
-          <Clock className="h-4 w-4 mr-1" />
-          <span>Cook: {recipe.cookTime} min</span>
+        
+        <p className="mt-3 text-gray-600">
+          {recipe.description}
+        </p>
+        
+        <div className="grid grid-cols-4 gap-2 mt-4">
+          <Card className="p-3 text-center">
+            <div className="flex justify-center text-wasfah-bright-teal mb-1">
+              <Clock size={18} />
+            </div>
+            <p className="text-sm font-semibold">{recipe.prepTime + recipe.cookTime}m</p>
+            <p className="text-xs text-gray-500">Time</p>
+          </Card>
+          
+          <Card className="p-3 text-center">
+            <div className="flex justify-center text-wasfah-bright-teal mb-1">
+              <Users size={18} />
+            </div>
+            <p className="text-sm font-semibold">{recipe.servings}</p>
+            <p className="text-xs text-gray-500">Servings</p>
+          </Card>
+          
+          <Card className="p-3 text-center">
+            <div className="flex justify-center text-wasfah-bright-teal mb-1">
+              <ChefHat size={18} />
+            </div>
+            <p className="text-sm font-semibold">{recipe.difficulty}</p>
+            <p className="text-xs text-gray-500">Difficulty</p>
+          </Card>
+          
+          <Card className="p-3 text-center">
+            <div className="flex justify-center text-wasfah-bright-teal mb-1">
+              <ArrowUpRight size={18} />
+            </div>
+            <p className="text-sm font-semibold">{recipe.calories}</p>
+            <p className="text-xs text-gray-500">Calories</p>
+          </Card>
         </div>
-        <div className="flex items-center text-sm text-gray-600">
-          <Users className="h-4 w-4 mr-1" />
-          <span>Serves: {recipe.servings}</span>
-        </div>
-        <div className="flex items-center text-sm text-gray-600">
-          <ChefHat className="h-4 w-4 mr-1" />
-          <span>Difficulty: {recipe.difficulty}</span>
-        </div>
-        <div className="flex items-center text-sm text-gray-600">
-          <Flame className="h-4 w-4 mr-1" />
-          <span>{recipe.calories} cal</span>
-        </div>
-      </div>
-
-      <p className="text-gray-700">{recipe.description}</p>
-
-      <Card>
-        <CardContent className="p-4">
-          <h2 className="font-bold text-lg mb-2">Ingredients</h2>
-          <ul className="list-disc pl-5 space-y-1">
-            {recipe.ingredients.map((ingredient, index) => (
-              <li key={index} className="text-gray-700">
-                {ingredient.quantity} {ingredient.unit} {ingredient.name}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent className="p-4">
-          <h2 className="font-bold text-lg mb-2">Instructions</h2>
-          <ol className="list-decimal pl-5 space-y-3">
-            {recipe.instructions.map((instruction, index) => (
-              <li key={index} className="text-gray-700">{instruction}</li>
-            ))}
-          </ol>
-        </CardContent>
-      </Card>
-
-      <div className="flex space-x-3 pt-3">
+        
+        <Tabs defaultValue="ingredients" className="mt-6">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
+            <TabsTrigger value="instructions">Instructions</TabsTrigger>
+            <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="ingredients" className="space-y-4 mt-4">
+            <div className="mt-3 space-y-3">
+              {recipe.ingredients.map((ingredient) => (
+                <div key={ingredient.id} className="flex items-center space-x-2">
+                  <Checkbox id={ingredient.id} />
+                  <label
+                    htmlFor={ingredient.id}
+                    className={`text-gray-700 ${ingredient.inPantry ? '' : 'text-wasfah-coral-red'}`}
+                  >
+                    {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                    {!ingredient.inPantry && ' (missing)'}
+                  </label>
+                </div>
+              ))}
+            </div>
+            
+            <Button
+              variant="outline"
+              className="w-full mt-4 border-wasfah-bright-teal text-wasfah-bright-teal hover:bg-wasfah-bright-teal/10"
+              onClick={onAddToShoppingList}
+            >
+              Add missing to shopping list
+            </Button>
+          </TabsContent>
+          
+          <TabsContent value="instructions" className="space-y-4 mt-4">
+            <ol className="mt-3 space-y-4 list-decimal list-inside">
+              {recipe.instructions.map((instruction, index) => (
+                <li key={index} className="text-gray-700 pl-2">
+                  {instruction}
+                </li>
+              ))}
+            </ol>
+          </TabsContent>
+          
+          <TabsContent value="nutrition" className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Calories</span>
+                <span>{recipe.calories} kcal</span>
+              </div>
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Protein</span>
+                <span>{recipe.nutrition?.protein || 0} g</span>
+              </div>
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Carbohydrates</span>
+                <span>{recipe.nutrition?.carbs || 0} g</span>
+              </div>
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Fat</span>
+                <span>{recipe.nutrition?.fat || 0} g</span>
+              </div>
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Fiber</span>
+                <span>{recipe.nutrition?.fiber || 0} g</span>
+              </div>
+              <div className="flex justify-between p-2 border-b">
+                <span className="font-medium">Sugar</span>
+                <span>{recipe.nutrition?.sugar || 0} g</span>
+              </div>
+            </div>
+            <div className="bg-gray-50 p-3 rounded-md">
+              <p className="text-sm text-gray-600 flex items-center">
+                <Info size={14} className="mr-2 text-wasfah-bright-teal" />
+                Values are per serving
+              </p>
+            </div>
+          </TabsContent>
+        </Tabs>
+        
         <Button
-          onClick={onStartCooking}
-          className="flex-1 bg-wasfah-bright-teal hover:bg-wasfah-teal"
+          className="w-full mt-6 mb-4 bg-wasfah-bright-teal hover:bg-wasfah-teal text-white"
+          onClick={onStartCookingMode}
         >
-          <ChefHat className="mr-2 h-4 w-4" /> Start Cooking
+          <ChefHat size={18} className="mr-2" />
+          Start Cooking Mode
         </Button>
-        <Button
-          variant="outline"
-          className="border-wasfah-deep-teal text-wasfah-deep-teal"
-        >
-          <Bookmark className="h-4 w-4" />
-        </Button>
+        
+        <RecipeSocialInteractions
+          isFavorite={recipe.isFavorite}
+          shareCount={recipe.shareCount || 0}
+          commentCount={recipe.commentCount || 0}
+          onShare={() => {}}
+          onToggleFavorite={() => {}}
+        />
       </div>
     </div>
   );

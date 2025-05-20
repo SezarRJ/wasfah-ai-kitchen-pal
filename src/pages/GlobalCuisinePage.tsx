@@ -6,12 +6,15 @@ import { Card, CardContent } from '@/components/ui/card';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mockRecipes } from '@/data/mockData';
-import { Flag, Utensils, Dessert, Wine, Martini } from 'lucide-react';
+import { Flag, Utensils, Dessert, Wine, Martini, Languages } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const GlobalCuisinePage = () => {
+  const navigate = useNavigate();
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
   const [selectedCuisine, setSelectedCuisine] = useState('');
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   // Main categories and their subcategories
   const categories = {
@@ -67,6 +70,15 @@ const GlobalCuisinePage = () => {
         title: 'Global Cuisine',
         showBackButton: true,
         showSearch: true,
+        actions: (
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+          >
+            <Languages size={20} className="text-wasfah-deep-teal" />
+          </Button>
+        )
       }}
     >
       <div className="space-y-6 pb-20">

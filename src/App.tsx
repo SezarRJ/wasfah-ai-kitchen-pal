@@ -49,6 +49,7 @@ import AdminRewardsManager from "./pages/admin/AdminRewardsManager";
 import AdminAccountingManager from "./pages/admin/AdminAccountingManager";
 import AdminIntegrationsManager from "./pages/admin/AdminIntegrationsManager";
 import AdminUserTypesManager from "./pages/admin/AdminUserTypesManager";
+import AdminSubscriptionManager from "./pages/admin/AdminSubscriptionManager";
 import AdminAuthGuard from "./components/admin/AdminAuthGuard";
 
 // Initialize admin demo
@@ -65,6 +66,10 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Splash and Auth Pages */}
+            <Route path="/splash" element={<SplashScreen />} />
+            <Route path="/auth" element={<AuthPage />} />
+            
             {/* Main Pages in order */}
             <Route path="/" element={<QuickAccessPage />} />
             <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
@@ -74,13 +79,11 @@ const App = () => (
             <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
             <Route path="/meal-plan" element={<MealPlanPage />} />
             <Route path="/pantry" element={<PantryPage />} />
-            <Route path="/shared-recipes" element={<SharedRecipesPage />} />
+            <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
             
             {/* Secondary Pages */}
             <Route path="/new-home" element={<NewHomePage />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/splash" element={<SplashScreen />} />
-            <Route path="/auth" element={<AuthPage />} />
             <Route path="/recipes" element={<RecipesPage />} />
             <Route path="/recipe/:id" element={<RecipeDetailPage />} />
             <Route path="/profile" element={<ProfilePage />} />
@@ -99,7 +102,7 @@ const App = () => (
             <Route path="/share-recipe" element={<CreateRecipePage />} />
             <Route path="/quick-access" element={<QuickAccessPage />} />
             <Route path="/language-settings" element={<LanguageSettingsPage />} />
-            <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
+            <Route path="/shared-recipes" element={<SharedRecipesPage />} />
             
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
@@ -121,6 +124,7 @@ const App = () => (
               <Route path="accounting" element={<AdminAccountingManager />} />
               <Route path="integrations" element={<AdminIntegrationsManager />} />
               <Route path="user-types" element={<AdminUserTypesManager />} />
+              <Route path="subscriptions" element={<AdminSubscriptionManager />} />
             </Route>
             
             <Route path="*" element={<NotFound />} />

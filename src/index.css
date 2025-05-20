@@ -5,83 +5,25 @@
 
 @layer base {
   :root {
+    --wasfah-deep-teal: 175 95% 20%; /* #006566 */
+    --wasfah-bright-teal: 174 100% 29%; /* #009594 */
+    --wasfah-mint: 176 56% 55%; /* #4ec3c3 */
+    --wasfah-coral-red: 11 100% 50%; /* #ff2a00 */
+    --wasfah-light-gray: 0 0% 98%; /* #fafafa */
+    --wasfah-teal: 174 100% 25%; /* #007c7c */
+    
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 193 82% 22%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 188 83% 31%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 190 90% 44%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 193 82% 22%;
-
+    --foreground: 222.2 47.4% 11.2%;
     --radius: 0.5rem;
-
-    --sidebar-background: 193 82% 22%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 177 100% 50%;
-    --sidebar-primary-foreground: 193 82% 22%;
-    --sidebar-accent: 193 30% 40%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 193 50% 35%;
-    --sidebar-ring: 177 100% 50%;
   }
+}
 
-  .dark {
-    --background: 193 30% 8%;
-    --foreground: 210 40% 98%;
-
-    --card: 193 30% 12%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 193 30% 12%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 188 83% 31%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 193 50% 35%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 193 30% 20%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 190 90% 44%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 193 30% 25%;
-    --input: 193 30% 25%;
-    --ring: 177 100% 50%;
-
-    --sidebar-background: 193 50% 15%;
-    --sidebar-foreground: 177 100% 90%;
-    --sidebar-primary: 177 100% 50%;
-    --sidebar-primary-foreground: 193 50% 15%;
-    --sidebar-accent: 193 40% 20%;
-    --sidebar-accent-foreground: 177 100% 90%;
-    --sidebar-border: 193 40% 20%;
-    --sidebar-ring: 177 100% 50%;
+@keyframes loadingBar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
   }
 }
 
@@ -89,50 +31,9 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@font-face {
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 400;
-  src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
-}
-
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: normal;
-  font-weight: 400;
-  src: url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-}
-
-body {
-  font-family: 'Montserrat', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-}
-
-.recipe-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-}
-
-.chef-notes {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-}
-
-/* Custom utility classes */
-.hover-scale {
-  @apply transition-transform duration-200 hover:scale-105;
-}
-
-.story-link {
-  @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-wasfah-bright-teal after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left;
-}

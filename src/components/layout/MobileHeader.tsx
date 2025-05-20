@@ -35,7 +35,26 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
               variant="ghost"
               size="icon"
               className="text-wasfah-deep-teal"
-              onClick={() => navigate(-1)}
+              onClick={() => {
+                // Navigate to the parent page or home if on main feature
+                const path = window.location.pathname;
+                const isMainPage = [
+                  '/find-by-ingredients', 
+                  '/global-cuisine', 
+                  '/meal-plan',
+                  '/chef-avatar',
+                  '/health-tracking-home',
+                  '/pantry',
+                  '/shared-recipes-tracking',
+                  '/favorites'
+                ].includes(path);
+                
+                if (isMainPage) {
+                  navigate('/');
+                } else {
+                  navigate(-1);
+                }
+              }}
             >
               <ArrowLeft size={20} />
             </Button>

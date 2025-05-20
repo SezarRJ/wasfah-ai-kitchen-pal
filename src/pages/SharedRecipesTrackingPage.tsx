@@ -29,6 +29,7 @@ const mockSharedRecipes: Recipe[] = [
     cuisineType: 'Italian',
     ingredients: [],
     instructions: [],
+    categories: ['Italian', 'Main Course'],
     tags: ['Italian', 'Pasta', 'Homemade'],
     isFavorite: true 
   },
@@ -47,6 +48,7 @@ const mockSharedRecipes: Recipe[] = [
     cuisineType: 'Indian',
     ingredients: [],
     instructions: [],
+    categories: ['Indian', 'Main Course'],
     tags: ['Indian', 'Spicy', 'Chicken'],
     isFavorite: false 
   },
@@ -65,6 +67,7 @@ const mockSharedRecipes: Recipe[] = [
     cuisineType: 'International',
     ingredients: [],
     instructions: [],
+    categories: ['Dessert'],
     tags: ['Dessert', 'Chocolate'],
     isFavorite: true 
   }

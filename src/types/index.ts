@@ -18,7 +18,7 @@ export interface Recipe {
   ingredients: {
     id: string;
     name: string;
-    quantity: string;
+    quantity: string | number;
     unit: string;
     inPantry: boolean;
   }[];
@@ -76,7 +76,7 @@ export interface Meal {
   id: string;
   type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
   recipe: Recipe;
-  completed: boolean;
+  completed?: boolean;
 }
 
 export interface PantryItem {

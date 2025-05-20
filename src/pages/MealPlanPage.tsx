@@ -5,7 +5,7 @@ import { mockMealPlans } from '@/data/mockData';
 import { MealCard } from '@/components/meal-plan/MealCard';
 import { Button } from '@/components/ui/button';
 import { Plus, ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
-import { format, addDays, startOfWeek, isSameDay, parseISO } from 'date-fns';
+import { format, addDays, startOfWeek, parseISO } from 'date-fns';
 
 export default function MealPlanPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -53,21 +53,26 @@ export default function MealPlanPage() {
         </div>
         
         <div className="flex justify-between mb-6 overflow-x-auto pb-2">
-          {weekDays.map((date, i) => (
-            <Button
-              key={i}
-              variant="ghost"
-              className={`flex-shrink-0 flex flex-col items-center px-3 rounded-full ${
-                isSameDay(date, selectedDate) ? 
-                'bg-wasfah-bright-teal text-white' : 
-                'text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setSelectedDate(date)}
-            >
-              <span className="text-xs">{format(date, 'EEE')}</span>
-              <span className="font-bold">{format(date, 'd')}</span>
-            </Button>
-          ))}
+          {weekDays.map((date, i) => {
+            const dateStr = format(date, 'yyyy-MM-dd');
+            const isSelected = dateStr === format(selectedDate, 'yyyy-MM-dd');
+            
+            return (
+              <Button
+                key={i}
+                variant="ghost"
+                className={`flex-shrink-0 flex flex-col items-center px-3 rounded-full ${
+                  isSelected ? 
+                  'bg-wasfah-bright-teal text-white' : 
+                  'text-gray-700 hover:bg-gray-100'
+                }`}
+                onClick={() => setSelectedDate(date)}
+              >
+                <span className="text-xs">{format(date, 'EEE')}</span>
+                <span className="font-bold">{format(date, 'd')}</span>
+              </Button>
+            );
+          })}
         </div>
         
         {mealPlan ? (

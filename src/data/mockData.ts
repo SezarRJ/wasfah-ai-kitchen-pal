@@ -1,3 +1,4 @@
+
 import { Recipe, PantryItem, User, MealPlan } from '../types';
 
 export const mockRecipes: Recipe[] = [
@@ -32,6 +33,7 @@ export const mockRecipes: Recipe[] = [
       'Pour in the canned tomatoes and coconut milk, stir well.',
       'Simmer for 15-20 minutes until the sauce thickens.',
     ],
+    categories: ['Main Course', 'Indian Cuisine'],
     tags: ['Indian', 'Curry', 'Spicy', 'Main Course'],
     isFavorite: true,
     tips: [
@@ -76,6 +78,7 @@ export const mockRecipes: Recipe[] = [
       'Heat oil in a deep fryer or pan to 350°F (180°C).',
       'Fry the falafel until golden brown and crispy, about 3-4 minutes.',
     ],
+    categories: ['Appetizer', 'Middle Eastern Cuisine'],
     tags: ['Middle Eastern', 'Vegetarian', 'Appetizer'],
     isFavorite: false,
   },
@@ -102,6 +105,7 @@ export const mockRecipes: Recipe[] = [
       'Top with mixed berries.',
       'Drizzle with honey.',
     ],
+    categories: ['Breakfast', 'Quick Meal'],
     tags: ['Breakfast', 'Quick', 'Healthy', 'Vegetarian'],
     isFavorite: true,
   },
@@ -135,6 +139,7 @@ export const mockRecipes: Recipe[] = [
       'Add cooking water as needed to create a creamy sauce.',
       'Season generously with black pepper.',
     ],
+    categories: ['Main Course', 'Italian Cuisine'],
     tags: ['Italian', 'Pasta', 'Quick', 'Main Course'],
     isFavorite: false,
   },
@@ -165,6 +170,7 @@ export const mockRecipes: Recipe[] = [
       'Spread mashed avocado on toast.',
       'Sprinkle with red pepper flakes if desired.',
     ],
+    categories: ['Breakfast', 'Quick Meal'],
     tags: ['Breakfast', 'Vegetarian', 'Quick', 'Healthy'],
     isFavorite: true,
   },
@@ -200,6 +206,7 @@ export const mockRecipes: Recipe[] = [
       'Return beef to the pan, add soy sauce, and toss to combine.',
       'Serve hot over rice or noodles.',
     ],
+    categories: ['Main Course', 'Asian Cuisine'],
     tags: ['Asian', 'Quick', 'Main Course'],
     isFavorite: false,
   }
@@ -266,7 +273,6 @@ export const mockUser: User = {
   id: '1',
   name: 'Sarah Johnson',
   email: 'sarah@example.com',
-  avatarUrl: '',
   avatar: 'https://i.pravatar.cc/300?u=sarah',
   isPremium: true,
   dietaryPreferences: ['Vegetarian', 'Low-Carb'],
@@ -291,12 +297,12 @@ export const mockMealPlans: MealPlan[] = [
     meals: [
       {
         id: '1-1',
-        type: 'Breakfast',
+        type: 'breakfast',
         recipe: mockRecipes.find(r => r.id === '3')!
       },
       {
         id: '1-2',
-        type: 'Lunch',
+        type: 'lunch',
         recipe: {
           id: '7',
           title: 'Chicken Caesar Salad',
@@ -312,13 +318,14 @@ export const mockMealPlans: MealPlan[] = [
           cuisineType: 'International',
           ingredients: [],
           instructions: [],
+          categories: ['Lunch', 'Salad'],
           tags: ['Salad', 'Lunch', 'Protein'],
           isFavorite: false
         }
       },
       {
         id: '1-3',
-        type: 'Dinner',
+        type: 'dinner',
         recipe: {
           id: '8',
           title: 'Salmon with Roasted Vegetables',
@@ -334,6 +341,7 @@ export const mockMealPlans: MealPlan[] = [
           cuisineType: 'International',
           ingredients: [],
           instructions: [],
+          categories: ['Dinner', 'Fish'],
           tags: ['Fish', 'Dinner', 'Healthy'],
           isFavorite: false
         }

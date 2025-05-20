@@ -76,7 +76,9 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe, onStartCooki
           <h2 className="font-bold text-lg mb-2">Ingredients</h2>
           <ul className="list-disc pl-5 space-y-1">
             {recipe.ingredients.map((ingredient, index) => (
-              <li key={index} className="text-gray-700">{ingredient}</li>
+              <li key={index} className="text-gray-700">
+                {ingredient.quantity} {ingredient.unit} {ingredient.name}
+              </li>
             ))}
           </ul>
         </CardContent>

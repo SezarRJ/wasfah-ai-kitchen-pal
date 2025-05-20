@@ -126,23 +126,23 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({
               </div>
               <div className="flex justify-between p-2 border-b">
                 <span className="font-medium">Protein</span>
-                <span>{recipe.nutrition?.protein || 0} g</span>
+                <span>{recipe.nutritionalInfo?.protein || 0} g</span>
               </div>
               <div className="flex justify-between p-2 border-b">
                 <span className="font-medium">Carbohydrates</span>
-                <span>{recipe.nutrition?.carbs || 0} g</span>
+                <span>{recipe.nutritionalInfo?.carbs || 0} g</span>
               </div>
               <div className="flex justify-between p-2 border-b">
                 <span className="font-medium">Fat</span>
-                <span>{recipe.nutrition?.fat || 0} g</span>
+                <span>{recipe.nutritionalInfo?.fat || 0} g</span>
               </div>
               <div className="flex justify-between p-2 border-b">
                 <span className="font-medium">Fiber</span>
-                <span>{recipe.nutrition?.fiber || 0} g</span>
+                <span>{recipe.nutritionalInfo?.fiber || 0} g</span>
               </div>
               <div className="flex justify-between p-2 border-b">
                 <span className="font-medium">Sugar</span>
-                <span>{recipe.nutrition?.sugar || 0} g</span>
+                <span>{recipe.nutritionalInfo?.sugar || 0} g</span>
               </div>
             </div>
             <div className="bg-gray-50 p-3 rounded-md">

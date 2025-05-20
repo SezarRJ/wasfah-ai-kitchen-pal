@@ -33,7 +33,7 @@ export const MobileNavbar: React.FC = () => {
     },
     {
       icon: Menu,
-      label: 'More',
+      label: 'Settings',
       href: '/quick-access',
     },
   ];

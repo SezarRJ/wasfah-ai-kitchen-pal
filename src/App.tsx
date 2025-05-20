@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,6 +34,7 @@ import FindByIngredientsPage from "./pages/FindByIngredientsPage";
 import QuickAccessPage from "./pages/QuickAccessPage";
 import LanguageSettingsPage from "./pages/LanguageSettingsPage";
 import FavoritesPage from "./pages/FavoritesPage";
+import MainSettingsPage from "./pages/MainSettingsPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -71,7 +71,7 @@ const App = () => (
             <Route path="/auth" element={<AuthPage />} />
             
             {/* Main Pages in order */}
-            <Route path="/" element={<QuickAccessPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
             <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
             <Route path="/favorites" element={<FavoritesPage />} />
@@ -100,7 +100,7 @@ const App = () => (
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/history" element={<HealthTrackingPage />} />
             <Route path="/share-recipe" element={<CreateRecipePage />} />
-            <Route path="/quick-access" element={<QuickAccessPage />} />
+            <Route path="/quick-access" element={<MainSettingsPage />} />
             <Route path="/language-settings" element={<LanguageSettingsPage />} />
             <Route path="/shared-recipes" element={<SharedRecipesPage />} />
             

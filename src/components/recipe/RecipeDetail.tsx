@@ -162,13 +162,17 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({
           Start Cooking Mode
         </Button>
         
-        <RecipeSocialInteractions
-          isFavorite={recipe.isFavorite}
-          shareCount={recipe.shareCount || 0}
-          commentCount={recipe.commentCount || 0}
-          onShare={() => {}}
-          onToggleFavorite={() => {}}
-        />
+        <div className="flex justify-between items-center mt-4 pt-4 border-t">
+          <button className="flex items-center text-gray-600 hover:text-wasfah-coral-red">
+            <Heart className={`h-6 w-6 mr-2 ${recipe.isFavorite ? 'fill-wasfah-coral-red text-wasfah-coral-red' : ''}`} />
+            <span>Favorite</span>
+          </button>
+          
+          <button className="flex items-center text-gray-600 hover:text-wasfah-bright-teal">
+            <Share className="h-6 w-6 mr-2" />
+            <span>Share</span>
+          </button>
+        </div>
       </div>
     </div>
   );

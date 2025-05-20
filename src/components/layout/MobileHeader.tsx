@@ -1,9 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WasfahLogo } from '../icons/WasfahLogo';
-import { Search, ArrowLeft } from 'lucide-react';
+import { Search, ArrowLeft, Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface MobileHeaderProps {
   title?: string;
@@ -21,9 +27,16 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
   actions,
 }) => {
   const navigate = useNavigate();
+  const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   const handleSearchClick = () => {
     navigate('/search');
+  };
+
+  const handleLanguageChange = (language: string) => {
+    setSelectedLanguage(language);
+    // Here you would implement actual language change logic
+    console.log(`Language changed to: ${language}`);
   };
 
   return (
@@ -64,6 +77,44 @@ export const MobileHeader: React.FC<MobileHeaderProps> = ({
         </div>
         
         <div className="flex items-center space-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-wasfah-deep-teal"
+              >
+                <Languages size={20} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg">
+              <DropdownMenuItem 
+                className={selectedLanguage === "English" ? "bg-gray-100" : ""}
+                onClick={() => handleLanguageChange("English")}
+              >
+                🇺🇸 English
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                className={selectedLanguage === "Arabic" ? "bg-gray-100" : ""}
+                onClick={() => handleLanguageChange("Arabic")}
+              >
+                🇦🇪 العربية
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                className={selectedLanguage === "Spanish" ? "bg-gray-100" : ""}
+                onClick={() => handleLanguageChange("Spanish")}
+              >
+                🇪🇸 Español
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                className={selectedLanguage === "French" ? "bg-gray-100" : ""}
+                onClick={() => handleLanguageChange("French")}
+              >
+                🇫🇷 Français
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           {showSearch && (
             <Button
               variant="ghost"

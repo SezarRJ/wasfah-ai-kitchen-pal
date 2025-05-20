@@ -3,35 +3,18 @@ import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, Globe,
-  Heart, History, Share2, CalendarDays, Settings, User, Search, Award, 
-  CreditCard, Languages, Bell, Moon, Trash2 } from 'lucide-react';
+import { User, Award, ShoppingCart, CreditCard, Languages, Bell, Moon, 
+  Settings, LogOut } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
-// Define Home icon component before using it
-const Home = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-export default function QuickAccessPage() {
-  const mainFeatures = [
-    { icon: <Search className="h-6 w-6 text-wasfah-bright-teal" />, label: "Find by Ingredients", path: "/find-by-ingredients" },
-    { icon: <Globe className="h-6 w-6 text-wasfah-bright-teal" />, label: "Global Cuisine", path: "/global-cuisine" },
-    { icon: <CalendarDays className="h-6 w-6 text-wasfah-deep-teal" />, label: "Meal Plan", path: "/meal-plan" },
-    { icon: <ChefHat className="h-6 w-6 text-wasfah-bright-teal" />, label: "Chef Avatar", path: "/chef-avatar" },
-    { icon: <Activity className="h-6 w-6 text-wasfah-coral-red" />, label: "Health Tracking", path: "/health-tracking-home" },
-    { icon: <ShoppingCart className="h-6 w-6 text-wasfah-deep-teal" />, label: "Pantry", path: "/pantry" },
-    { icon: <Share2 className="h-6 w-6 text-wasfah-bright-teal" />, label: "Share Recipes Status", path: "/shared-recipes-tracking" },
-    { icon: <Heart className="h-6 w-6 text-red-500" />, label: "Favorites", path: "/favorites" },
-  ];
+const MainSettingsPage = () => {
+  const { toast } = useToast();
   
   const accountFeatures = [
     { icon: <User className="h-6 w-6 text-gray-600" />, label: "Profile", path: "/profile" },
     { icon: <Award className="h-6 w-6 text-amber-500" />, label: "Loyalty Program", path: "/loyalty" },
     { icon: <ShoppingCart className="h-6 w-6 text-wasfah-deep-teal" />, label: "Shopping List", path: "/shopping-list" },
-    { icon: <CreditCard className="h-6 w-6 text-wasfah-bright-teal" />, label: "Subscription", path: "/subscription" },
+    { icon: <CreditCard className="h-6 w-6 text-wasfah-bright-teal" />, label: "Payment Methods", path: "/subscription" },
   ];
   
   const settingsFeatures = [
@@ -41,30 +24,21 @@ export default function QuickAccessPage() {
     { icon: <Settings className="h-6 w-6 text-gray-600" />, label: "Settings", path: "/settings" },
   ];
 
+  const handleSignOut = () => {
+    // Implement sign out logic here
+    toast({
+      title: "Signing out",
+      description: "You have been signed out successfully"
+    });
+    // Navigate to login page or clear auth state
+  };
+
   return (
-    <PageContainer header={{ title: "WasfahAI", showBackButton: false }}>
+    <PageContainer header={{ title: "Settings", showBackButton: true }}>
       <div className="p-4 pb-24 space-y-6">
         <div className="bg-gradient-to-br from-wasfah-bright-teal to-wasfah-deep-teal p-6 rounded-lg text-white text-center mb-6">
-          <h1 className="text-2xl font-bold mb-2">Welcome to WasfahAI</h1>
-          <p className="opacity-90">Your personal cooking assistant</p>
-        </div>
-
-        <div className="space-y-3">
-          <h2 className="text-lg font-bold text-wasfah-deep-teal">Main Features</h2>
-          <div className="grid grid-cols-2 gap-3">
-            {mainFeatures.map((item, itemIndex) => (
-              <Link to={item.path} key={itemIndex}>
-                <Card className="hover:shadow-md transition-all duration-300 transform hover:scale-105">
-                  <CardContent className="p-4 flex items-center space-x-3">
-                    <div className="rounded-full p-2 bg-gray-50 flex items-center justify-center">
-                      {item.icon}
-                    </div>
-                    <span className="font-medium">{item.label}</span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <h1 className="text-2xl font-bold mb-2">Settings</h1>
+          <p className="opacity-90">Customize your WasfahAI experience</p>
         </div>
 
         <div className="space-y-3">
@@ -114,7 +88,19 @@ export default function QuickAccessPage() {
             </Card>
           </Link>
         </div>
+        
+        {/* Sign Out Button */}
+        <div className="pt-4">
+          <Card className="bg-red-50 hover:bg-red-100 transition-colors" onClick={handleSignOut}>
+            <CardContent className="p-4 flex items-center justify-center space-x-2 cursor-pointer">
+              <LogOut className="h-5 w-5 text-red-600" />
+              <span className="font-medium text-red-600">Sign Out</span>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </PageContainer>
   );
-}
+};
+
+export default MainSettingsPage;

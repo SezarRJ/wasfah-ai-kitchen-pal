@@ -3,14 +3,17 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChefHat, Award } from 'lucide-react';
-import { ChefPersonality } from '@/types';
+
+// Define ChefPersonality type if it doesn't exist in types/index.ts
+type ChefPersonality = 'Traditional' | 'Adventurous' | 'Health-conscious' | 'Comfort Food' | 
+  'Gourmet' | 'Speedy Chef' | 'Precision' | 'Creative';
 
 interface ChefAvatarDisplayProps {
   name: string;
   level: number;
   experience: number;
   nextLevelExperience: number;
-  personality: ChefPersonality;
+  personality: ChefPersonality | string;
   avatarUrl: string;
   achievements?: {
     id: string;

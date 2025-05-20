@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mockRecipes } from '@/data/mockData';
-import { Flag, Utensils, Dessert, Wine, Martini, Languages } from 'lucide-react';
+import { Flag, Utensils, Dessert, Wine, Martini } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const GlobalCuisinePage = () => {
@@ -14,7 +14,6 @@ const GlobalCuisinePage = () => {
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
   const [selectedCuisine, setSelectedCuisine] = useState('');
-  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   // Main categories and their subcategories
   const categories = {
@@ -69,16 +68,7 @@ const GlobalCuisinePage = () => {
       header={{
         title: 'Global Cuisine',
         showBackButton: true,
-        showSearch: true,
-        actions: (
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-          >
-            <Languages size={20} className="text-wasfah-deep-teal" />
-          </Button>
-        )
+        showSearch: true
       }}
     >
       <div className="space-y-6 pb-20">
@@ -89,10 +79,10 @@ const GlobalCuisinePage = () => {
             <h3 className="font-semibold text-wasfah-deep-teal">Select Cuisine</h3>
           </div>
           <Select value={selectedCuisine} onValueChange={setSelectedCuisine}>
-            <SelectTrigger>
+            <SelectTrigger className="bg-white">
               <SelectValue placeholder="Select cuisine country" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               {cuisines.map((cuisine) => (
                 <SelectItem key={cuisine.name} value={cuisine.name.toLowerCase()}>
                   <span className="mr-2">{cuisine.flag}</span> {cuisine.name}

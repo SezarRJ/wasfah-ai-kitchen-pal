@@ -1,4 +1,3 @@
-
 // Recipe Types
 export interface Recipe {
   id: string;
@@ -131,15 +130,8 @@ export interface ChefPreferences {
   flavorProfiles: string[];
 }
 
-export type ChefPersonality = 
-  | 'Traditional' 
-  | 'Adventurous' 
-  | 'Health-conscious' 
-  | 'Comfort Food' 
-  | 'Gourmet' 
-  | 'Speedy Chef' 
-  | 'Precision' 
-  | 'Creative';
+export type ChefPersonality = 'Traditional' | 'Adventurous' | 'Health-conscious' | 'Comfort Food' | 
+  'Gourmet' | 'Speedy Chef' | 'Precision' | 'Creative';
 
 export interface ChefTip {
   id: string;

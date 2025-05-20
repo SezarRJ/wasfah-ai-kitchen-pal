@@ -7,6 +7,14 @@ import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, Globe,
   Heart, History, Share2, CalendarDays, Settings, User, Search, Award, 
   CreditCard, Languages, Bell, Moon, Trash2 } from 'lucide-react';
 
+// Define Home icon component before using it
+const Home = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+    <polyline points="9 22 9 12 15 12 15 22" />
+  </svg>
+);
+
 export default function QuickAccessPage() {
   const featureSections = [
     {
@@ -47,14 +55,6 @@ export default function QuickAccessPage() {
       ]
     }
   ];
-
-  // Add a missing lucide icon import
-  const Home = ({ className }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  );
 
   return (
     <PageContainer header={{ title: "App Navigation", showBackButton: true }}>

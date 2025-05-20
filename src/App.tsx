@@ -34,6 +34,7 @@ import HealthTrackingHomePage from "./pages/HealthTrackingHomePage";
 import FindByIngredientsPage from "./pages/FindByIngredientsPage";
 import QuickAccessPage from "./pages/QuickAccessPage";
 import LanguageSettingsPage from "./pages/LanguageSettingsPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 // Admin Panel Routes
 import AdminPage from "./pages/AdminPage";
@@ -64,15 +65,24 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            {/* Main Pages in order */}
+            <Route path="/" element={<QuickAccessPage />} />
+            <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
+            <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/chef-avatar" element={<ChefAvatarPage />} />
+            <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
+            <Route path="/meal-plan" element={<MealPlanPage />} />
+            <Route path="/pantry" element={<PantryPage />} />
+            <Route path="/shared-recipes" element={<SharedRecipesPage />} />
+            
+            {/* Secondary Pages */}
             <Route path="/new-home" element={<NewHomePage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/splash" element={<SplashScreen />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/recipes" element={<RecipesPage />} />
             <Route path="/recipe/:id" element={<RecipeDetailPage />} />
-            <Route path="/pantry" element={<PantryPage />} />
-            <Route path="/meal-plan" element={<MealPlanPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/create-recipe" element={<CreateRecipePage />} />
@@ -85,18 +95,10 @@ const App = () => (
             <Route path="/loyalty" element={<LoyaltyProgramPage />} />
             <Route path="/subscription" element={<SubscriptionPage />} />
             <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
-            <Route path="/shared-recipes" element={<SharedRecipesPage />} />
-            <Route path="/chef-avatar" element={<ChefAvatarPage />} />
-            <Route path="/favorites" element={<RecipesPage />} />
             <Route path="/history" element={<HealthTrackingPage />} />
             <Route path="/share-recipe" element={<CreateRecipePage />} />
             <Route path="/quick-access" element={<QuickAccessPage />} />
             <Route path="/language-settings" element={<LanguageSettingsPage />} />
-            
-            {/* New Routes */}
-            <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
-            <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
             <Route path="/shared-recipes-tracking" element={<SharedRecipesTrackingPage />} />
             
             {/* Admin Routes */}

@@ -9,7 +9,7 @@ import { NutritionProgressChart } from '@/components/nutrition/NutritionProgress
 import { NutritionSummary } from '@/components/nutrition/NutritionSummary';
 import { NutritionEntryForm } from '@/components/nutrition/NutritionEntryForm';
 import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
-import { Activity, Scale, CalendarDays } from 'lucide-react';
+import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function HealthTrackingHomePage() {
@@ -40,6 +40,34 @@ export default function HealthTrackingHomePage() {
     // Here you would typically save the data or update state
   };
 
+  // Mock ingredient swap data
+  const ingredientSwaps = [
+    {
+      original: 'Butter',
+      alternatives: [
+        { name: 'Olive Oil', benefits: 'Heart-healthy fats, less saturated fat', ratio: '3/4 cup for 1 cup butter' },
+        { name: 'Greek Yogurt', benefits: 'Lower fat, higher protein', ratio: '1/2 cup for 1 cup butter' },
+        { name: 'Applesauce', benefits: 'No fat, adds moisture', ratio: '1 cup for 1 cup butter' }
+      ]
+    },
+    {
+      original: 'Sugar',
+      alternatives: [
+        { name: 'Honey', benefits: 'Natural sweetener, contains antioxidants', ratio: '3/4 cup for 1 cup sugar' },
+        { name: 'Maple Syrup', benefits: 'Contains minerals, lower glycemic index', ratio: '3/4 cup for 1 cup sugar' },
+        { name: 'Stevia', benefits: 'Zero calories, natural sweetener', ratio: '1 tsp for 1 cup sugar' }
+      ]
+    },
+    {
+      original: 'White Flour',
+      alternatives: [
+        { name: 'Almond Flour', benefits: 'Low carb, high protein, gluten-free', ratio: '1:1 replacement' },
+        { name: 'Coconut Flour', benefits: 'High fiber, low carb', ratio: '1/4 cup for 1 cup flour' },
+        { name: 'Whole Wheat Flour', benefits: 'More fiber and nutrients', ratio: '1:1 replacement' }
+      ]
+    }
+  ];
+
   return (
     <PageContainer header={{ title: 'Health & Tracking', showBackButton: true }}>
       <div className="space-y-6 pb-20">
@@ -51,7 +79,7 @@ export default function HealthTrackingHomePage() {
         />
         
         <Tabs defaultValue="track">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="track">
               <Activity className="h-4 w-4 mr-1" />
               Track
@@ -59,6 +87,10 @@ export default function HealthTrackingHomePage() {
             <TabsTrigger value="goals">
               <Scale className="h-4 w-4 mr-1" />
               Goals
+            </TabsTrigger>
+            <TabsTrigger value="swaps">
+              <ArrowLeftRight className="h-4 w-4 mr-1" />
+              Swaps
             </TabsTrigger>
             <TabsTrigger value="history">
               <CalendarDays className="h-4 w-4 mr-1" />
@@ -114,6 +146,42 @@ export default function HealthTrackingHomePage() {
             <Link to="/dietary-preferences">
               <Button variant="outline" className="w-full border-wasfah-bright-teal text-wasfah-bright-teal">
                 Manage Dietary Preferences
+              </Button>
+            </Link>
+          </TabsContent>
+          
+          <TabsContent value="swaps" className="space-y-4 mt-4">
+            <h3 className="text-lg font-semibold text-wasfah-deep-teal">Healthier Ingredient Alternatives</h3>
+            <div className="space-y-4">
+              {ingredientSwaps.map((swap, index) => (
+                <Card key={index}>
+                  <CardContent className="p-4">
+                    <h4 className="font-bold text-wasfah-deep-teal flex items-center mb-3">
+                      <Tag className="h-4 w-4 mr-2" />
+                      Instead of <span className="text-wasfah-bright-teal ml-1">{swap.original}</span>, try:
+                    </h4>
+                    <div className="space-y-3">
+                      {swap.alternatives.map((alt, altIdx) => (
+                        <div key={altIdx} className="bg-wasfah-light-gray p-3 rounded-md">
+                          <div className="flex justify-between">
+                            <h5 className="font-medium">{alt.name}</h5>
+                            <span className="text-xs bg-wasfah-bright-teal text-white px-2 py-0.5 rounded-full">
+                              {alt.ratio}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1">{alt.benefits}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            
+            <Link to="/ingredient-swap">
+              <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">
+                <ArrowLeftRight className="mr-2 h-4 w-4" />
+                View All Ingredient Swaps
               </Button>
             </Link>
           </TabsContent>

@@ -1,7 +1,7 @@
 
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ChefHat, CalendarDays, ShoppingCart, Menu } from 'lucide-react';
+import { Home, ChefHat, CalendarDays, ShoppingCart, Menu, Heart, Globe, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 
@@ -17,19 +17,19 @@ export const MobileNavbar: React.FC = () => {
       href: '/',
     },
     {
-      icon: ChefHat,
-      label: 'Recipes',
-      href: '/recipes',
+      icon: Search,
+      label: 'Find',
+      href: '/find-by-ingredients',
     },
     {
-      icon: CalendarDays,
-      label: 'Meal Plan',
-      href: '/meal-plan',
+      icon: Globe,
+      label: 'Cuisine',
+      href: '/global-cuisine',
     },
     {
-      icon: ShoppingCart,
-      label: 'Pantry',
-      href: '/pantry',
+      icon: Heart,
+      label: 'Favorites',
+      href: '/favorites',
     },
     {
       icon: Menu,

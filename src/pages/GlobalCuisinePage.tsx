@@ -128,8 +128,15 @@ const GlobalCuisinePage = () => {
           </div>
         </div>
         
+        {/* Find Recipe Button - MOVED UP */}
+        <Button 
+          className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal text-lg py-6"
+        >
+          Find Recipe
+        </Button>
+        
         {/* Recipe Results */}
-        <div className="mt-6">
+        <div>
           <h2 className="text-lg font-bold text-wasfah-deep-teal mb-4">
             {selectedCuisine ? (
               <div className="flex items-center">
@@ -142,13 +149,6 @@ const GlobalCuisinePage = () => {
           </h2>
           <RecipeGrid recipes={mockRecipes} columns={2} cardSize="medium" />
         </div>
-        
-        {/* Bottom CTA */}
-        <Button 
-          className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal text-lg py-6"
-        >
-          Find Recipe
-        </Button>
       </div>
     </PageContainer>
   );

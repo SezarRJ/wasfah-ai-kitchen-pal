@@ -5,57 +5,65 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, Globe,
   Heart, History, Share2, CalendarDays, Settings, User, Search, Award, 
-  CreditCard, Languages } from 'lucide-react';
+  CreditCard, Languages, Bell, Moon, Trash2 } from 'lucide-react';
 
 export default function QuickAccessPage() {
   const featureSections = [
     {
-      title: "Main Features",
+      title: "Main Navigation",
+      items: [
+        { icon: <Home className="h-6 w-6 text-wasfah-bright-teal" />, label: "Home", path: "/" },
+        { icon: <Search className="h-6 w-6 text-wasfah-bright-teal" />, label: "Find by Ingredients", path: "/find-by-ingredients" },
+        { icon: <Globe className="h-6 w-6 text-wasfah-bright-teal" />, label: "Global Cuisine", path: "/global-cuisine" },
+        { icon: <Heart className="h-6 w-6 text-red-500" />, label: "Favorites & History", path: "/favorites" },
+      ]
+    },
+    {
+      title: "Quick Features",
       items: [
         { icon: <ChefHat className="h-6 w-6 text-wasfah-bright-teal" />, label: "Chef Avatar", path: "/chef-avatar" },
-        { icon: <Globe className="h-6 w-6 text-wasfah-bright-teal" />, label: "Global Cuisine", path: "/global-cuisine" },
-        { icon: <Share2 className="h-6 w-6 text-wasfah-bright-teal" />, label: "Share Recipes", path: "/shared-recipes-tracking" },
-        { icon: <Award className="h-6 w-6 text-wasfah-bright-teal" />, label: "Loyalty Program", path: "/loyalty" },
-      ]
-    },
-    {
-      title: "Plan & Organize",
-      items: [
+        { icon: <Activity className="h-6 w-6 text-wasfah-coral-red" />, label: "Health Tracking", path: "/health-tracking-home" },
         { icon: <CalendarDays className="h-6 w-6 text-wasfah-deep-teal" />, label: "Meal Plan", path: "/meal-plan" },
         { icon: <ShoppingCart className="h-6 w-6 text-wasfah-deep-teal" />, label: "Pantry", path: "/pantry" },
-        { icon: <ShoppingCart className="h-6 w-6 text-wasfah-deep-teal" />, label: "Shopping List", path: "/shopping-list" },
-        { icon: <Search className="h-6 w-6 text-wasfah-deep-teal" />, label: "Find by Ingredients", path: "/find-by-ingredients" },
+        { icon: <Share2 className="h-6 w-6 text-wasfah-bright-teal" />, label: "Share Recipes", path: "/shared-recipes" },
       ]
     },
     {
-      title: "Health & Tracking",
+      title: "User & Settings",
       items: [
-        { icon: <Activity className="h-6 w-6 text-wasfah-coral-red" />, label: "Health Tracking", path: "/health-tracking-home" },
-        { icon: <Target className="h-6 w-6 text-wasfah-coral-red" />, label: "Set Goals", path: "/nutrition-goals" },
-        { icon: <ArrowLeftRight className="h-6 w-6 text-wasfah-coral-red" />, label: "Ingredient Swap", path: "/ingredient-swap" },
-      ]
-    },
-    {
-      title: "My Collection",
-      items: [
-        { icon: <Heart className="h-6 w-6 text-wasfah-coral-red" />, label: "Saved Recipes", path: "/favorites" },
-        { icon: <History className="h-6 w-6 text-wasfah-bright-teal" />, label: "History", path: "/history" },
-      ]
-    },
-    {
-      title: "Account & Payments",
-      items: [
-        { icon: <CreditCard className="h-6 w-6 text-wasfah-bright-teal" />, label: "Subscription", path: "/subscription" },
-        { icon: <Languages className="h-6 w-6 text-wasfah-bright-teal" />, label: "Language", path: "/language-settings" },
-        { icon: <Settings className="h-6 w-6 text-gray-600" />, label: "Settings", path: "/settings" },
         { icon: <User className="h-6 w-6 text-gray-600" />, label: "Profile", path: "/profile" },
+        { icon: <Award className="h-6 w-6 text-amber-500" />, label: "Loyalty Program", path: "/loyalty" },
+        { icon: <ShoppingCart className="h-6 w-6 text-wasfah-deep-teal" />, label: "Shopping List", path: "/shopping-list" },
+        { icon: <CreditCard className="h-6 w-6 text-wasfah-bright-teal" />, label: "Subscription", path: "/subscription" },
+      ]
+    },
+    {
+      title: "App Settings",
+      items: [
+        { icon: <Languages className="h-6 w-6 text-wasfah-bright-teal" />, label: "Language", path: "/language-settings" },
+        { icon: <Bell className="h-6 w-6 text-wasfah-bright-teal" />, label: "Notifications", path: "/settings" },
+        { icon: <Moon className="h-6 w-6 text-purple-600" />, label: "Appearance", path: "/settings" },
+        { icon: <Settings className="h-6 w-6 text-gray-600" />, label: "Settings", path: "/settings" },
       ]
     }
   ];
 
+  // Add a missing lucide icon import
+  const Home = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+      <polyline points="9 22 9 12 15 12 15 22" />
+    </svg>
+  );
+
   return (
-    <PageContainer header={{ title: "Quick Access", showBackButton: true }}>
+    <PageContainer header={{ title: "App Navigation", showBackButton: true }}>
       <div className="p-4 pb-24 space-y-6">
+        <div className="bg-gradient-to-br from-wasfah-bright-teal to-wasfah-deep-teal p-6 rounded-lg text-white text-center mb-6">
+          <h1 className="text-2xl font-bold mb-2">Welcome to WasfahAI</h1>
+          <p className="opacity-90">Your personal cooking assistant</p>
+        </div>
+
         {featureSections.map((section, index) => (
           <div key={index} className="space-y-3">
             <h2 className="text-lg font-bold text-wasfah-deep-teal">{section.title}</h2>

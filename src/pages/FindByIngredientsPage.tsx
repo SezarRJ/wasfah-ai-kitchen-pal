@@ -7,11 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Recipe } from '@/types';
-import { ChevronDown, Plus, Search, Filter, Utensils, Dessert, Wine } from 'lucide-react';
+import { ChevronDown, Plus, Search, Filter, Utensils, Dessert, Wine, XCircle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { mockRecipes } from '@/data/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CategoryFilters } from '@/components/recipe/CategoryFilters';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 // Mock categories with their ingredients
 const ingredientCategories = [
@@ -53,6 +53,10 @@ export default function FindByIngredientsPage() {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+  
+  // New state for adding custom ingredients
+  const [newIngredientName, setNewIngredientName] = useState('');
+  const [newIngredientCategory, setNewIngredientCategory] = useState('');
   
   // New state for categories and filters
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
@@ -96,10 +100,8 @@ export default function FindByIngredientsPage() {
     }
     
     // Mock search functionality - in a real app, this would call an API
-    // Filter based on selected ingredients, categories, subcategories, and other filters
     const results = mockRecipes.filter(recipe => {
       // This is just a simulation since mockRecipes doesn't have detailed properties
-      // In a real app, these filters would be applied properly
       return Math.random() > 0.3;
     });
     
@@ -110,6 +112,50 @@ export default function FindByIngredientsPage() {
       title: "Recipes Found",
       description: `Found ${results.length} recipes with your selected ingredients and filters.`
     });
+  };
+  
+  // Handle adding a new custom ingredient
+  const handleAddNewIngredient = () => {
+    if (!newIngredientName.trim()) {
+      toast({
+        title: "Invalid ingredient",
+        description: "Please enter an ingredient name.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!newIngredientCategory) {
+      toast({
+        title: "Select a category",
+        description: "Please select a category for your ingredient.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Check if ingredient already exists
+    const categoryExists = ingredientCategories.find(cat => cat.name === newIngredientCategory);
+    if (categoryExists && categoryExists.ingredients.includes(newIngredientName)) {
+      toast({
+        title: "Ingredient exists",
+        description: "This ingredient already exists in the selected category.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Add the ingredient to the category (in a real app, this would update the database)
+    // For this demo, we'll just add it to the selected ingredients
+    setSelectedIngredients([...selectedIngredients, newIngredientName]);
+    toast({
+      title: "Ingredient added",
+      description: `${newIngredientName} added to your ingredients.`
+    });
+    
+    // Reset the form
+    setNewIngredientName('');
+    setNewIngredientCategory('');
   };
 
   // Get icon for main category
@@ -144,16 +190,62 @@ export default function FindByIngredientsPage() {
         
         <TabsContent value="add" className="space-y-4 mt-4">
           <div className="sticky top-16 bg-white z-10 pb-2">
-            <Input
-              type="search"
-              placeholder="Search ingredients..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="mb-2"
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                type="search"
+                placeholder="Search ingredients..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="flex-1"
+              />
+              
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Plus size={18} />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Ingredient</DialogTitle>
+                  </DialogHeader>
+                  <div className="space-y-4 mt-2">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Ingredient Name</label>
+                      <Input 
+                        placeholder="Enter ingredient name" 
+                        value={newIngredientName}
+                        onChange={(e) => setNewIngredientName(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Category</label>
+                      <Select value={newIngredientCategory} onValueChange={setNewIngredientCategory}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {ingredientCategories.map(category => (
+                            <SelectItem key={category.name} value={category.name}>
+                              {category.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button 
+                      onClick={handleAddNewIngredient}
+                      className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal"
+                    >
+                      Add Ingredient
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </div>
             
             {selectedIngredients.length > 0 && (
-              <div className="mb-4">
+              <div className="mb-4 mt-3">
                 <p className="text-sm text-gray-600 mb-2">Selected ingredients:</p>
                 <div className="flex flex-wrap gap-2">
                   {selectedIngredients.map(ingredient => (
@@ -163,7 +255,7 @@ export default function FindByIngredientsPage() {
                       onClick={() => toggleIngredient(ingredient)}
                     >
                       {ingredient}
-                      <span className="ml-1 cursor-pointer">×</span>
+                      <XCircle size={14} className="ml-1 cursor-pointer" />
                     </div>
                   ))}
                 </div>

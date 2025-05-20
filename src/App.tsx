@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,7 +32,6 @@ import DietaryPreferencesPage from "./pages/DietaryPreferencesPage";
 import SharedRecipesTrackingPage from "./pages/SharedRecipesTrackingPage";
 import HealthTrackingHomePage from "./pages/HealthTrackingHomePage";
 import FindByIngredientsPage from "./pages/FindByIngredientsPage";
-import QuickAccessPage from "./pages/QuickAccessPage";
 import LanguageSettingsPage from "./pages/LanguageSettingsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import MainSettingsPage from "./pages/MainSettingsPage";

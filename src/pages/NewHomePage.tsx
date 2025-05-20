@@ -25,7 +25,7 @@ const NewHomePage = () => {
   const [quantity, setQuantity] = useState('1');
   const [unit, setUnit] = useState('');
   const [selectedMainCategory, setSelectedMainCategory] = useState('Foods');
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const [isAdvancedFilterOpen, setIsAdvancedFilterOpen] = useState(false);
   const [pantryItems, setPantryItems] = useState([
     'Tomatoes', 'Onions', 'Chicken', 'Rice', 'Garlic'
@@ -45,14 +45,6 @@ const NewHomePage = () => {
     }
   };
 
-  const toggleSubcategory = (subcategory: string) => {
-    if (selectedSubcategories.includes(subcategory)) {
-      setSelectedSubcategories(selectedSubcategories.filter(item => item !== subcategory));
-    } else {
-      setSelectedSubcategories([...selectedSubcategories, subcategory]);
-    }
-  };
-
   return (
     <PageContainer 
       header={{
@@ -62,7 +54,7 @@ const NewHomePage = () => {
     >
       <div className="space-y-6 pb-20">
         {/* Ingredient Section */}
-        <Card className="p-4">
+        <Card className="p-4 card-3d">
           <h2 className="font-bold text-lg text-wasfah-deep-teal mb-3">Add Ingredients</h2>
           
           <Tabs defaultValue="manual">
@@ -85,7 +77,7 @@ const NewHomePage = () => {
                     <SelectTrigger className="w-20">
                       <SelectValue placeholder="Qty" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border shadow-lg">
                       {[0.25, 0.5, 0.75, 1, 2, 3, 4, 5].map(num => (
                         <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
                       ))}
@@ -95,7 +87,7 @@ const NewHomePage = () => {
                     <SelectTrigger className="w-24">
                       <SelectValue placeholder="Unit" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white border shadow-lg">
                       {['g', 'kg', 'ml', 'L', 'tsp', 'tbsp', 'cup', 'oz', 'lb', 'piece'].map(u => (
                         <SelectItem key={u} value={u}>{u}</SelectItem>
                       ))}
@@ -169,48 +161,43 @@ const NewHomePage = () => {
           </Button>
         </Card>
         
-        {/* Main Categories (horizontal scroll) */}
-        <div className="overflow-x-auto pb-2">
-          <div className="flex space-x-2 min-w-max">
-            {Object.keys(categories).map((category) => (
-              <Button 
-                key={category}
-                variant={selectedMainCategory === category ? "default" : "outline"}
-                className={selectedMainCategory === category ? 
-                  "bg-wasfah-bright-teal hover:bg-wasfah-teal" : 
-                  "border-wasfah-bright-teal text-wasfah-bright-teal"}
-                onClick={() => setSelectedMainCategory(category)}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-        
-        {/* Subcategories */}
-        <div className="overflow-x-auto pb-2">
-          <div className="flex space-x-2 min-w-max">
-            {categories[selectedMainCategory as keyof typeof categories].map((subcategory) => (
-              <Button 
-                key={subcategory}
-                variant="outline"
-                size="sm"
-                className={selectedSubcategories.includes(subcategory) ? 
-                  "bg-wasfah-deep-teal text-white border-wasfah-deep-teal" : 
-                  "border-wasfah-deep-teal text-wasfah-deep-teal"}
-                onClick={() => toggleSubcategory(subcategory)}
-              >
-                {subcategory}
-              </Button>
-            ))}
-          </div>
+        {/* Main Categories (Select) */}
+        <div className="space-y-4">
+          <h3 className="font-medium text-wasfah-deep-teal">Select Category</h3>
+          <Select value={selectedMainCategory} onValueChange={setSelectedMainCategory}>
+            <SelectTrigger className="w-full bg-white border shadow-sm">
+              <SelectValue placeholder="Select a category" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-lg">
+              {Object.keys(categories).map((category) => (
+                <SelectItem key={category} value={category}>
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          
+          {/* Subcategories (Select) */}
+          <h3 className="font-medium text-wasfah-deep-teal">Select Subcategory</h3>
+          <Select value={selectedSubcategory} onValueChange={setSelectedSubcategory}>
+            <SelectTrigger className="w-full bg-white border shadow-sm">
+              <SelectValue placeholder="Select a subcategory" />
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-lg">
+              {categories[selectedMainCategory as keyof typeof categories].map((subcategory) => (
+                <SelectItem key={subcategory} value={subcategory}>
+                  {subcategory}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         
         {/* Advanced Filters */}
         <Collapsible 
           open={isAdvancedFilterOpen} 
           onOpenChange={setIsAdvancedFilterOpen}
-          className="border rounded-lg p-4"
+          className="border rounded-lg p-4 card-3d"
         >
           <div className="flex justify-between items-center">
             <h3 className="font-semibold text-wasfah-deep-teal">Advanced Filters</h3>
@@ -229,7 +216,7 @@ const NewHomePage = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border shadow-lg">
                     <SelectItem value="vegetarian">Vegetarian</SelectItem>
                     <SelectItem value="vegan">Vegan</SelectItem>
                     <SelectItem value="gluten-free">Gluten Free</SelectItem>
@@ -244,7 +231,7 @@ const NewHomePage = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border shadow-lg">
                     <SelectItem value="under15">Under 15 mins</SelectItem>
                     <SelectItem value="under30">Under 30 mins</SelectItem>
                     <SelectItem value="under60">Under 60 mins</SelectItem>
@@ -259,7 +246,7 @@ const NewHomePage = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border shadow-lg">
                     <SelectItem value="easy">Easy</SelectItem>
                     <SelectItem value="medium">Medium</SelectItem>
                     <SelectItem value="hard">Hard</SelectItem>
@@ -273,7 +260,7 @@ const NewHomePage = () => {
                   <SelectTrigger>
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white border shadow-lg">
                     <SelectItem value="levant">Levant</SelectItem>
                     <SelectItem value="italian">Italian</SelectItem>
                     <SelectItem value="mexican">Mexican</SelectItem>
@@ -288,7 +275,7 @@ const NewHomePage = () => {
         
         {/* Bottom CTA */}
         <Button 
-          className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal text-lg py-6"
+          className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal text-lg py-6 card-3d"
         >
           Find Recipe
         </Button>
@@ -297,7 +284,7 @@ const NewHomePage = () => {
         <Link to="/create-recipe">
           <Button 
             variant="outline" 
-            className="w-full border-wasfah-deep-teal text-wasfah-deep-teal hover:bg-wasfah-deep-teal hover:text-white"
+            className="w-full border-wasfah-deep-teal text-wasfah-deep-teal hover:bg-wasfah-deep-teal hover:text-white card-3d"
           >
             <ChefHat size={16} className="mr-2" /> Create & Share Recipe
           </Button>
@@ -305,7 +292,7 @@ const NewHomePage = () => {
       </div>
       
       {/* Quick Access Bar (sticky bottom) */}
-      <div className="fixed bottom-20 left-0 right-0 bg-white border-t border-gray-200 p-2 flex justify-around">
+      <div className="fixed bottom-20 left-0 right-0 bg-white border-t border-gray-200 p-2 flex justify-around card-3d">
         <Link to="/favorites">
           <Button variant="ghost" size="sm" className="flex flex-col items-center">
             <Heart size={20} className="text-wasfah-bright-teal" />

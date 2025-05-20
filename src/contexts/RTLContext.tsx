@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useToast } from '@/hooks/use-toast';
 
 interface RTLContextProps {
   isRTL: boolean;
@@ -7,11 +8,13 @@ interface RTLContextProps {
   toggleRTL: () => void;
   language: string;
   setLanguage: (lang: string) => void;
+  direction: 'ltr' | 'rtl';
 }
 
 const RTLContext = createContext<RTLContextProps | undefined>(undefined);
 
 export const RTLProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { toast } = useToast();
   // Get initial language from localStorage or default to English
   const [language, setLanguageState] = useState<string>(
     localStorage.getItem('preferredLanguage') || 'en'
@@ -31,12 +34,27 @@ export const RTLProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       document.documentElement.dir = 'ltr';
       document.body.style.textAlign = 'left';
     }
-  }, [isRTL]);
+    
+    // Apply language attribute for screen readers
+    document.documentElement.lang = language;
+  }, [isRTL, language]);
 
   const setLanguage = (lang: string) => {
-    localStorage.setItem('preferredLanguage', lang);
-    setLanguageState(lang);
-    setRTLState(lang === 'ar');
+    try {
+      localStorage.setItem('preferredLanguage', lang);
+      setLanguageState(lang);
+      const newIsRTL = lang === 'ar';
+      setRTLState(newIsRTL);
+      
+      toast({
+        title: newIsRTL ? "تم تغيير اللغة" : "Language Changed",
+        description: newIsRTL ? 
+          "تم تغيير لغة التطبيق إلى العربية" : 
+          `The application language has been changed to ${lang === 'en' ? 'English' : lang}`
+      });
+    } catch (error) {
+      console.error('Error setting language:', error);
+    }
   };
 
   const setRTL = (value: boolean) => {
@@ -45,10 +63,18 @@ export const RTLProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const toggleRTL = () => {
     setRTL(!isRTL);
+    setLanguage(isRTL ? 'en' : 'ar');
   };
 
   return (
-    <RTLContext.Provider value={{ isRTL, setRTL, toggleRTL, language, setLanguage }}>
+    <RTLContext.Provider value={{ 
+      isRTL, 
+      setRTL, 
+      toggleRTL, 
+      language, 
+      setLanguage,
+      direction: isRTL ? 'rtl' : 'ltr'
+    }}>
       {children}
     </RTLContext.Provider>
   );

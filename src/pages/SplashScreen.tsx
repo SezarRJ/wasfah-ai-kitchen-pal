@@ -1,29 +1,27 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WasfahLogo } from '@/components/icons/WasfahLogo';
-import { ChefHat, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { ChevronRight } from 'lucide-react';
+import { WasfahLogo } from '@/components/icons/WasfahLogo';
 
-interface SplashScreenContent {
-  title: string;
-  description: string;
-  image?: string;
-}
-
-const splashScreens: SplashScreenContent[] = [
+// Define splash screen content
+const splashScreens = [
   {
-    title: 'Welcome to WasfahAI',
-    description: 'Your AI-powered kitchen companion for discovering and cooking amazing recipes.'
+    title: 'Welcome to Wasfah AI',
+    description: 'Discover personalized meal suggestions, AI-powered recipe recommendations, and connect with a community of culinary enthusiasts.',
+    image: '/lovable-uploads/ed0ba6f7-c589-46f1-96a9-e69b3990c573.png'
   },
   {
-    title: 'Personalized Recipes',
-    description: 'Get recipe recommendations based on your dietary preferences, available ingredients, and skill level.'
+    title: 'Best Desserts',
+    description: 'Discover personalized meal suggestions and share your culinary creations with a vibrant community of food enthusiasts.',
+    image: '/lovable-uploads/3478e6c6-66b6-44b8-9f16-0426e1989ab2.png'
   },
   {
-    title: 'Join Our Community',
-    description: 'Connect with other food lovers, share recipes, and get inspired by culinary creations from around the world.'
+    title: 'All types of drinks',
+    description: 'Discover personalized meal suggestions and connect with our vibrant community to enhance your cooking journey.',
+    image: '/lovable-uploads/7ad13e17-a95f-4ed1-9edd-8e0a123d699e.png'
   }
 ];
 
@@ -39,7 +37,7 @@ export default function SplashScreen() {
     if (autoAdvance) {
       // Start progress animation
       const startTime = Date.now();
-      const duration = 2000; // 2 seconds per screen
+      const duration = 3000; // 3 seconds per screen
       
       const updateProgress = () => {
         const elapsed = Date.now() - startTime;
@@ -82,44 +80,50 @@ export default function SplashScreen() {
     navigate('/auth');
   };
 
+  const currentSplashScreen = splashScreens[currentScreen];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-wasfah-deep-teal to-wasfah-bright-teal flex flex-col items-center justify-between px-6 py-10">
-      <div className="w-full flex justify-end">
+    <div className="min-h-screen flex flex-col">
+      {/* Skip button */}
+      <div className="w-full flex justify-end p-4">
         <Button 
           variant="ghost" 
-          className="text-white hover:bg-white/10"
+          className="text-wasfah-deep-teal hover:bg-wasfah-light-gray"
           onClick={handleSkip}
         >
           Skip
         </Button>
       </div>
       
-      <div className="flex flex-col items-center justify-center flex-1 text-center">
-        <div className="animate-pulse mb-8">
-          <WasfahLogo className="text-white w-32 h-32" />
+      {/* Image section */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4">
+        <div className="w-full max-w-md overflow-hidden rounded-3xl shadow-xl mb-8 border border-gray-200">
+          <img 
+            src={currentSplashScreen.image} 
+            alt={currentSplashScreen.title} 
+            className="w-full h-auto object-cover"
+          />
         </div>
         
-        <div className="mb-8">
-          <div className="flex items-center justify-center">
-            <ChefHat size={28} className="text-wasfah-bright-teal mr-2" />
-            <h1 className="text-3xl font-bold text-white">
-              {splashScreens[currentScreen].title}
-            </h1>
-          </div>
+        <div className="text-center max-w-md">
+          <h1 className="text-3xl font-bold text-wasfah-deep-teal mb-4">
+            {currentSplashScreen.title}
+          </h1>
           
-          <p className="mt-4 text-lg text-white/90 max-w-sm">
-            {splashScreens[currentScreen].description}
+          <p className="text-gray-600 text-lg mb-8">
+            {currentSplashScreen.description}
           </p>
         </div>
       </div>
       
-      <div className="w-full max-w-sm">
+      {/* Navigation and controls */}
+      <div className="p-6 w-full max-w-md mx-auto">
         <div className="flex justify-center mb-4">
           {splashScreens.map((_, index) => (
             <div 
               key={index}
               className={`h-2 w-2 rounded-full mx-1 ${
-                index === currentScreen ? 'bg-white' : 'bg-white/30'
+                index === currentScreen ? 'bg-wasfah-bright-teal' : 'bg-gray-300'
               }`}
             />
           ))}
@@ -127,15 +131,15 @@ export default function SplashScreen() {
         
         <Progress 
           value={progress} 
-          className="h-1 mb-6 bg-white/20"
+          className="h-1 mb-6"
         />
         
         <Button
-          className="w-full bg-white text-wasfah-deep-teal hover:bg-white/90 flex items-center justify-center"
+          className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal text-white rounded-full py-6 flex items-center justify-center"
           onClick={handleNext}
         >
           {currentScreen < splashScreens.length - 1 ? (
-            <>Next <ArrowRight size={18} className="ml-2" /></>
+            <>Next <ChevronRight size={20} className="ml-2" /></>
           ) : (
             'Get Started'
           )}

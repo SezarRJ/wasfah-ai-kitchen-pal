@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Recipe } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -7,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Clock, ChefHat, Users, ArrowUpRight, Heart, Share, Info } from 'lucide-react';
 import { RecipeSocialInteractions } from './RecipeSocialInteractions';
+import { useToast } from '@/hooks/use-toast';
 
 interface RecipeDetailProps {
   recipe: Recipe;
@@ -19,6 +19,25 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({
   onAddToShoppingList,
   onStartCookingMode,
 }) => {
+  const { toast } = useToast();
+  const [isLiked, setIsLiked] = useState(recipe.isFavorite);
+  const [likeCount, setLikeCount] = useState(recipe.rating * 10); // Just an example value
+
+  const handleLike = (recipeId: string) => {
+    setIsLiked(!isLiked);
+    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
+  };
+
+  const handleComment = (recipeId: string, comment: string) => {
+    console.log(`New comment on recipe ${recipeId}: ${comment}`);
+    // Here you would typically send the comment to your API
+  };
+
+  const handleShare = (recipeId: string) => {
+    console.log(`Sharing recipe ${recipeId}`);
+    // Here you would open your share modal or integrations
+  };
+
   return (
     <div>
       <div 
@@ -173,6 +192,16 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({
             <span>Share</span>
           </button>
         </div>
+        
+        <RecipeSocialInteractions
+          recipeId={recipe.id}
+          likes={likeCount}
+          comments={[]}
+          isLiked={isLiked}
+          onLike={handleLike}
+          onComment={handleComment}
+          onShare={handleShare}
+        />
       </div>
     </div>
   );

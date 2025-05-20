@@ -3,7 +3,7 @@ import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChefHat, Search, Activity, Heart, Globe, Calendar, ShoppingCart, Share2 } from 'lucide-react';
+import { ChefHat, Search, Activity, Heart, Globe, Calendar, ShoppingCart, Share2, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
 import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
@@ -35,56 +35,48 @@ const HomePage = () => {
       label: "Find by Ingredients", 
       path: "/find-by-ingredients",
       color: "bg-wasfah-bright-teal",
-      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9"
     },
     { 
       icon: <Globe className="h-6 w-6 text-white" />, 
       label: "Global Cuisine", 
       path: "/global-cuisine",
       color: "bg-wasfah-deep-teal",
-      image: "https://images.unsplash.com/photo-1482938289607-e9573fc25ebb"
     },
     { 
       icon: <Calendar className="h-6 w-6 text-white" />, 
       label: "Meal Plan", 
       path: "/meal-plan",
       color: "bg-green-500",
-      image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
     },
     { 
       icon: <ChefHat className="h-6 w-6 text-white" />, 
       label: "Chef Avatar", 
       path: "/chef-avatar",
       color: "bg-amber-500",
-      image: "https://images.unsplash.com/photo-1501286353178-1ec881214838"
     },
     { 
       icon: <Activity className="h-6 w-6 text-white" />, 
       label: "Health Tracking", 
       path: "/health-tracking-home",
       color: "bg-wasfah-coral-red",
-      image: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1"
     },
     { 
       icon: <ShoppingCart className="h-6 w-6 text-white" />, 
       label: "Pantry", 
       path: "/pantry",
       color: "bg-purple-500",
-      image: "https://images.unsplash.com/photo-1465379944081-7f47de8d74ac"
     },
     { 
-      icon: <Share2 className="h-6 w-6 text-white" />, 
-      label: "Share Recipes Status", 
-      path: "/shared-recipes-tracking",
+      icon: <Users className="h-6 w-6 text-white" />, 
+      label: "Community", 
+      path: "/community",
       color: "bg-blue-500",
-      image: "https://images.unsplash.com/photo-1582562124811-c09040d0a901"
     },
     { 
       icon: <Heart className="h-6 w-6 text-white" />, 
       label: "Favorites", 
       path: "/favorites",
       color: "bg-pink-500",
-      image: "https://images.unsplash.com/photo-1470813740244-df37b8c1edcb"
     },
   ];
 
@@ -111,25 +103,16 @@ const HomePage = () => {
           onApply={handleApplyTip}
         />
         
-        {/* Main Features Grid with Images */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Main Features Grid with Icons only */}
+        <div className="grid grid-cols-4 gap-4">
           {mainFeatures.map((feature, index) => (
-            <Link to={feature.path} key={index}>
-              <Card className="overflow-hidden border-none hover:shadow-lg transition-all duration-300">
-                <div 
-                  className="h-28 bg-cover bg-center relative"
-                  style={{ backgroundImage: `url(${feature.image})` }}
-                >
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className={`${feature.color} p-2 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-2`}>
-                        {feature.icon}
-                      </div>
-                      <h3 className="text-white text-sm font-semibold">{feature.label}</h3>
-                    </div>
-                  </div>
+            <Link to={feature.path} key={index} className="text-center">
+              <div className="flex flex-col items-center">
+                <div className={`${feature.color} rounded-full w-14 h-14 mb-2 flex items-center justify-center shadow-md card-3d`}>
+                  {feature.icon}
                 </div>
-              </Card>
+                <span className="text-xs font-medium text-gray-700">{feature.label}</span>
+              </div>
             </Link>
           ))}
         </div>

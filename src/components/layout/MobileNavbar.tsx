@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ChefHat, CalendarDays, ShoppingCart, Menu, Heart, Globe, Search } from 'lucide-react';
+import { Home, ChefHat, CalendarDays, ShoppingCart, Menu, Heart, Globe, Search, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 
@@ -22,9 +22,9 @@ export const MobileNavbar: React.FC = () => {
       href: '/find-by-ingredients',
     },
     {
-      icon: Globe,
-      label: 'Cuisine',
-      href: '/global-cuisine',
+      icon: Users,
+      label: 'Community',
+      href: '/community',
     },
     {
       icon: Heart,
@@ -40,7 +40,7 @@ export const MobileNavbar: React.FC = () => {
 
   return (
     <div className={cn(
-      "fixed bottom-0 left-0 right-0 border-t z-50",
+      "fixed bottom-0 left-0 right-0 border-t z-50 card-3d",
       isDarkMode
         ? "bg-gray-900 border-gray-800 text-white"
         : "bg-white border-gray-200"

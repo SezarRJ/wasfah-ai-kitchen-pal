@@ -2,8 +2,10 @@
 /* RTL support for Arabic language */
 .rtl {
   direction: rtl;
+  text-align: right;
 }
 
+/* Basic text alignment */
 .rtl .text-left {
   text-align: right;
 }
@@ -12,6 +14,7 @@
   text-align: left;
 }
 
+/* Margin adjustments */
 .rtl .mr-1, .rtl .mr-2, .rtl .mr-3, .rtl .mr-4, .rtl .mr-5, .rtl .mr-6 {
   margin-right: 0 !important;
 }
@@ -34,6 +37,7 @@
 .rtl .ml-5 { margin-right: 1.25rem !important; }
 .rtl .ml-6 { margin-right: 1.5rem !important; }
 
+/* Padding adjustments */
 .rtl .pl-1, .rtl .pl-2, .rtl .pl-3, .rtl .pl-4, .rtl .pl-5, .rtl .pl-6 {
   padding-left: 0 !important;
 }
@@ -61,6 +65,13 @@
   flex-direction: row-reverse;
 }
 
+/* Fix for grid layouts */
+.rtl .grid-cols-2,
+.rtl .grid-cols-3,
+.rtl .grid-cols-4 {
+  direction: rtl;
+}
+
 /* Fix scroll area for RTL */
 .rtl .scrollbar {
   left: 0;
@@ -70,4 +81,48 @@
 /* Fix dropdown positioning */
 .rtl [data-radix-popper-content-wrapper] {
   transform-origin: right top !important;
+}
+
+/* Icons in RTL mode */
+.rtl .lucide-chevron-right {
+  transform: rotate(180deg);
+}
+
+.rtl .lucide-chevron-left {
+  transform: rotate(180deg);
+}
+
+/* Input and form controls */
+.rtl input,
+.rtl textarea,
+.rtl select {
+  text-align: right;
+}
+
+/* Button icon alignment */
+.rtl .button-icon-right {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.rtl .button-icon-left {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+/* Card content alignment */
+.rtl .card-content {
+  text-align: right;
+}
+
+/* List items */
+.rtl ul li,
+.rtl ol li {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+/* Fix for radix components */
+.rtl .radix-dropdown-content {
+  text-align: right;
 }

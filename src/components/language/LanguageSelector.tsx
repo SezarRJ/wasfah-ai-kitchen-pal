@@ -18,11 +18,11 @@ interface LanguageSelectorProps {
 }
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'en', name: 'English', flag: '🇺🇸', rtl: false },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', rtl: true },
+  { code: 'es', name: 'Español', flag: '🇪🇸', rtl: false },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', rtl: false },
+  { code: 'zh', name: '中文', flag: '🇨🇳', rtl: false },
 ];
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({ 
@@ -37,8 +37,10 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     const selectedLanguage = languages.find(l => l.code === lang);
     
     toast({
-      title: "Language Changed",
-      description: `The app language has been changed to ${selectedLanguage?.name}`,
+      title: lang === 'ar' ? "تم تغيير اللغة" : "Language Changed",
+      description: lang === 'ar' 
+        ? "تم تغيير لغة التطبيق إلى العربية" 
+        : `The app language has been changed to ${selectedLanguage?.name}`,
     });
   };
   
@@ -49,12 +51,12 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <DropdownMenuTrigger asChild>
         <Button variant={variant} size={size} className="relative">
           <Globe className="h-5 w-5" />
-          {size !== 'icon' && (
-            <span className="ml-2">{currentLanguage?.name}</span>
+          {size !== 'icon' && currentLanguage && (
+            <span className="ml-2">{currentLanguage.name}</span>
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-48 bg-white border shadow-lg">
+      <DropdownMenuContent align="end" className="w-48 bg-white border border-gray-200 shadow-lg rounded-lg">
         <DropdownMenuGroup>
           {languages.map((lang) => (
             <DropdownMenuItem 
@@ -65,7 +67,9 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               }`}
             >
               <span className="mr-2 text-xl">{lang.flag}</span>
-              <span>{lang.name}</span>
+              <span className={`${lang.rtl ? 'text-right' : 'text-left'} flex-1`}>
+                {lang.name}
+              </span>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Button } from '@/components/ui/button';
@@ -14,14 +13,15 @@ export default function SharedRecipesPage() {
   const recipesWithSocial = mockRecipes.map(recipe => ({
     ...recipe,
     views: Math.floor(Math.random() * 100) + 50,
-    likes: Math.floor(Math.random() * 30) + 10, 
-    comments: Math.floor(Math.random() * 15),
+    likes: Math.floor(Math.random() * 30) + 10,
+    // FIX: Rename 'comments' (which was a number) to 'commentCount'
+    commentCount: Math.floor(Math.random() * 15),
     shares: Math.floor(Math.random() * 10),
     usedCount: Math.floor(Math.random() * 20)
   }));
 
   return (
-    <PageContainer 
+    <PageContainer
       header={{
         title: 'Shared Recipes',
         showBackButton: true,
@@ -39,7 +39,7 @@ export default function SharedRecipesPage() {
             </div>
           </CardContent>
         </Card>
-        
+
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold text-wasfah-deep-teal">Community Recipes</h3>
           <Link to="/shared-recipes-tracking">
@@ -48,34 +48,35 @@ export default function SharedRecipesPage() {
             </Button>
           </Link>
         </div>
-        
+
         <div className="space-y-4">
           {recipesWithSocial.slice(0, 3).map(recipe => (
             <Card key={recipe.id} className="overflow-hidden">
               <div className="flex flex-col md:flex-row">
                 <div className="w-full md:w-1/3 h-48 md:h-auto relative">
-                  <img 
-                    src={recipe.image} 
-                    alt={recipe.title} 
+                  <img
+                    src={recipe.image}
+                    alt={recipe.title}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="w-full md:w-2/3 p-4">
                   <h3 className="font-semibold text-lg mb-1">{recipe.title}</h3>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">{recipe.description}</p>
-                  
+
                   <RecipeSocialInteractions
                     recipeId={recipe.id}
                     views={recipe.views}
                     likes={recipe.likes}
-                    comments={recipe.comments}
+                    // FIX: Pass the number to a new prop, assuming the component accepts commentCount: number
+                    commentCount={recipe.commentCount}
                     shares={recipe.shares}
                     rating={recipe.rating}
                     ratingCount={recipe.ratingCount}
                     usedCount={recipe.usedCount}
                     isLiked={recipe.isFavorite}
                   />
-                  
+
                   <div className="mt-3 flex justify-end">
                     <Link to={`/recipe/${recipe.id}`}>
                       <Button size="sm">View Recipe</Button>
@@ -86,7 +87,7 @@ export default function SharedRecipesPage() {
             </Card>
           ))}
         </div>
-        
+
         <div className="flex space-x-3">
           <Link to="/create-recipe" className="flex-1">
             <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">

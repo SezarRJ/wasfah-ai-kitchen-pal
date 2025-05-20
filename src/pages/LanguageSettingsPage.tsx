@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -7,22 +7,21 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Check, Globe } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useRTL } from '@/contexts/RTLContext';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'en', name: 'English', flag: '🇺🇸', direction: 'ltr' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', direction: 'rtl' },
+  { code: 'es', name: 'Español', flag: '🇪🇸', direction: 'ltr' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷', direction: 'ltr' },
+  { code: 'zh', name: '中文', flag: '🇨🇳', direction: 'ltr' },
 ];
 
 export default function LanguageSettingsPage() {
-  const [language, setLanguage] = useState('en');
+  const { language, setLanguage } = useRTL();
   const { toast } = useToast();
 
   const handleSaveLanguage = () => {
-    // In a real app, this would save to user preferences and trigger a language change
-    localStorage.setItem('preferredLanguage', language);
     toast({
       title: 'Language Updated',
       description: `Your language has been set to ${languages.find(lang => lang.code === language)?.name}`,
@@ -42,7 +41,13 @@ export default function LanguageSettingsPage() {
               </div>
             </div>
 
-            <RadioGroup value={language} onValueChange={setLanguage} className="space-y-4">
+            <RadioGroup 
+              value={language} 
+              onValueChange={(value) => {
+                setLanguage(value);
+              }} 
+              className="space-y-4"
+            >
               {languages.map((lang) => (
                 <div key={lang.code} className="flex items-center space-x-2 border p-4 rounded-lg hover:border-wasfah-bright-teal">
                   <RadioGroupItem value={lang.code} id={`lang-${lang.code}`} />

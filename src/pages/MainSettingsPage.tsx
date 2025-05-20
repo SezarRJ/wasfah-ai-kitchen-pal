@@ -4,12 +4,10 @@ import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { User, Award, ShoppingCart, CreditCard, Languages, Bell, Moon, 
-  Settings, LogOut } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+  Settings } from 'lucide-react';
+import { SignOut } from '@/components/auth/SignOut';
 
 const MainSettingsPage = () => {
-  const { toast } = useToast();
-  
   const accountFeatures = [
     { icon: <User className="h-6 w-6 text-gray-600" />, label: "Profile", path: "/profile" },
     { icon: <Award className="h-6 w-6 text-amber-500" />, label: "Loyalty Program", path: "/loyalty" },
@@ -23,15 +21,6 @@ const MainSettingsPage = () => {
     { icon: <Moon className="h-6 w-6 text-purple-600" />, label: "Appearance", path: "/settings" },
     { icon: <Settings className="h-6 w-6 text-gray-600" />, label: "Settings", path: "/settings" },
   ];
-
-  const handleSignOut = () => {
-    // Implement sign out logic here
-    toast({
-      title: "Signing out",
-      description: "You have been signed out successfully"
-    });
-    // Navigate to login page or clear auth state
-  };
 
   return (
     <PageContainer header={{ title: "Settings", showBackButton: true }}>
@@ -91,12 +80,7 @@ const MainSettingsPage = () => {
         
         {/* Sign Out Button */}
         <div className="pt-4">
-          <Card className="bg-red-50 hover:bg-red-100 transition-colors" onClick={handleSignOut}>
-            <CardContent className="p-4 flex items-center justify-center space-x-2 cursor-pointer">
-              <LogOut className="h-5 w-5 text-red-600" />
-              <span className="font-medium text-red-600">Sign Out</span>
-            </CardContent>
-          </Card>
+          <SignOut />
         </div>
       </div>
     </PageContainer>

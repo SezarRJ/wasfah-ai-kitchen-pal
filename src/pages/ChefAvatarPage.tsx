@@ -1,14 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
 import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
-import { ChefPersonality } from '@/types';
-import { Book, ChefHat, Sparkles, Target, Award } from 'lucide-react';
+import { type ChefPersonality } from '@/types';
+import { Book, ChefHat, Sparkles, Target, Award, HelpCircle, Lightbulb } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 // Mock chef tips
 const mockChefTips = [
@@ -34,8 +35,39 @@ const learningPatterns = [
   { name: 'Health consciousness', description: 'Patterns related to nutritional choices' }
 ];
 
+// Chef avatar guide steps
+const guideSteps = [
+  { 
+    title: 'Your Personal Chef',
+    content: 'Your Chef Avatar is your personalized AI cooking assistant, designed to learn your preferences and provide tailored recommendations.',
+    icon: <ChefHat className="h-8 w-8 text-wasfah-bright-teal" />
+  },
+  { 
+    title: 'Learning Your Style',
+    content: 'As you use WasfahAI, your Chef Avatar learns from your interactions, recipes you cook, ratings you provide, and preferences you set.',
+    icon: <Target className="h-8 w-8 text-wasfah-bright-teal" />
+  },
+  { 
+    title: 'Growing Together',
+    content: 'Your Chef Avatar levels up as you cook more recipes, gaining experience points for various cooking activities.',
+    icon: <Award className="h-8 w-8 text-wasfah-bright-teal" />
+  },
+  { 
+    title: 'Personalized Recommendations',
+    content: 'Based on what it learns, your Chef Avatar will suggest recipes, techniques, and ingredients that align with your tastes and cooking style.',
+    icon: <Sparkles className="h-8 w-8 text-wasfah-bright-teal" />
+  },
+  { 
+    title: 'Customization',
+    content: 'You can customize your Chef Avatar\'s personality to match your cooking approach - from traditional to adventurous.',
+    icon: <Book className="h-8 w-8 text-wasfah-bright-teal" />
+  }
+];
+
 export default function ChefAvatarPage() {
   const { toast } = useToast();
+  const [showGuide, setShowGuide] = useState(false);
+  const [currentGuideStep, setCurrentGuideStep] = useState(0);
   
   const handleApplyTip = (tip: string) => {
     toast({
@@ -44,9 +76,39 @@ export default function ChefAvatarPage() {
     });
   };
   
+  const handleGuideNext = () => {
+    if (currentGuideStep < guideSteps.length - 1) {
+      setCurrentGuideStep(prev => prev + 1);
+    } else {
+      setShowGuide(false);
+      toast({
+        title: "Guide Completed",
+        description: "You've completed the Chef Avatar guide!"
+      });
+    }
+  };
+  
+  const handleGuideBack = () => {
+    if (currentGuideStep > 0) {
+      setCurrentGuideStep(prev => prev - 1);
+    }
+  };
+  
   return (
-    <PageContainer header={{ title: 'Chef Avatar', showBackButton: true }}>
-      <div className="space-y-6 pb-24">
+    <PageContainer header={{ 
+      title: 'Chef Avatar', 
+      showBackButton: true,
+      actions: (
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setShowGuide(true)}
+        >
+          <HelpCircle className="h-5 w-5 text-wasfah-deep-teal" />
+        </Button>
+      )
+    }}>
+      <div className="space-y-6 pb-24 px-4">
         {/* Chef Avatar */}
         <ChefAvatarDisplay 
           name="Chef Alex"
@@ -56,22 +118,22 @@ export default function ChefAvatarPage() {
           personality="Creative"
           avatarUrl="/placeholder.svg"
           achievements={[
-            { id: '1', title: 'Recipe Master', icon: <Book size={14} /> },
-            { id: '2', title: 'Social Cook', icon: <ChefHat size={14} /> }
+            { id: '1', title: "Recipe Master", icon: <Book size={14} /> },
+            { id: '2', title: "Social Cook", icon: <ChefHat size={14} /> }
           ]}
         />
         
         <Tabs defaultValue="model">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="model">Chef Model</TabsTrigger>
+            <TabsTrigger value="model">Profile</TabsTrigger>
             <TabsTrigger value="learning">Learning</TabsTrigger>
-            <TabsTrigger value="personalization">Engine</TabsTrigger>
+            <TabsTrigger value="personalization">Customize</TabsTrigger>
           </TabsList>
           
           <TabsContent value="model" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg text-wasfah-deep-teal">Chef Avatar Model</CardTitle>
+                <CardTitle className="text-lg text-wasfah-deep-teal">Chef Avatar Profile</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
@@ -186,62 +248,55 @@ export default function ChefAvatarPage() {
           <TabsContent value="personalization" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg text-wasfah-deep-teal">Personalization Engine</CardTitle>
+                <CardTitle className="text-lg text-wasfah-deep-teal">Customize Your Chef</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-sm text-gray-600">
-                  Based on what your chef avatar learns, it provides personalized assistance
-                  that evolves over time as your cooking skills and preferences change.
+                <p className="text-sm text-gray-600 mb-4">
+                  Personalize your Chef Avatar to enhance your cooking experience and receive more tailored recommendations.
                 </p>
                 
                 <div>
-                  <h3 className="font-semibold mb-2">Personalization Features</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <ChefHat size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Adaptive Personality</p>
-                        <p className="text-xs text-gray-500">Your chef's personality evolves to match your cooking style</p>
+                  <h3 className="font-semibold mb-3">Select Personality</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {personalities.map((personality) => (
+                      <div 
+                        key={personality}
+                        className={`p-3 rounded-md border cursor-pointer ${
+                          personality === 'Creative' 
+                            ? 'border-wasfah-bright-teal bg-wasfah-bright-teal/5' 
+                            : 'border-gray-200'
+                        }`}
+                      >
+                        <div className="font-medium text-sm">{personality}</div>
                       </div>
-                    </li>
-                    <li className="flex items-start">
-                      <Sparkles size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Personalized Tips</p>
-                        <p className="text-xs text-gray-500">Get cooking tips customized to your skill level and interests</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <Book size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Recipe Recommendations</p>
-                        <p className="text-xs text-gray-500">Discover new recipes aligned with your taste preferences</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <Target size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Technique Improvements</p>
-                        <p className="text-xs text-gray-500">Suggestions to enhance your cooking techniques</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <Award size={18} className="mr-2 text-wasfah-bright-teal mt-0.5" />
-                      <div>
-                        <p className="text-sm font-medium">Ingredient Discovery</p>
-                        <p className="text-xs text-gray-500">New ingredients recommended based on your preferences</p>
-                      </div>
-                    </li>
-                  </ul>
+                    ))}
+                  </div>
                 </div>
+                
+                <div className="mt-4">
+                  <h3 className="font-semibold mb-3">Chef Avatar Style</h3>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[1, 2, 3].map((avatar) => (
+                      <div 
+                        key={avatar}
+                        className={`border rounded-md overflow-hidden cursor-pointer ${
+                          avatar === 1 ? 'border-wasfah-bright-teal' : 'border-gray-200'
+                        }`}
+                      >
+                        <div className="h-20 bg-gray-200 flex items-center justify-center">
+                          <ChefHat size={28} className="text-gray-400" />
+                        </div>
+                        <div className="p-2 text-center text-xs">Style {avatar}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <Button className="w-full mt-2 bg-wasfah-bright-teal hover:bg-wasfah-teal">
+                  Save Preferences
+                </Button>
               </CardContent>
             </Card>
-            
-            <div className="flex justify-center">
-              <Button className="bg-wasfah-bright-teal hover:bg-wasfah-teal">
-                <ChefHat className="mr-2 h-4 w-4" /> Customize Chef Avatar
-              </Button>
-            </div>
             
             <ChefTipCard 
               tip={mockChefTips[2]}
@@ -252,6 +307,60 @@ export default function ChefAvatarPage() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Chef Avatar Guide Dialog */}
+      <Dialog open={showGuide} onOpenChange={setShowGuide}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center">
+              <Lightbulb className="mr-2 h-5 w-5 text-wasfah-bright-teal" />
+              Chef Avatar Guide
+            </DialogTitle>
+            <DialogDescription>
+              Learn how to get the most from your personalized Chef Avatar
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="py-4">
+            <div className="flex justify-center mb-6">
+              {guideSteps[currentGuideStep].icon}
+            </div>
+            
+            <h3 className="text-lg font-bold text-center mb-2">
+              {guideSteps[currentGuideStep].title}
+            </h3>
+            
+            <p className="text-center text-gray-600">
+              {guideSteps[currentGuideStep].content}
+            </p>
+            
+            <div className="flex justify-between items-center mt-8">
+              <Button 
+                variant="outline" 
+                onClick={handleGuideBack}
+                disabled={currentGuideStep === 0}
+              >
+                Back
+              </Button>
+              
+              <div className="flex space-x-1">
+                {guideSteps.map((_, index) => (
+                  <div 
+                    key={index} 
+                    className={`h-2 w-2 rounded-full ${
+                      index === currentGuideStep ? 'bg-wasfah-bright-teal' : 'bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+              
+              <Button onClick={handleGuideNext}>
+                {currentGuideStep < guideSteps.length - 1 ? 'Next' : 'Finish'}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </PageContainer>
   );
 }

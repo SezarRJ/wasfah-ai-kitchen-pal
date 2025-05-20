@@ -1,4 +1,8 @@
-// Recipe Types
+
+// Define ChefPersonality type
+export type ChefPersonality = 'Traditional' | 'Adventurous' | 'Health-conscious' | 'Comfort Food' | 
+  'Gourmet' | 'Speedy Chef' | 'Precision' | 'Creative';
+
 export interface Recipe {
   id: string;
   title: string;
@@ -11,227 +15,87 @@ export interface Recipe {
   calories: number;
   rating: number;
   ratingCount: number;
-  cuisineType: string;
-  ingredients: Ingredient[];
+  ingredients: {
+    id: string;
+    name: string;
+    quantity: string;
+    unit: string;
+    inPantry: boolean;
+  }[];
   instructions: string[];
+  categories: string[];
   tags: string[];
   isFavorite: boolean;
-  tips?: string[]; // Added optional tips property
-  nutritionalInfo?: NutritionalInfo; // Added nutritional information
-  allergens?: string[]; // Added allergens list
+  nutritionalInfo?: {
+    protein: number;
+    carbs: number;
+    fat: number;
+    fiber: number;
+    sugar: number;
+  };
 }
 
-export interface Ingredient {
-  id: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  inPantry: boolean;
-}
-
-// Pantry Types
-export interface PantryItem {
-  id: string;
-  name: string;
-  quantity: number;
-  unit: string;
-  category: string;
-  expiryDate: string;
-  location: string;
-}
-
-// New Nutritional Information Type
-export interface NutritionalInfo {
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-  fiber?: number;
-  sugar?: number;
-  sodium?: number;
-  cholesterol?: number;
-}
-
-// User Types
 export interface User {
   id: string;
   name: string;
   email: string;
-  avatarUrl: string;
-  avatar?: string; // Making this optional to work with ProfilePage
-  isPremium: boolean;
-  dietaryPreferences: string[];
-  cuisinePreferences: string[];
-  allergens: string[];
-  chefAvatar: string;
-  nutritionalGoals: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
-  healthMetrics?: HealthMetrics;
-  loyaltyPoints?: number;
-  loyaltyLevel?: string;
-  achievements?: Achievement[];
-  recipesSaved?: number;
-  recipesCreated?: number;
-  followersCount?: number;
+  avatar?: string;
+  dietaryPreferences?: string[];
+  allergies?: string[];
+  favoriteRecipes?: string[];
 }
 
-// Health Tracking Types
-export interface HealthMetrics {
-  weight?: number; // in kg
-  height?: number; // in cm
-  bmi?: number;
-  dailyActivityLevel?: 'Sedentary' | 'Light' | 'Moderate' | 'Active' | 'Very Active';
-  waterIntake?: number; // in ml
-  sleepHours?: number;
-  caloriesBurned?: number;
-}
-
-export interface DailyNutritionLog {
-  date: string;
-  meals: Meal[];
-  totalCalories: number;
-  totalProtein: number;
-  totalCarbs: number;
-  totalFat: number;
-  waterIntake: number;
-}
-
-// Chef Avatar Types
-export interface ChefAvatar {
-  id: string;
-  name: string;
-  personality: ChefPersonality;
-  level: number;
-  experiencePoints: number;
-  nextLevelPoints: number;
-  avatarImage: string;
-  accessories: ChefAccessory[];
-  preferences: ChefPreferences;
-}
-
-export interface ChefAccessory {
-  id: string;
-  name: string;
-  type: 'hat' | 'outfit' | 'tool' | 'background';
-  image: string;
-  isEquipped: boolean;
-  isLocked: boolean;
-  unlockRequirement?: string;
-}
-
-export interface ChefPreferences {
-  cuisines: string[];
-  ingredients: string[];
-  cookingMethods: string[];
-  flavorProfiles: string[];
-}
-
-export type ChefPersonality = 'Traditional' | 'Adventurous' | 'Health-conscious' | 'Comfort Food' | 
-  'Gourmet' | 'Speedy Chef' | 'Precision' | 'Creative';
-
-export interface ChefTip {
-  id: string;
-  content: string;
-  personality: ChefPersonality;
-  category: 'general' | 'ingredient' | 'technique' | 'nutrition' | 'time-saving';
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
-}
-
-// Meal Plan Types
 export interface MealPlan {
   id: string;
-  date: string;
-  meals: Meal[];
-  nutritionSummary: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
+  date: Date;
+  meals: {
+    id: string;
+    type: 'breakfast' | 'lunch' | 'dinner' | 'snack';
+    recipeId: string;
+    completed: boolean;
+  }[];
 }
 
-export interface Meal {
-  id: string;
-  type: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
-  recipe: Recipe;
-}
-
-// Shopping List Types
-export interface ShoppingList {
+export interface PantryItem {
   id: string;
   name: string;
-  items: ShoppingItem[];
-  createdAt: string;
-  lastUpdated: string;
+  category: string;
+  quantity: number;
+  unit: string;
+  expiryDate?: Date;
+  image?: string;
 }
 
-export interface ShoppingItem {
+export interface NutritionGoal {
+  id: string;
+  type: 'calories' | 'protein' | 'carbs' | 'fat' | 'fiber' | 'sugar';
+  target: number;
+  current: number;
+}
+
+export interface HealthRecord {
+  id: string;
+  date: Date;
+  weight?: number;
+  height?: number;
+  bmi?: number;
+  notes?: string;
+}
+
+export interface ShoppingListItem {
   id: string;
   name: string;
   quantity: number;
   unit: string;
-  category: string;
   checked: boolean;
-  addedFrom?: string; // recipe id or 'manual'
+  category?: string;
 }
 
-// Ingredient Swap Types
-export interface IngredientSwap {
-  originalIngredient: string;
-  alternatives: SwapAlternative[];
-}
-
-export interface SwapAlternative {
-  name: string;
-  nutritionalImpact: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
-  suitableFor: string[]; // dietary preferences it works for
-  flavorProfile: string[]; // sweet, salty, etc.
-}
-
-// Loyalty Program Types
-export interface Achievement {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  pointsAwarded: number;
-  dateEarned?: string;
-  progress?: number; // percentage of completion
-  total?: number; // total required to complete
-}
-
-export interface LoyaltyReward {
-  id: string;
-  title: string;
-  description: string;
-  pointsCost: number;
-  image: string;
-  isAvailable: boolean;
-}
-
-// Auth Types
-export interface AuthState {
-  isAuthenticated: boolean;
-  user: User | null;
-  loading: boolean;
-  error: string | null;
-}
-
-// Subscription Types
-export interface SubscriptionPlan {
-  id: string;
-  name: string;
-  price: number;
-  interval: 'monthly' | 'yearly';
-  features: string[];
-  isPopular?: boolean;
+export interface RecipeSocialData {
+  views: number;
+  likes: number;
+  comments: number;
+  shares: number;
+  usedCount: number;
+  isLiked: boolean;
 }

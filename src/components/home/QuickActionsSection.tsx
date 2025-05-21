@@ -2,26 +2,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
-import { Activity, ArrowLeftRight, ShoppingCart, Target, Plus, ChefHat, History, Heart, Share2 } from 'lucide-react';
+import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, History, Heart, Share2, Camera, Subscription } from 'lucide-react';
+import { useRTL } from '@/contexts/RTLContext';
 
 export const QuickActionsSection: React.FC = () => {
+  const { t } = useRTL();
+  
   const actions = [
-    { icon: <Activity className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Track Health", path: "/health-tracking" },
-    { icon: <ArrowLeftRight className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Swap Ingredients", path: "/ingredient-swap" },
-    { icon: <ShoppingCart className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Shopping List", path: "/shopping-list" },
-    { icon: <Target className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Set Goals", path: "/nutrition-goals" },
+    { icon: <Activity className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Track Health", "تتبع الصحة"), path: "/health-tracking-home" },
+    { icon: <ArrowLeftRight className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Swap Ingredients", "تبديل المكونات"), path: "/ingredient-swap" },
+    { icon: <ShoppingCart className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Shopping List", "قائمة التسوق"), path: "/shopping-list" },
+    { icon: <Target className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Set Goals", "تعيين الأهداف"), path: "/nutrition-goals" },
   ];
 
   const historyFavoritesActions = [
-    { icon: <Heart className="h-6 w-6 mx-auto text-wasfah-coral-red" />, label: "Favorites", path: "/favorites" },
-    { icon: <History className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "History", path: "/history" },
-    { icon: <ChefHat className="h-6 w-6 mx-auto text-wasfah-deep-teal" />, label: "Chef Avatar", path: "/chef-avatar" },
-    { icon: <Share2 className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: "Share Recipe", path: "/share-recipe" },
+    { icon: <Heart className="h-6 w-6 mx-auto text-wasfah-coral-red" />, label: t("Favorites", "المفضلة"), path: "/favorites" },
+    { icon: <History className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("History", "السجل"), path: "/history" },
+    { icon: <Camera className="h-6 w-6 mx-auto text-wasfah-deep-teal" />, label: t("Scan Dish", "مسح الطبق"), path: "/scan-dish" },
+    { icon: <Subscription className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Subscription", "الاشتراك"), path: "/subscription" },
   ];
 
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-bold text-wasfah-deep-teal">Quick Actions</h2>
+      <h2 className="text-lg font-bold text-wasfah-deep-teal">{t('Quick Actions', 'إجراءات سريعة')}</h2>
       
       <div className="grid grid-cols-4 gap-2">
         {actions.map((action, index) => (
@@ -39,7 +42,7 @@ export const QuickActionsSection: React.FC = () => {
         ))}
       </div>
       
-      <h2 className="text-lg font-bold text-wasfah-deep-teal">Favorites & History</h2>
+      <h2 className="text-lg font-bold text-wasfah-deep-teal">{t('Favorites & Tools', 'المفضلة والأدوات')}</h2>
       
       <div className="grid grid-cols-4 gap-2">
         {historyFavoritesActions.map((action, index) => (

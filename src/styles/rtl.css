@@ -186,3 +186,113 @@
 .rtl [role="tablist"] {
   flex-direction: row-reverse !important;
 }
+
+/* Dark Mode Enhancements */
+.dark .border {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .border-2 {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark .card {
+  background-color: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .bg-white {
+  background-color: #1a1a1a !important;
+}
+
+.dark .bg-gray-50,
+.dark .bg-gray-100,
+.dark .bg-gray-200 {
+  background-color: #2a2a2a !important;
+}
+
+.dark .text-gray-500 {
+  color: #a0aec0 !important;
+}
+
+.dark .text-gray-600 {
+  color: #cbd5e0 !important;
+}
+
+.dark .text-gray-700 {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-gray-800, 
+.dark .text-gray-900 {
+  color: #f7fafc !important;
+}
+
+/* Better visibility for dark mode buttons */
+.dark button.border, 
+.dark a.border {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Improve form control visibility in dark mode */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: #2a2a2a !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f7fafc !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #a0aec0 !important;
+}
+
+/* Card and panel contrast improvements */
+.dark .from-wasfah-light-gray,
+.dark .from-blue-50,
+.dark .from-purple-50 {
+  --tw-gradient-from: #2a2a2a !important;
+}
+
+.dark .to-wasfah-light-mint\/10,
+.dark .to-blue-50\/10,
+.dark .to-purple-50\/10 {
+  --tw-gradient-to: rgba(42, 42, 42, 0.1) !important;
+}
+
+/* Brighten accent colors in dark mode */
+.dark .text-wasfah-bright-teal {
+  color: #05BFDB !important;
+}
+
+.dark .text-wasfah-deep-teal {
+  color: #0A4D68 !important;
+}
+
+.dark .bg-wasfah-bright-teal {
+  background-color: #05BFDB !important;
+}
+
+/* Improve hover states in dark mode */
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-200:hover {
+  background-color: #333333 !important;
+}
+
+/* Fix shadow contrast issues in dark mode */
+.dark .shadow-sm,
+.dark .shadow,
+.dark .shadow-md,
+.dark .shadow-lg {
+  --tw-shadow-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Better mobile view for dark mode */
+@media (max-width: 768px) {
+  .dark .border-t,
+  .dark .border-b {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}

@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
+import { NutritionTip } from '@/components/nutrition/NutritionTip';
 import { AlertCircle } from 'lucide-react';
 
 // Sample nutrition data for visualization
@@ -88,9 +88,9 @@ export default function HealthInformationPage() {
               </Card>
 
               <div className="mt-6">
-                <ChefTipCard 
+                <NutritionTip 
                   tip="Adding more lean protein to your meals can help you feel fuller for longer and support muscle maintenance."
-                  chefName="Chef Aria"
+                  source="Nutrition AI"
                 />
               </div>
             </section>

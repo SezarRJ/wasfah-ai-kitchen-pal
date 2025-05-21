@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Recipe } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -195,9 +196,13 @@ export const RecipeDetail: React.FC<RecipeDetailProps> = ({
         
         <RecipeSocialInteractions
           recipeId={recipe.id}
-          likes={likeCount}
-          comments={[]}
+          commentCount={recipe.ratingCount}
+          shares={Math.floor(recipe.rating * 5)}
+          rating={recipe.rating}
+          ratingCount={recipe.ratingCount}
+          usedCount={Math.floor(recipe.rating * 20)}
           isLiked={isLiked}
+          comments={[]}
           onLike={handleLike}
           onComment={handleComment}
           onShare={handleShare}

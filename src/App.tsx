@@ -27,7 +27,6 @@ import SubscriptionPage from "./pages/SubscriptionPage";
 import SettingsPage from "./pages/SettingsPage";
 import GlobalCuisinePage from "./pages/GlobalCuisinePage";
 import SharedRecipesPage from "./pages/SharedRecipesPage";
-import ChefAvatarPage from "./pages/ChefAvatarPage";
 import HealthInformationPage from "./pages/HealthInformationPage";
 import DietaryPreferencesPage from "./pages/DietaryPreferencesPage";
 import SharedRecipesTrackingPage from "./pages/SharedRecipesTrackingPage";
@@ -78,7 +77,6 @@ const App = () => (
               <Route path="/find-by-ingredients" element={<FindByIngredientsPage />} />
               <Route path="/global-cuisine" element={<GlobalCuisinePage />} />
               <Route path="/favorites" element={<FavoritesPage />} />
-              <Route path="/chef-avatar" element={<ChefAvatarPage />} />
               <Route path="/health-tracking-home" element={<HealthTrackingHomePage />} />
               <Route path="/meal-plan" element={<MealPlanPage />} />
               <Route path="/pantry" element={<PantryPage />} />

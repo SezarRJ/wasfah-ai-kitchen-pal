@@ -8,7 +8,7 @@ import { NutritionGoals } from '@/components/nutrition/NutritionGoals';
 import { NutritionProgressChart } from '@/components/nutrition/NutritionProgressChart';
 import { NutritionSummary } from '@/components/nutrition/NutritionSummary';
 import { NutritionEntryForm } from '@/components/nutrition/NutritionEntryForm';
-import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
+import { NutritionTip } from '@/components/nutrition/NutritionTip';
 import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -71,10 +71,9 @@ export default function HealthTrackingHomePage() {
   return (
     <PageContainer header={{ title: 'Health & Tracking', showBackButton: true }}>
       <div className="space-y-6 pb-20">
-        <ChefTipCard 
+        <NutritionTip 
           tip="Tracking your nutrition regularly helps maintain healthy eating habits and achieve your nutrition goals faster."
-          chefName="Chef Alex"
-          personality="Health-conscious"
+          source="Nutrition AI"
           onApply={handleApplyTip}
         />
         

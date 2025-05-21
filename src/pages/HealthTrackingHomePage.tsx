@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +9,7 @@ import { NutritionProgressChart } from '@/components/nutrition/NutritionProgress
 import { NutritionSummary } from '@/components/nutrition/NutritionSummary';
 import { NutritionEntryForm } from '@/components/nutrition/NutritionEntryForm';
 import { NutritionTip } from '@/components/nutrition/NutritionTip';
-import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Heart, Check } from 'lucide-react';
+import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DailyIndependenceChallenges } from '@/components/health/DailyIndependenceChallenges';
 import { BMICalculator } from '@/components/health/BMICalculator';
@@ -145,9 +146,9 @@ export default function HealthTrackingHomePage() {
                   {t('Detailed Tracking', 'التتبع التفصيلي')}
                 </Button>
               </Link>
-              <Link to="/health-information">
+              <Link to="/body-information">
                 <Button variant="outline" className="w-full border-wasfah-bright-teal text-wasfah-bright-teal dark:border-wasfah-bright-teal/50">
-                  {t('View Health Information', 'عرض المعلومات الصحية')}
+                  {t('Body Information', 'معلومات الجسم')}
                 </Button>
               </Link>
             </div>
@@ -253,29 +254,6 @@ export default function HealthTrackingHomePage() {
             </Link>
           </TabsContent>
         </Tabs>
-        
-        {/* Social Sharing for Motivation */}
-        <Card className="border-2 border-blue-300/30">
-          <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-50/10 dark:from-gray-800 dark:to-gray-800/80 pb-2">
-            <CardTitle className="flex items-center text-blue-700 dark:text-blue-400">
-              <Heart className="h-5 w-5 mr-2" />
-              {t('Share Your Progress', 'شارك تقدمك')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-4">
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-              {t('Stay motivated by sharing your achievements with friends', 'ابق متحمسًا من خلال مشاركة إنجازاتك مع الأصدقاء')}
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" className="border-blue-300 text-blue-600 dark:border-blue-500/30 dark:text-blue-400">
-                {t('Share Progress', 'مشاركة التقدم')}
-              </Button>
-              <Button variant="outline" className="border-blue-300 text-blue-600 dark:border-blue-500/30 dark:text-blue-400">
-                {t('Join Challenge', 'انضم إلى التحدي')}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </PageContainer>
   );

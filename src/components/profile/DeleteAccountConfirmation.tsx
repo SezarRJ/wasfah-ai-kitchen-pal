@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { AlertTriangle, Trash, Lock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 
 interface DeleteAccountConfirmationProps {
   isOpen: boolean;
@@ -27,20 +28,30 @@ export const DeleteAccountConfirmation: React.FC<DeleteAccountConfirmationProps>
   userEmail = 'your account',
 }) => {
   const [confirmText, setConfirmText] = useState('');
-  const [secondStep, setSecondStep] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { toast } = useToast();
   const isConfirmEnabled = confirmText.toLowerCase() === 'delete';
 
-  const handleProceed = () => {
-    if (!secondStep) {
-      setSecondStep(true);
-    } else if (isConfirmEnabled) {
+  const handleConfirm = () => {
+    if (!isConfirmEnabled) return;
+    
+    setIsDeleting(true);
+    
+    // Simulate a deletion process (in a real app, this would be an API call)
+    setTimeout(() => {
+      setIsDeleting(false);
       onConfirm();
-    }
+      toast({
+        title: "Account deleted",
+        description: "Your account has been successfully deleted",
+        variant: "destructive",
+      });
+    }, 1500);
   };
 
   const handleClose = () => {
     setConfirmText('');
-    setSecondStep(false);
+    setIsDeleting(false);
     onClose();
   };
 
@@ -49,43 +60,34 @@ export const DeleteAccountConfirmation: React.FC<DeleteAccountConfirmationProps>
       <AlertDialogContent className="border-2 border-red-200 dark:border-red-900/30 dark:bg-gray-900 max-w-md mx-auto">
         <AlertDialogHeader>
           <div className="mx-auto bg-red-100 dark:bg-red-900/30 p-3 rounded-full mb-4">
-            {secondStep ? 
-              <Lock className="h-6 w-6 text-red-600 dark:text-red-400" /> : 
-              <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
-            }
+            <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
           </div>
           <AlertDialogTitle className="text-center text-red-600 dark:text-red-400">
-            {secondStep ? 'Confirm Account Deletion' : 'Delete Account'}
+            Delete Account
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-center">
-            {!secondStep ? (
-              <>
-                <p className="mb-2 font-medium">This action cannot be undone.</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  When you delete your account, all your data will be permanently removed. This includes your profile,
-                  saved recipes, meal plans, and all other information.
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="mb-4 font-medium">Final confirmation required</p>
-                <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-md mb-4">
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    To confirm deletion of <span className="font-bold">{userEmail}</span>, please type "delete" below:
-                  </p>
-                </div>
-                <Input 
-                  value={confirmText}
-                  onChange={(e) => setConfirmText(e.target.value)}
-                  placeholder="Type 'delete'"
-                  className="border-red-300 dark:border-red-700/50 mb-2"
-                  autoFocus
-                />
-                {confirmText && !isConfirmEnabled && (
-                  <p className="text-xs text-red-500 mt-1">Please type "delete" exactly as shown</p>
-                )}
-              </>
-            )}
+          <AlertDialogDescription className="text-center space-y-4">
+            <p className="font-medium">This action cannot be undone.</p>
+            <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
+              <p className="text-sm text-red-600 dark:text-red-400">
+                All your data will be permanently deleted, including your profile, saved recipes, meal plans, and all other personal information.
+              </p>
+            </div>
+            
+            <div className="pt-2">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                To confirm deletion of <span className="font-bold">{userEmail}</span>, please type "delete" below:
+              </p>
+              <Input 
+                value={confirmText}
+                onChange={(e) => setConfirmText(e.target.value)}
+                placeholder="Type 'delete'"
+                className="border-red-300 dark:border-red-700/50"
+                autoFocus
+              />
+              {confirmText && !isConfirmEnabled && (
+                <p className="text-xs text-red-500 mt-1">Please type "delete" exactly as shown</p>
+              )}
+            </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
@@ -96,14 +98,23 @@ export const DeleteAccountConfirmation: React.FC<DeleteAccountConfirmationProps>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction 
-            onClick={handleProceed}
+            onClick={handleConfirm}
             className={`bg-red-600 hover:bg-red-700 focus:ring-red-500 text-white flex items-center justify-center ${
-              secondStep && !isConfirmEnabled ? "opacity-50 cursor-not-allowed" : ""
+              !isConfirmEnabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
-            disabled={secondStep && !isConfirmEnabled}
+            disabled={!isConfirmEnabled || isDeleting}
           >
-            <Trash className="mr-2 h-4 w-4" />
-            {secondStep ? "Delete My Account" : "Continue"}
+            {isDeleting ? (
+              <>
+                <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                Deleting...
+              </>
+            ) : (
+              <>
+                <Trash className="mr-2 h-4 w-4" />
+                Delete My Account
+              </>
+            )}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

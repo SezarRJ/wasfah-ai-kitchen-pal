@@ -27,16 +27,26 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
-      });
-      
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setIsCameraActive(true);
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+          video: { facingMode: 'environment' } 
+        });
+        
+        streamRef.current = stream;
+        
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current?.play();
+          };
+          setIsCameraActive(true);
+        }
+      } else {
+        throw new Error('getUserMedia not supported');
       }
     } catch (error) {
       console.error('Error accessing camera:', error);
@@ -49,27 +59,42 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
   };
   
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
-      videoRef.current.srcObject = null;
-      setIsCameraActive(false);
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
     }
+    
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    
+    setIsCameraActive(false);
   };
   
   const captureImage = () => {
     if (videoRef.current) {
-      const canvas = document.createElement('canvas');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
-      const ctx = canvas.getContext('2d');
-      
-      if (ctx) {
-        ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        const imageDataUrl = canvas.toDataURL('image/png');
-        setCapturedImage(imageDataUrl);
-        stopCamera();
-        analyzeImage(imageDataUrl);
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        const ctx = canvas.getContext('2d');
+        
+        if (ctx && videoRef.current.videoWidth > 0) {
+          ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+          const imageDataUrl = canvas.toDataURL('image/png');
+          setCapturedImage(imageDataUrl);
+          stopCamera();
+          analyzeImage(imageDataUrl);
+        } else {
+          throw new Error('Could not capture image');
+        }
+      } catch (error) {
+        console.error('Error capturing image:', error);
+        toast({
+          title: t('Capture Error', 'خطأ في التقاط الصورة'),
+          description: t('Could not capture image from camera.', 'تعذر التقاط الصورة من الكاميرا.'),
+          variant: 'destructive'
+        });
       }
     }
   };
@@ -77,6 +102,16 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Check if file is an image
+      if (!file.type.startsWith('image/')) {
+        toast({
+          title: t('Invalid File', 'ملف غير صالح'),
+          description: t('Please upload an image file.', 'يرجى تحميل ملف صورة.'),
+          variant: 'destructive'
+        });
+        return;
+      }
+      
       const reader = new FileReader();
       reader.onload = (event) => {
         const imageDataUrl = event.target?.result as string;
@@ -124,6 +159,15 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
     }, 2000);
   };
   
+  React.useEffect(() => {
+    // Clean up on component unmount
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+  
   return (
     <Card className="overflow-hidden">
       <CardHeader className="bg-gradient-to-r from-wasfah-light-gray to-wasfah-light-mint/10 pb-2">
@@ -149,7 +193,7 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-white px-2 text-gray-500">
+                  <span className="bg-white dark:bg-gray-800 px-2 text-gray-500">
                     {t('or', 'أو')}
                   </span>
                 </div>
@@ -191,7 +235,7 @@ export const ScanDishComponent: React.FC<ScanDishComponentProps> = ({ onScanResu
                 <Button 
                   onClick={stopCamera} 
                   variant="outline" 
-                  className="bg-white/80 border-gray-300 rounded-full h-12 w-12 flex items-center justify-center"
+                  className="bg-white/80 dark:bg-gray-700/80 border-gray-300 rounded-full h-12 w-12 flex items-center justify-center"
                 >
                   <XCircle className="h-6 w-6" />
                 </Button>

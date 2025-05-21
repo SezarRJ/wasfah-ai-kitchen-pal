@@ -5,37 +5,39 @@ import { Home, Search, Menu, Heart, Camera, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
+import { useRTL } from '@/contexts/RTLContext';
 
 export const MobileNavbar: React.FC = () => {
   const location = useLocation();
   const { theme } = useTheme();
+  const { t } = useRTL();
   const isDarkMode = theme === 'dark';
 
   const navItems = [
     {
       icon: Home,
-      label: 'Home',
+      label: t('Home', 'الرئيسية'),
       href: '/',
     },
     {
       icon: Search,
-      label: 'Find',
+      label: t('Find', 'البحث'),
       href: '/find-by-ingredients',
     },
     {
       icon: Camera,
-      label: 'Scan',
-      href: '/scan-ingredients',
+      label: t('Scan', 'المسح'),
+      href: '/scan-dish',
     },
     {
       icon: BarChart3,
-      label: 'Track',
+      label: t('Track', 'التتبع'),
       href: '/health-tracking-home',
     },
     {
       icon: Menu,
-      label: 'Menu',
-      href: '/quick-access',
+      label: t('Menu', 'القائمة'),
+      href: '/menu',
     },
   ];
 

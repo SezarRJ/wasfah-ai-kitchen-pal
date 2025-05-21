@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +8,7 @@ import { NutritionProgressChart } from '@/components/nutrition/NutritionProgress
 import { NutritionSummary } from '@/components/nutrition/NutritionSummary';
 import { NutritionEntryForm } from '@/components/nutrition/NutritionEntryForm';
 import { NutritionTip } from '@/components/nutrition/NutritionTip';
-import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Heart } from 'lucide-react';
+import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Heart, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DailyIndependenceChallenges } from '@/components/health/DailyIndependenceChallenges';
 import { BMICalculator } from '@/components/health/BMICalculator';

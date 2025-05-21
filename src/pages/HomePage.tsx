@@ -1,15 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Share2, Users, Camera } from 'lucide-react';
+import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Users, Camera, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 import { ExpiringIngredients } from '@/components/home/ExpiringIngredients';
+import { motion } from 'framer-motion';
+import { NutritionTip } from '@/components/nutrition/NutritionTip';
 
 const HomePage = () => {
-  const [selectedCategory, setSelectedCategory] = React.useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const header = {
     showLogo: true,
     showSearch: true,
@@ -34,12 +36,6 @@ const HomePage = () => {
       label: "Meal Plan", 
       path: "/meal-plan",
       color: "bg-green-500",
-    },
-    { 
-      icon: <Camera className="h-6 w-6 text-white" />, 
-      label: "Scan Dish", 
-      path: "/scan-ingredients",
-      color: "bg-amber-500",
     },
     { 
       icon: <Activity className="h-6 w-6 text-white" />, 
@@ -67,41 +63,94 @@ const HomePage = () => {
     },
   ];
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <PageContainer header={header}>
       <div className="space-y-6 pb-24">
-        {/* Hero Section */}
-        <Card className="bg-gradient-to-r from-wasfah-deep-teal to-wasfah-bright-teal text-white overflow-hidden">
-          <CardContent className="p-6">
-            <div className="flex flex-col">
-              <h1 className="text-2xl font-bold mb-2">Wasfah AI</h1>
-              <p className="text-sm opacity-90 mb-4">Your AI-powered kitchen companion</p>
-              <Link to="/scan-ingredients" className="inline-block">
-                <Button className="bg-white text-wasfah-bright-teal hover:bg-gray-100 mt-2">
-                  <Camera className="mr-2 h-4 w-4" />
-                  Scan a Dish
-                </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-        
-        {/* Main Features Grid with Icons only */}
-        <div className="grid grid-cols-4 gap-4">
-          {mainFeatures.map((feature, index) => (
-            <Link to={feature.path} key={index} className="text-center">
-              <div className="flex flex-col items-center">
-                <div className={`${feature.color} rounded-full w-14 h-14 mb-2 flex items-center justify-center shadow-md card-3d`}>
-                  {feature.icon}
+        {/* AI Scan Card - Highlighted Feature */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Link to="/scan-ingredients">
+            <Card className="relative overflow-hidden border-2 border-wasfah-bright-teal/30 dark:border-wasfah-bright-teal/20">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-wasfah-bright-teal/20 to-wasfah-deep-teal/40 dark:from-wasfah-bright-teal/10 dark:to-wasfah-deep-teal/30 z-0"></div>
+              <CardContent className="p-6 relative z-10">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center mb-1">
+                      <Sparkles className="h-5 w-5 text-wasfah-bright-teal mr-2" />
+                      <span className="text-sm font-medium text-wasfah-bright-teal">NEW AI FEATURE</span>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">Scan Any Dish</h2>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">Instantly get nutrition info and ingredients from any food photo.</p>
+                    <Button className="bg-wasfah-bright-teal hover:bg-wasfah-teal text-white flex items-center">
+                      <Camera className="mr-2 h-4 w-4" />
+                      Scan Now
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="hidden md:block ml-4">
+                    <div className="w-16 h-16 bg-wasfah-bright-teal/20 border-2 border-wasfah-bright-teal/50 rounded-full flex items-center justify-center">
+                      <Camera className="h-8 w-8 text-wasfah-bright-teal" />
+                    </div>
+                  </div>
                 </div>
-                <span className="text-xs font-medium text-gray-700">{feature.label}</span>
-              </div>
-            </Link>
-          ))}
+              </CardContent>
+            </Card>
+          </Link>
+        </motion.div>
+        
+        {/* Nutrition Tip */}
+        <div className="my-4">
+          <NutritionTip 
+            tip="Use our new AI Scan feature to identify ingredients and get nutrition facts for any dish by just taking a photo."
+            source="Wasfah AI"
+            type="success"
+          />
+        </div>
+
+        {/* Main Features Grid with Icons only */}
+        <div>
+          <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mb-4">Quick Access</h2>
+          <motion.div 
+            className="grid grid-cols-4 gap-4"
+            variants={container}
+            initial="hidden"
+            animate="show"
+          >
+            {mainFeatures.map((feature, index) => (
+              <motion.div key={index} variants={item}>
+                <Link to={feature.path} className="text-center">
+                  <div className="flex flex-col items-center">
+                    <div className={`${feature.color} rounded-full w-16 h-16 mb-2 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 dark:shadow-lg dark:shadow-${feature.color}/20`}>
+                      {feature.icon}
+                    </div>
+                    <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{feature.label}</span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
         
         {/* Recent Activity */}
-        <h2 className="font-bold text-lg text-wasfah-deep-teal mt-6">Recent Activity</h2>
+        <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mt-6">Recent Activity</h2>
         
         {/* Today's meal plan */}
         <TodayMealPlan mealPlan={null} />

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
-import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, History, Heart, Share2, Camera, Subscription } from 'lucide-react';
+import { Activity, ArrowLeftRight, ShoppingCart, Target, ChefHat, History, Heart, Share2, Camera, SubscriptIcon } from 'lucide-react';
 import { useRTL } from '@/contexts/RTLContext';
 
 export const QuickActionsSection: React.FC = () => {
@@ -19,7 +19,7 @@ export const QuickActionsSection: React.FC = () => {
     { icon: <Heart className="h-6 w-6 mx-auto text-wasfah-coral-red" />, label: t("Favorites", "المفضلة"), path: "/favorites" },
     { icon: <History className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("History", "السجل"), path: "/history" },
     { icon: <Camera className="h-6 w-6 mx-auto text-wasfah-deep-teal" />, label: t("Scan Dish", "مسح الطبق"), path: "/scan-dish" },
-    { icon: <Subscription className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Subscription", "الاشتراك"), path: "/subscription" },
+    { icon: <SubscriptIcon className="h-6 w-6 mx-auto text-wasfah-bright-teal" />, label: t("Subscription", "الاشتراك"), path: "/subscription" },
   ];
 
   return (

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Button } from '@/components/ui/button';
@@ -8,14 +9,25 @@ import { ChefHat, Share2 } from 'lucide-react';
 import { mockRecipes } from '@/data/mockData';
 import { RecipeSocialInteractions } from '@/components/recipe/RecipeSocialInteractions';
 
+// Define a Comment interface for recipe comments
+interface Comment {
+  id: string;
+  userId: string;
+  username: string;
+  avatar?: string;
+  content: string;
+  timestamp: string;
+}
+
 export default function SharedRecipesPage() {
   // Add mock social data to recipes
   const recipesWithSocial = mockRecipes.map(recipe => ({
     ...recipe,
     views: Math.floor(Math.random() * 100) + 50,
     likes: Math.floor(Math.random() * 30) + 10,
-    // FIX: Rename 'comments' (which was a number) to 'commentCount'
+    // FIX: Use an empty array for comments instead of a number
     commentCount: Math.floor(Math.random() * 15),
+    comments: [] as Comment[], // Add empty comments array of the correct type
     shares: Math.floor(Math.random() * 10),
     usedCount: Math.floor(Math.random() * 20)
   }));
@@ -68,7 +80,6 @@ export default function SharedRecipesPage() {
                     recipeId={recipe.id}
                     views={recipe.views}
                     likes={recipe.likes}
-                    // FIX: Pass the number to a new prop, assuming the component accepts commentCount: number
                     commentCount={recipe.commentCount}
                     shares={recipe.shares}
                     rating={recipe.rating}

@@ -80,7 +80,9 @@ export default function SplashScreen() {
     navigate('/auth');
   };
 
-  const currentSplashScreen = splashScreens[currentScreen];
+  // Safeguard against out-of-bounds index access
+  const safeIndex = Math.min(Math.max(0, currentScreen), splashScreens.length - 1);
+  const currentSplashScreen = splashScreens[safeIndex];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -99,19 +101,19 @@ export default function SplashScreen() {
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         <div className="w-full max-w-md overflow-hidden rounded-3xl shadow-xl mb-8 border border-gray-200">
           <img 
-            src={currentSplashScreen.image} 
-            alt={currentSplashScreen.title} 
+            src={currentSplashScreen?.image || '/placeholder.svg'} 
+            alt={currentSplashScreen?.title || 'Splash screen'} 
             className="w-full h-auto object-cover"
           />
         </div>
         
         <div className="text-center max-w-md">
           <h1 className="text-3xl font-bold text-wasfah-deep-teal mb-4">
-            {currentSplashScreen.title}
+            {currentSplashScreen?.title || 'Welcome to Wasfah'}
           </h1>
           
           <p className="text-gray-600 text-lg mb-8">
-            {currentSplashScreen.description}
+            {currentSplashScreen?.description || 'Discover amazing recipes with our app'}
           </p>
         </div>
       </div>

@@ -3,11 +3,8 @@ import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChefHat, Search, Activity, Heart, Globe, Calendar, ShoppingCart, Share2, Users } from 'lucide-react';
+import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Share2, Users, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ChefAvatarDisplay } from '@/components/chef-avatar/ChefAvatarDisplay';
-import { ChefTipCard } from '@/components/chef-avatar/ChefTipCard';
-import { RecommendedRecipes } from '@/components/home/RecommendedRecipes';
 import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 import { ExpiringIngredients } from '@/components/home/ExpiringIngredients';
 
@@ -17,16 +14,6 @@ const HomePage = () => {
     showLogo: true,
     showSearch: true,
     actions: null,
-  };
-
-  const mockChefTips = [
-    "Try adding a splash of vinegar when poaching eggs to help them keep their shape.",
-    "Use a wooden spoon to check if your oil is hot enough for frying - if bubbles form around it, the oil is ready.",
-    "Let meat rest for a few minutes after cooking to allow juices to redistribute."
-  ];
-
-  const handleApplyTip = (tip: string) => {
-    console.log("Tip applied:", tip);
   };
 
   const mainFeatures = [
@@ -49,9 +36,9 @@ const HomePage = () => {
       color: "bg-green-500",
     },
     { 
-      icon: <ChefHat className="h-6 w-6 text-white" />, 
-      label: "Chef Avatar", 
-      path: "/chef-avatar",
+      icon: <Camera className="h-6 w-6 text-white" />, 
+      label: "Scan Dish", 
+      path: "/scan-ingredients",
       color: "bg-amber-500",
     },
     { 
@@ -83,25 +70,21 @@ const HomePage = () => {
   return (
     <PageContainer header={header}>
       <div className="space-y-6 pb-24">
-        {/* Chef Avatar and Tip */}
-        <div className="mb-6">
-          <ChefAvatarDisplay 
-            name="Chef Alex"
-            level={5}
-            experience={340}
-            nextLevelExperience={500}
-            personality="Creative"
-            avatarUrl="/placeholder.svg"
-            achievements={[]}
-          />
-        </div>
-        
-        <ChefTipCard 
-          tip={mockChefTips[Math.floor(Math.random() * mockChefTips.length)]} 
-          chefName="Chef Alex"
-          personality="Creative"
-          onApply={handleApplyTip}
-        />
+        {/* Hero Section */}
+        <Card className="bg-gradient-to-r from-wasfah-deep-teal to-wasfah-bright-teal text-white overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex flex-col">
+              <h1 className="text-2xl font-bold mb-2">Wasfah AI</h1>
+              <p className="text-sm opacity-90 mb-4">Your AI-powered kitchen companion</p>
+              <Link to="/scan-ingredients" className="inline-block">
+                <Button className="bg-white text-wasfah-bright-teal hover:bg-gray-100 mt-2">
+                  <Camera className="mr-2 h-4 w-4" />
+                  Scan a Dish
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
         
         {/* Main Features Grid with Icons only */}
         <div className="grid grid-cols-4 gap-4">

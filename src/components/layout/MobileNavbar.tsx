@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, ChefHat, CalendarDays, ShoppingCart, Menu, Heart, Globe, Search, Users } from 'lucide-react';
+import { Home, CalendarDays, ShoppingCart, Menu, Heart, Globe, Search, Users, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 
@@ -22,9 +22,9 @@ export const MobileNavbar: React.FC = () => {
       href: '/find-by-ingredients',
     },
     {
-      icon: Users,
-      label: 'Community',
-      href: '/community',
+      icon: Camera,
+      label: 'Scan',
+      href: '/scan-ingredients',
     },
     {
       icon: Heart,

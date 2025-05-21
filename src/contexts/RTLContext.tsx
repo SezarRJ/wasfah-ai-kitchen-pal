@@ -9,7 +9,127 @@ interface RTLContextProps {
   language: string;
   setLanguage: (lang: string) => void;
   direction: 'ltr' | 'rtl';
+  t: (en: string, ar: string) => string;
 }
+
+interface TranslationDictionary {
+  [key: string]: {
+    en: string;
+    ar: string;
+  };
+}
+
+// Common translations that are used throughout the app
+const commonTranslations: TranslationDictionary = {
+  home: { 
+    en: 'Home', 
+    ar: 'الرئيسية' 
+  },
+  settings: { 
+    en: 'Settings', 
+    ar: 'الإعدادات' 
+  },
+  favorites: { 
+    en: 'Favorites', 
+    ar: 'المفضلة' 
+  },
+  search: { 
+    en: 'Search', 
+    ar: 'البحث' 
+  },
+  profile: { 
+    en: 'Profile', 
+    ar: 'الملف الشخصي' 
+  },
+  save: { 
+    en: 'Save', 
+    ar: 'حفظ' 
+  },
+  cancel: { 
+    en: 'Cancel', 
+    ar: 'إلغاء' 
+  },
+  delete: { 
+    en: 'Delete', 
+    ar: 'حذف' 
+  },
+  edit: { 
+    en: 'Edit', 
+    ar: 'تعديل' 
+  },
+  view: { 
+    en: 'View', 
+    ar: 'عرض' 
+  },
+  add: { 
+    en: 'Add', 
+    ar: 'إضافة' 
+  },
+  remove: { 
+    en: 'Remove', 
+    ar: 'إزالة' 
+  },
+  confirm: { 
+    en: 'Confirm', 
+    ar: 'تأكيد' 
+  },
+  next: { 
+    en: 'Next', 
+    ar: 'التالي' 
+  },
+  previous: { 
+    en: 'Previous', 
+    ar: 'السابق' 
+  },
+  done: { 
+    en: 'Done', 
+    ar: 'تم' 
+  },
+  submit: { 
+    en: 'Submit', 
+    ar: 'إرسال' 
+  },
+  loading: { 
+    en: 'Loading...', 
+    ar: 'جاري التحميل...' 
+  },
+  scan: { 
+    en: 'Scan', 
+    ar: 'فحص' 
+  },
+  ingredients: { 
+    en: 'Ingredients', 
+    ar: 'المكونات' 
+  },
+  nutritionalInfo: { 
+    en: 'Nutritional Information', 
+    ar: 'المعلومات الغذائية' 
+  },
+  recipes: { 
+    en: 'Recipes', 
+    ar: 'وصفات' 
+  },
+  cookTime: { 
+    en: 'Cook Time', 
+    ar: 'وقت الطهي' 
+  },
+  prepTime: { 
+    en: 'Prep Time', 
+    ar: 'وقت التحضير' 
+  },
+  servings: { 
+    en: 'Servings', 
+    ar: 'الحصص' 
+  },
+  difficulty: { 
+    en: 'Difficulty', 
+    ar: 'الصعوبة' 
+  },
+  calories: { 
+    en: 'Calories', 
+    ar: 'السعرات الحرارية' 
+  },
+};
 
 const RTLContext = createContext<RTLContextProps | undefined>(undefined);
 
@@ -65,6 +185,19 @@ export const RTLProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRTL(!isRTL);
     setLanguage(isRTL ? 'en' : 'ar');
   };
+  
+  // Translation function that returns the appropriate string based on current language
+  const t = (en: string, ar: string): string => {
+    // First check if the text exists in our common translations
+    for (const key in commonTranslations) {
+      if (commonTranslations[key].en === en) {
+        return language === 'ar' ? commonTranslations[key].ar : en;
+      }
+    }
+    
+    // If not found in common translations, use the provided ar text or en text
+    return language === 'ar' ? ar : en;
+  };
 
   return (
     <RTLContext.Provider value={{ 
@@ -73,7 +206,8 @@ export const RTLProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       toggleRTL, 
       language, 
       setLanguage,
-      direction: isRTL ? 'rtl' : 'ltr'
+      direction: isRTL ? 'rtl' : 'ltr',
+      t
     }}>
       {children}
     </RTLContext.Provider>

@@ -62,7 +62,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             <DropdownMenuItem 
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
-              className={`flex items-center cursor-pointer ${
+              className={`flex items-center cursor-pointer hover:bg-gray-100 ${
                 lang.code === language ? 'bg-gray-100' : ''
               }`}
             >

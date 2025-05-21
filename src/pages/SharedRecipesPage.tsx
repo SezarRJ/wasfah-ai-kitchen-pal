@@ -7,17 +7,7 @@ import { RecipeGrid } from '@/components/recipe/RecipeGrid';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChefHat, Share2 } from 'lucide-react';
 import { mockRecipes } from '@/data/mockData';
-import { RecipeSocialInteractions } from '@/components/recipe/RecipeSocialInteractions';
-
-// Define a Comment interface for recipe comments
-interface Comment {
-  id: string;
-  userId: string;
-  username: string;
-  avatar?: string;
-  content: string;
-  timestamp: string;
-}
+import { RecipeSocialInteractions, Comment } from '@/components/recipe/RecipeSocialInteractions';
 
 export default function SharedRecipesPage() {
   // Add mock social data to recipes
@@ -25,9 +15,8 @@ export default function SharedRecipesPage() {
     ...recipe,
     views: Math.floor(Math.random() * 100) + 50,
     likes: Math.floor(Math.random() * 30) + 10,
-    // FIX: Use an empty array for comments instead of a number
     commentCount: Math.floor(Math.random() * 15),
-    comments: [] as Comment[], // Add empty comments array of the correct type
+    comments: [] as Comment[],
     shares: Math.floor(Math.random() * 10),
     usedCount: Math.floor(Math.random() * 20)
   }));
@@ -78,14 +67,13 @@ export default function SharedRecipesPage() {
 
                   <RecipeSocialInteractions
                     recipeId={recipe.id}
-                    views={recipe.views}
-                    likes={recipe.likes}
                     commentCount={recipe.commentCount}
                     shares={recipe.shares}
                     rating={recipe.rating}
                     ratingCount={recipe.ratingCount}
                     usedCount={recipe.usedCount}
                     isLiked={recipe.isFavorite}
+                    comments={recipe.comments}
                   />
 
                   <div className="mt-3 flex justify-end">

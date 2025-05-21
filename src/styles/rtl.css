@@ -7,11 +7,11 @@
 
 /* Basic text alignment */
 .rtl .text-left {
-  text-align: right;
+  text-align: right !important;
 }
 
 .rtl .text-right {
-  text-align: left;
+  text-align: left !important;
 }
 
 /* Margin adjustments */
@@ -62,20 +62,20 @@
 
 /* Reverse flexbox direction in RTL mode */
 .rtl .flex-row {
-  flex-direction: row-reverse;
+  flex-direction: row-reverse !important;
 }
 
 /* Fix for grid layouts */
 .rtl .grid-cols-2,
 .rtl .grid-cols-3,
 .rtl .grid-cols-4 {
-  direction: rtl;
+  direction: rtl !important;
 }
 
 /* Fix scroll area for RTL */
 .rtl .scrollbar {
-  left: 0;
-  right: auto;
+  left: 0 !important;
+  right: auto !important;
 }
 
 /* Fix dropdown positioning */
@@ -85,44 +85,104 @@
 
 /* Icons in RTL mode */
 .rtl .lucide-chevron-right {
-  transform: rotate(180deg);
+  transform: rotate(180deg) !important;
 }
 
 .rtl .lucide-chevron-left {
-  transform: rotate(180deg);
+  transform: rotate(180deg) !important;
+}
+
+.rtl .lucide-arrow-left {
+  transform: rotate(180deg) !important;
+}
+
+.rtl .lucide-arrow-right {
+  transform: rotate(180deg) !important;
 }
 
 /* Input and form controls */
 .rtl input,
 .rtl textarea,
 .rtl select {
-  text-align: right;
+  text-align: right !important;
 }
 
 /* Button icon alignment */
 .rtl .button-icon-right {
-  margin-left: 0;
-  margin-right: 0.5rem;
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
 }
 
 .rtl .button-icon-left {
-  margin-right: 0;
-  margin-left: 0.5rem;
+  margin-right: 0 !important;
+  margin-left: 0.5rem !important;
 }
 
 /* Card content alignment */
 .rtl .card-content {
-  text-align: right;
+  text-align: right !important;
 }
 
 /* List items */
 .rtl ul li,
 .rtl ol li {
-  padding-left: 0;
-  padding-right: 1rem;
+  padding-left: 0 !important;
+  padding-right: 1rem !important;
 }
 
 /* Fix for radix components */
 .rtl .radix-dropdown-content {
-  text-align: right;
+  text-align: right !important;
+}
+
+/* Fixed display for dropdowns */
+[data-radix-popper-content-wrapper] {
+  background-color: white !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  z-index: 50 !important;
+}
+
+.rtl button svg + span,
+.rtl a svg + span {
+  margin-left: 0 !important;
+  margin-right: 0.5rem !important;
+}
+
+/* Improved RTL form layout */
+.rtl label {
+  text-align: right !important;
+}
+
+/* Handle RTL in mobile navigation */
+.rtl .MobileNavbar-nav {
+  flex-direction: row-reverse !important;
+}
+
+/* RTL Tailwind classes */
+.rtl .items-start {
+  align-items: flex-start !important;
+}
+
+.rtl .justify-start {
+  justify-content: flex-start !important;
+}
+
+.rtl .justify-end {
+  justify-content: flex-end !important;
+}
+
+/* RTL dialog fixes */
+.rtl [role="dialog"] {
+  text-align: right !important;
+}
+
+/* Fix dropdown menus in RTL */
+.rtl [role="menu"] {
+  text-align: right !important;
+}
+
+/* RTL tabs */
+.rtl [role="tablist"] {
+  flex-direction: row-reverse !important;
 }

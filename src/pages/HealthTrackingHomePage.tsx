@@ -9,7 +9,7 @@ import { NutritionProgressChart } from '@/components/nutrition/NutritionProgress
 import { NutritionSummary } from '@/components/nutrition/NutritionSummary';
 import { NutritionEntryForm } from '@/components/nutrition/NutritionEntryForm';
 import { NutritionTip } from '@/components/nutrition/NutritionTip';
-import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Brain, Award, Heart, Calculator, ChevronDown, ChevronRight } from 'lucide-react';
+import { Activity, Scale, CalendarDays, ArrowLeftRight, Tag, Brain, Award, Heart, Calculator, ChevronDown, ChevronRight, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Progress } from '@/components/ui/progress';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';

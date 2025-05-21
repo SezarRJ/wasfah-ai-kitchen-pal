@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, Menu, Heart, Camera } from 'lucide-react';
+import { Home, Search, Menu, Heart, Camera, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
@@ -28,9 +28,9 @@ export const MobileNavbar: React.FC = () => {
       href: '/scan-ingredients',
     },
     {
-      icon: Heart,
-      label: 'Favorites',
-      href: '/favorites',
+      icon: BarChart3,
+      label: 'Track',
+      href: '/health-tracking-home',
     },
     {
       icon: Menu,

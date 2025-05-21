@@ -3,15 +3,21 @@ import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Users, Camera, ArrowRight, Sparkles } from 'lucide-react';
+import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Users, Camera, ArrowRight, Sparkles, Brain } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 import { ExpiringIngredients } from '@/components/home/ExpiringIngredients';
 import { motion } from 'framer-motion';
 import { NutritionTip } from '@/components/nutrition/NutritionTip';
+import { SubscriptionCard } from '@/components/home/SubscriptionCard';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useTheme } from 'next-themes';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+  
   const header = {
     showLogo: true,
     showSearch: true,
@@ -63,6 +69,55 @@ const HomePage = () => {
     },
   ];
 
+  // Subscription plans
+  const subscriptionPlans = [
+    {
+      id: 'free',
+      name: 'Free',
+      price: '$0',
+      interval: 'mo',
+      description: 'Basic features for everyone',
+      features: [
+        'Basic recipe search',
+        'Limited meal planning',
+        'Standard health tracking',
+        'Community access'
+      ],
+      color: 'border-gray-300',
+    },
+    {
+      id: 'premium',
+      name: 'Premium',
+      price: '$9.99',
+      interval: 'mo',
+      description: 'Perfect for food enthusiasts',
+      features: [
+        'Unlimited recipe searches',
+        'Advanced meal planning',
+        'AI-powered health tracking',
+        'Premium content access',
+        'No ads'
+      ],
+      popular: true,
+      color: 'border-wasfah-bright-teal-300',
+    },
+    {
+      id: 'family',
+      name: 'Family',
+      price: '$19.99',
+      interval: 'mo',
+      description: 'Share with up to 6 family members',
+      features: [
+        'All Premium features',
+        'Family meal planning',
+        'Multi-profile health tracking',
+        'Shared shopping lists',
+        'Priority customer support'
+      ],
+      color: 'border-purple-300',
+    }
+  ];
+
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -88,8 +143,8 @@ const HomePage = () => {
           transition={{ duration: 0.5 }}
         >
           <Link to="/scan-ingredients">
-            <Card className="relative overflow-hidden border-2 border-wasfah-bright-teal/30 dark:border-wasfah-bright-teal/20">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-wasfah-bright-teal/20 to-wasfah-deep-teal/40 dark:from-wasfah-bright-teal/10 dark:to-wasfah-deep-teal/30 z-0"></div>
+            <Card className="relative overflow-hidden border-2 border-wasfah-bright-teal/30 dark:border-wasfah-bright-teal/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div className={`absolute top-0 left-0 w-full h-full ${isDark ? 'bg-gradient-to-br from-wasfah-bright-teal/10 to-wasfah-deep-teal/20' : 'bg-gradient-to-br from-wasfah-bright-teal/20 to-wasfah-deep-teal/30'} z-0`}></div>
               <CardContent className="p-6 relative z-10">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
@@ -105,9 +160,9 @@ const HomePage = () => {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
-                  <div className="hidden md:block ml-4">
-                    <div className="w-16 h-16 bg-wasfah-bright-teal/20 border-2 border-wasfah-bright-teal/50 rounded-full flex items-center justify-center">
-                      <Camera className="h-8 w-8 text-wasfah-bright-teal" />
+                  <div className="hidden md:block ml-4 relative animate-pulse-glow">
+                    <div className="w-20 h-20 bg-wasfah-bright-teal/20 border-2 border-wasfah-bright-teal/50 rounded-full flex items-center justify-center overflow-hidden">
+                      <Camera className="h-10 w-10 text-wasfah-bright-teal" />
                     </div>
                   </div>
                 </div>
@@ -119,9 +174,10 @@ const HomePage = () => {
         {/* Nutrition Tip */}
         <div className="my-4">
           <NutritionTip 
-            tip="Use our new AI Scan feature to identify ingredients and get nutrition facts for any dish by just taking a photo."
+            tip="Our AI analysis of your recent meals suggests you might benefit from more lean protein. Try our salmon with broccoli recipe for dinner tonight."
             source="Wasfah AI"
-            type="success"
+            type="ai"
+            onApply={() => console.log("Applied AI tip")}
           />
         </div>
 
@@ -138,7 +194,7 @@ const HomePage = () => {
               <motion.div key={index} variants={item}>
                 <Link to={feature.path} className="text-center">
                   <div className="flex flex-col items-center">
-                    <div className={`${feature.color} rounded-full w-16 h-16 mb-2 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 dark:shadow-lg dark:shadow-${feature.color}/20`}>
+                    <div className={`${feature.color} rounded-full w-16 h-16 mb-2 flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 dark:shadow-lg`}>
                       {feature.icon}
                     </div>
                     <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{feature.label}</span>
@@ -147,6 +203,44 @@ const HomePage = () => {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+        
+        {/* Subscription Plans */}
+        <div className="pt-2">
+          <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mb-4 flex items-center">
+            <Brain className="h-5 w-5 mr-2 text-wasfah-bright-teal" />
+            Subscription Plans
+          </h2>
+          
+          <Tabs defaultValue="monthlySub" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
+              <TabsTrigger value="monthlySub">Monthly</TabsTrigger>
+              <TabsTrigger value="yearlySub">Yearly (Save 20%)</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="monthlySub">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {subscriptionPlans.map((plan) => (
+                  <SubscriptionCard key={plan.id} plan={plan} />
+                ))}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="yearlySub">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {subscriptionPlans.map((plan) => (
+                  <SubscriptionCard 
+                    key={plan.id} 
+                    plan={{
+                      ...plan,
+                      price: plan.id === 'free' ? '$0' : (parseFloat(plan.price.replace('$', '')) * 0.8 * 12).toFixed(2),
+                      interval: 'yr'
+                    }} 
+                  />
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
         
         {/* Recent Activity */}

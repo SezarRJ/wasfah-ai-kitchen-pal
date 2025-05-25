@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { NutritionGoals } from '@/components/nutrition/NutritionGoals';
@@ -21,8 +20,8 @@ export default function HealthTrackingHomePage() {
   const [userWeight, setUserWeight] = useState(70); // in kg
   const [userHeight, setUserHeight] = useState(170); // in cm
   const [userTargetWeight, setUserTargetWeight] = useState(65); // in kg
-  
-  const handleApplyTip = (tip: string) => {
+
+  const handleApplyTip = (tip) => {
     console.log('Applied tip:', tip);
   };
 
@@ -37,16 +36,8 @@ export default function HealthTrackingHomePage() {
     { date: 'Sun', calories: 1850, protein: 86, carbs: 215, fat: 56 },
   ];
 
-  const handleNutritionSubmit = (data: {
-    date: Date;
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-    mealType: string;
-  }) => {
+  const handleNutritionSubmit = (data) => {
     console.log('Nutrition data submitted:', data);
-    // Here you would typically save the data or update state
   };
 
   // Mock ingredient swap data
@@ -80,15 +71,15 @@ export default function HealthTrackingHomePage() {
   return (
     <PageContainer header={{ title: t('Health & Tracking', 'الصحة والتتبع'), showBackButton: true }}>
       <div className="space-y-6 pb-20">
-        <NutritionTip 
+        <NutritionTip
           tip={t("Based on your recent activity and diet patterns, I recommend increasing protein intake by 15g daily while reducing carbs slightly to help reach your weight goal of 65kg.", "بناءً على أنماط نشاطك ونظامك الغذائي الأخيرة، أوصي بزيادة تناول البروتين بمقدار 15 جرام يوميًا مع تقليل الكربوهيدرات قليلاً للمساعدة في الوصول إلى هدفك في الوزن وهو 65 كجم.")}
           source="Wasfah AI"
           onApply={handleApplyTip}
           type="ai"
         />
-        
+
         {/* Health Progress Overview */}
-        <BMICalculator 
+        <BMICalculator
           userWeight={userWeight}
           userHeight={userHeight}
           userTargetWeight={userTargetWeight}
@@ -96,10 +87,10 @@ export default function HealthTrackingHomePage() {
           isHealthGoalsOpen={isHealthGoalsOpen}
           setIsHealthGoalsOpen={setIsHealthGoalsOpen}
         />
-        
+
         {/* Daily Challenges to Reduce AI Dependency */}
         <DailyIndependenceChallenges />
-        
+
         <Tabs defaultValue="track">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="track">
@@ -119,11 +110,11 @@ export default function HealthTrackingHomePage() {
               {t('History', 'السجل')}
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="track" className="space-y-4 mt-4">
             <Card className="border border-gray-200 dark:border-gray-700">
               <CardContent className="pt-6">
-                <NutritionSummary 
+                <NutritionSummary
                   calories={{consumed: 1450, target: 2000}}
                   protein={{consumed: 75, target: 120}}
                   carbs={{consumed: 180, target: 240}}
@@ -131,14 +122,14 @@ export default function HealthTrackingHomePage() {
                 />
               </CardContent>
             </Card>
-            
+
             <div className="space-y-2">
               <h3 className="text-lg font-semibold text-wasfah-deep-teal dark:text-wasfah-bright-teal">
                 {t("Add Today's Nutrition", "أضف التغذية اليوم")}
               </h3>
               <NutritionEntryForm onSubmit={handleNutritionSubmit} />
             </div>
-            
+
             <div className="flex flex-col gap-2">
               <Link to="/health-tracking">
                 <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">
@@ -153,27 +144,27 @@ export default function HealthTrackingHomePage() {
               </Link>
             </div>
           </TabsContent>
-          
+
           <TabsContent value="goals" className="space-y-4 mt-4">
             <Card>
               <CardContent className="pt-6">
                 <NutritionGoals />
               </CardContent>
             </Card>
-            
+
             <Link to="/nutrition-goals">
               <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">
                 {t('Update Nutrition Goals', 'تحديث أهداف التغذية')}
               </Button>
             </Link>
-            
+
             <Link to="/dietary-preferences">
               <Button variant="outline" className="w-full border-wasfah-bright-teal text-wasfah-bright-teal dark:border-wasfah-bright-teal/50">
                 {t('Manage Dietary Preferences', 'إدارة التفضيلات الغذائية')}
               </Button>
             </Link>
           </TabsContent>
-          
+
           <TabsContent value="swaps" className="space-y-4 mt-4">
             <h3 className="text-lg font-semibold text-wasfah-deep-teal dark:text-wasfah-bright-teal">
               {t('Healthier Ingredient Alternatives', 'بدائل المكونات الصحية')}
@@ -203,7 +194,7 @@ export default function HealthTrackingHomePage() {
                 </Card>
               ))}
             </div>
-            
+
             <Link to="/ingredient-swap">
               <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">
                 <ArrowLeftRight className="mr-2 h-4 w-4" />
@@ -211,7 +202,7 @@ export default function HealthTrackingHomePage() {
               </Button>
             </Link>
           </TabsContent>
-          
+
           <TabsContent value="history" className="space-y-4 mt-4">
             <Card>
               <CardContent className="pt-6">
@@ -219,14 +210,14 @@ export default function HealthTrackingHomePage() {
                   <h3 className="text-lg font-semibold text-wasfah-deep-teal dark:text-wasfah-bright-teal mb-2">
                     {t('Weekly Progress', 'التقدم الأسبوعي')}
                   </h3>
-                  <NutritionProgressChart 
+                  <NutritionProgressChart
                     data={mockNutritionData}
                     type="weekly"
                   />
                 </div>
               </CardContent>
             </Card>
-            
+
             <div className="space-y-3">
               <h3 className="text-lg font-semibold text-wasfah-deep-teal dark:text-wasfah-bright-teal">
                 {t('Recent Meals', 'الوجبات الأخيرة')}
@@ -246,7 +237,7 @@ export default function HealthTrackingHomePage() {
                 </Card>
               ))}
             </div>
-            
+
             <Link to="/health-tracking">
               <Button className="w-full bg-wasfah-bright-teal hover:bg-wasfah-teal">
                 {t('View Complete History', 'عرض السجل الكامل')}

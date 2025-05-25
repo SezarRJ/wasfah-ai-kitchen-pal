@@ -1,12 +1,11 @@
-
 import React from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  Settings, User, Heart, Book, ShoppingCart, CreditCard, 
-  Bell, Languages, Moon, HelpCircle, Globe, Award, LogOut, 
+import {
+  Settings, User, Heart, Book, ShoppingCart, CreditCard,
+  Bell, Languages, Moon, HelpCircle, Globe, Award, LogOut,
   Gift, Camera, Scale, Smartphone, SquareUser
 } from 'lucide-react';
 import { useRTL } from '@/contexts/RTLContext';
@@ -116,12 +115,12 @@ export default function MenuPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {menuItems.map((item) => (
                 <Link to={item.link} key={item.id}>
-                  <Card className="transition-all duration-300 hover:shadow-md hover:scale-[1.02] h-full">
-                    <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                      <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-full mb-3">
+                  <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.03] h-full">
+                    <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
+                      <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-full mb-4">
                         {item.icon}
                       </div>
-                      <span className="text-sm font-medium">{item.title}</span>
+                      <span className="text-base font-medium">{item.title}</span>
                     </CardContent>
                   </Card>
                 </Link>
@@ -132,23 +131,23 @@ export default function MenuPage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {settingsItems.map((item) => (
                 <Link to={item.link} key={item.id}>
-                  <Card className="transition-all duration-300 hover:shadow-md hover:scale-[1.02] h-full">
-                    <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                      <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-full mb-3">
+                  <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.03] h-full">
+                    <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
+                      <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-full mb-4">
                         {item.icon}
                       </div>
-                      <span className="text-sm font-medium">{item.title}</span>
+                      <span className="text-base font-medium">{item.title}</span>
                     </CardContent>
                   </Card>
                 </Link>
               ))}
               <Link to="/auth">
-                <Card className="transition-all duration-300 hover:shadow-md hover:scale-[1.02] h-full border-red-200 dark:border-red-700/30">
-                  <CardContent className="p-4 flex flex-col items-center justify-center text-center h-full">
-                    <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-full mb-3">
+                <Card className="transition-all duration-300 hover:shadow-lg hover:scale-[1.03] h-full border-red-200 dark:border-red-700/30">
+                  <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
+                    <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-full mb-4">
                       <LogOut className="h-6 w-6 text-red-500" />
                     </div>
-                    <span className="text-sm font-medium text-red-600 dark:text-red-400">
+                    <span className="text-base font-medium text-red-600 dark:text-red-400">
                       {t('Log Out', 'تسجيل الخروج')}
                     </span>
                   </CardContent>

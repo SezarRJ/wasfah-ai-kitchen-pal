@@ -1,15 +1,13 @@
-
 import React, { useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Users, Camera, ArrowRight, Sparkles, Brain } from 'lucide-react';
+import { Search, Activity, Heart, Globe, Calendar, ShoppingCart, Users, Camera, ArrowRight, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { TodayMealPlan } from '@/components/home/TodayMealPlan';
 import { ExpiringIngredients } from '@/components/home/ExpiringIngredients';
 import { motion } from 'framer-motion';
 import { NutritionTip } from '@/components/nutrition/NutritionTip';
-import { SubscriptionCard } from '@/components/home/SubscriptionCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTheme } from 'next-themes';
 
@@ -17,7 +15,7 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  
+
   const header = {
     showLogo: true,
     showSearch: true,
@@ -25,97 +23,48 @@ const HomePage = () => {
   };
 
   const mainFeatures = [
-    { 
-      icon: <Search className="h-6 w-6 text-white" />, 
-      label: "Find by Ingredients", 
+    {
+      icon: <Search className="h-6 w-6 text-white" />,
+      label: "Find by Ingredients",
       path: "/find-by-ingredients",
       color: "bg-wasfah-bright-teal",
     },
-    { 
-      icon: <Globe className="h-6 w-6 text-white" />, 
-      label: "Global Cuisine", 
+    {
+      icon: <Globe className="h-6 w-6 text-white" />,
+      label: "Global Cuisine",
       path: "/global-cuisine",
       color: "bg-wasfah-deep-teal",
     },
-    { 
-      icon: <Calendar className="h-6 w-6 text-white" />, 
-      label: "Meal Plan", 
+    {
+      icon: <Calendar className="h-6 w-6 text-white" />,
+      label: "Meal Plan",
       path: "/meal-plan",
       color: "bg-green-500",
     },
-    { 
-      icon: <Activity className="h-6 w-6 text-white" />, 
-      label: "Health Tracking", 
+    {
+      icon: <Activity className="h-6 w-6 text-white" />,
+      label: "Health Tracking",
       path: "/health-tracking-home",
       color: "bg-wasfah-coral-red",
     },
-    { 
-      icon: <ShoppingCart className="h-6 w-6 text-white" />, 
-      label: "Pantry", 
+    {
+      icon: <ShoppingCart className="h-6 w-6 text-white" />,
+      label: "Pantry",
       path: "/pantry",
       color: "bg-purple-500",
     },
-    { 
-      icon: <Users className="h-6 w-6 text-white" />, 
-      label: "Community", 
+    {
+      icon: <Users className="h-6 w-6 text-white" />,
+      label: "Community",
       path: "/community",
       color: "bg-blue-500",
     },
-    { 
-      icon: <Heart className="h-6 w-6 text-white" />, 
-      label: "Favorites", 
+    {
+      icon: <Heart className="h-6 w-6 text-white" />,
+      label: "Favorites",
       path: "/favorites",
       color: "bg-pink-500",
     },
-  ];
-
-  // Subscription plans
-  const subscriptionPlans = [
-    {
-      id: 'free',
-      name: 'Free',
-      price: '$0',
-      interval: 'mo',
-      description: 'Basic features for everyone',
-      features: [
-        'Basic recipe search',
-        'Limited meal planning',
-        'Standard health tracking',
-        'Community access'
-      ],
-      color: 'border-gray-300',
-    },
-    {
-      id: 'premium',
-      name: 'Premium',
-      price: '$9.99',
-      interval: 'mo',
-      description: 'Perfect for food enthusiasts',
-      features: [
-        'Unlimited recipe searches',
-        'Advanced meal planning',
-        'AI-powered health tracking',
-        'Premium content access',
-        'No ads'
-      ],
-      popular: true,
-      color: 'border-wasfah-bright-teal-300',
-    },
-    {
-      id: 'family',
-      name: 'Family',
-      price: '$19.99',
-      interval: 'mo',
-      description: 'Share with up to 6 family members',
-      features: [
-        'All Premium features',
-        'Family meal planning',
-        'Multi-profile health tracking',
-        'Shared shopping lists',
-        'Priority customer support'
-      ],
-      color: 'border-purple-300',
-    }
   ];
 
   const container = {
@@ -137,7 +86,7 @@ const HomePage = () => {
     <PageContainer header={header}>
       <div className="space-y-6 pb-24">
         {/* AI Scan Card - Highlighted Feature */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -170,10 +119,10 @@ const HomePage = () => {
             </Card>
           </Link>
         </motion.div>
-        
+
         {/* Nutrition Tip */}
         <div className="my-4">
-          <NutritionTip 
+          <NutritionTip
             tip="Our AI analysis of your recent meals suggests you might benefit from more lean protein. Try our salmon with broccoli recipe for dinner tonight."
             source="Wasfah AI"
             type="ai"
@@ -184,7 +133,7 @@ const HomePage = () => {
         {/* Main Features Grid with Icons only */}
         <div>
           <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mb-4">Quick Access</h2>
-          <motion.div 
+          <motion.div
             className="grid grid-cols-4 gap-4"
             variants={container}
             initial="hidden"
@@ -204,55 +153,17 @@ const HomePage = () => {
             ))}
           </motion.div>
         </div>
-        
-        {/* Subscription Plans */}
-        <div className="pt-2">
-          <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mb-4 flex items-center">
-            <Brain className="h-5 w-5 mr-2 text-wasfah-bright-teal" />
-            Subscription Plans
-          </h2>
-          
-          <Tabs defaultValue="monthlySub" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="monthlySub">Monthly</TabsTrigger>
-              <TabsTrigger value="yearlySub">Yearly (Save 20%)</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="monthlySub">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {subscriptionPlans.map((plan) => (
-                  <SubscriptionCard key={plan.id} plan={plan} />
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="yearlySub">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {subscriptionPlans.map((plan) => (
-                  <SubscriptionCard 
-                    key={plan.id} 
-                    plan={{
-                      ...plan,
-                      price: plan.id === 'free' ? '$0' : (parseFloat(plan.price.replace('$', '')) * 0.8 * 12).toFixed(2),
-                      interval: 'yr'
-                    }} 
-                  />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-        
+
         {/* Recent Activity */}
         <h2 className="font-bold text-lg text-wasfah-deep-teal dark:text-wasfah-bright-teal mt-6">Recent Activity</h2>
-        
+
         {/* Today's meal plan */}
         <TodayMealPlan mealPlan={null} />
-        
+
         {/* Expiring ingredients */}
-        <ExpiringIngredients 
-          expiringItems={[]} 
-          onAddIngredient={() => {}} 
+        <ExpiringIngredients
+          expiringItems={[]}
+          onAddIngredient={() => {}}
         />
       </div>
     </PageContainer>
